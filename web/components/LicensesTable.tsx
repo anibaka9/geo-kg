@@ -64,7 +64,10 @@ export function LicensesTable({ items, offset }: LicensesTableProps) {
                 <Truncate text={license.objectName.value} maxW="max-w-44" />
               </td>
               <td class="px-4 py-3 text-foreground">
-                <Truncate text={license.company.value} maxW="max-w-52" />
+                <Truncate
+                  text={[license.company.identity.value.orgType, license.company.identity.value.name].filter(Boolean).join(" ")}
+                  maxW="max-w-52"
+                />
               </td>
               <td class="px-4 py-3 text-foreground">
                 <Truncate text={license.region.value} maxW="max-w-32" />

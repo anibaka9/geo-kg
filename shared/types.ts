@@ -3,6 +3,21 @@ export type Field<V, R = string> = {
   value: V;
 };
 
+export interface CompanyIdentity {
+  orgType: string | null;
+  name: string;
+}
+
+export interface CompanyData {
+  identity: Field<CompanyIdentity>;
+  inn: Field<string>;
+  manager: Field<string>;
+  phone: Field<string>;
+  country: Field<string>;
+  address: Field<string>;
+  founders: Field<string>;
+}
+
 export interface Beneficiary {
   name: Field<string>;
   citizenship: Field<string>;
@@ -16,7 +31,7 @@ export interface License {
   id: Field<string>;
   licenseNumber: Field<string>;
   objectName: Field<string>;
-  company: Field<string>;
+  company: CompanyData;
   region: Field<string>;
   district: Field<string>;
   ayilAymak: Field<string>;
@@ -25,13 +40,7 @@ export interface License {
   workType: Field<string>;
   areaHa: Field<number | null>;
   status: Field<string>;
-  inn: Field<string>;
-  manager: Field<string>;
-  phone: Field<string>;
-  country: Field<string>;
   polygon: Field<[number, number][], { x: string; y: string }>;
-  address: Field<string>;
-  founders: Field<string>;
   beneficiaries: Field<Beneficiary[], string>;
   notes: Field<string>;
   sourceYear: 2025 | 2026;

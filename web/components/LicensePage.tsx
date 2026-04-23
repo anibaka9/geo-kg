@@ -3,19 +3,35 @@ import type { License } from "@shared/types";
 interface FieldRowProps {
   label: string;
   value: string | number | null | undefined;
+  raw?: string;
+  href?: string;
 }
 
-function FieldRow({ label, value }: FieldRowProps) {
+function FieldRow({ label, value, raw, href }: FieldRowProps) {
   const display = value !== null && value !== undefined && String(value).trim() !== ""
     ? String(value)
     : null;
+  const showRaw = raw !== undefined && raw.trim() !== "" && raw.trim() !== display;
   return (
     <div class="grid grid-cols-3 gap-4 py-3 border-b border-border last:border-0">
       <dt class="text-xs font-medium text-muted-foreground uppercase tracking-wide pt-0.5">
         {label}
       </dt>
       <dd class="text-sm text-foreground col-span-2">
-        {display ?? <span class="text-muted-foreground">—</span>}
+        {display
+          ? href
+            ? <a href={href} target="_blank" rel="noopener noreferrer" class="text-primary hover:underline underline-offset-4">{display}</a>
+            : display
+          : <span class="text-muted-foreground">—</span>
+        }
+        {showRaw && (
+          <details class="mt-1">
+            <summary class="text-xs text-muted-foreground/60 cursor-pointer hover:text-muted-foreground select-none w-fit">
+              raw
+            </summary>
+            <p class="text-xs font-mono mt-1 text-muted-foreground break-all whitespace-pre-wrap">{raw}</p>
+          </details>
+        )}
       </dd>
     </div>
   );
@@ -32,6 +48,12 @@ function Card({ title, children }: { title: string; children: JSX.Element | JSX.
       </div>
     </div>
   );
+}
+
+function companyDisplayName(license: License): string {
+  const { orgType, name } = license.company.identity.value;
+  if (!orgType) return name;
+  return name ? `${orgType} "${name}"` : orgType;
 }
 
 export function LicensePage({ license }: { license: License }) {
@@ -81,13 +103,22 @@ export function LicensePage({ license }: { license: License }) {
       </Card>
 
       <Card title="Компания">
-        <FieldRow label="Наименование" value={license.company.value} />
-        <FieldRow label="ИНН" value={license.inn.value} />
-        <FieldRow label="Руководитель" value={license.manager.value} />
-        <FieldRow label="Телефон" value={license.phone.value} />
-        <FieldRow label="Адрес" value={license.address.value} />
-        <FieldRow label="Страна" value={license.country.value} />
-        <FieldRow label="Учредители" value={license.founders.value} />
+        <FieldRow
+          label="Наименование"
+          value={companyDisplayName(license)}
+          raw={license.company.identity.raw}
+        />
+        <FieldRow
+          label="ИНН"
+          value={license.company.inn.value}
+          raw={license.company.inn.raw}
+          href={license.company.inn.value ? `https://www.osoo.kg/inn/${license.company.inn.value}/` : undefined}
+        />
+        <FieldRow label="Руководитель" value={license.company.manager.value} />
+        <FieldRow label="Телефон" value={license.company.phone.value} />
+        <FieldRow label="Адрес" value={license.company.address.value} />
+        <FieldRow label="Страна" value={license.company.country.value} />
+        <FieldRow label="Учредители" value={license.company.founders.value} />
       </Card>
 
       {hasBeneficiaries && (

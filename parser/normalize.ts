@@ -3,10 +3,10 @@ import type { License } from "@shared/types";
 import { parsePassthrough } from "./parsers/passthrough";
 import { parseMinerals } from "./parsers/minerals";
 import { parseArea } from "./parsers/area";
-import { parseInn } from "./parsers/inn";
 import { parseCoords } from "./parsers/coords";
 import { parseLocation } from "./parsers/location";
 import { parseBeneficiaries } from "./parsers/beneficiaries";
+import { parseCompany } from "./parsers/company";
 
 export function normalize(raw: RawLicense): License {
   const { region, district } = parseLocation(raw.location);
@@ -15,7 +15,7 @@ export function normalize(raw: RawLicense): License {
     id: parsePassthrough(raw.id),
     licenseNumber: parsePassthrough(raw.licenseNumber),
     objectName: parsePassthrough(raw.objectName),
-    company: parsePassthrough(raw.company),
+    company: parseCompany(raw),
     region,
     district,
     ayilAymak: parsePassthrough(raw.ayilAymak),
@@ -24,13 +24,7 @@ export function normalize(raw: RawLicense): License {
     workType: parsePassthrough(raw.workType),
     areaHa: parseArea(raw.area),
     status: parsePassthrough(raw.status),
-    inn: parseInn(raw.inn),
-    manager: parsePassthrough(raw.manager),
-    phone: parsePassthrough(raw.phone),
-    country: parsePassthrough(raw.country),
     polygon: parseCoords(raw.coordX, raw.coordY),
-    address: parsePassthrough(raw.address),
-    founders: parsePassthrough(raw.founders),
     beneficiaries: parseBeneficiaries(raw),
     notes: parsePassthrough(raw.notes),
     sourceYear: raw.sourceYear,

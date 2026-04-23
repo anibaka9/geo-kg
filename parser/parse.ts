@@ -1,7 +1,7 @@
 import { writeFileSync, mkdirSync } from "fs";
 import { join, dirname } from "path";
 import { fileURLToPath } from "url";
-import { loadRaw } from "./csv";
+import { loadRaw, licenseKey } from "./csv";
 import { normalize } from "./normalize";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -10,11 +10,14 @@ const ROOT = join(__dirname, "..");
 const raw2025 = loadRaw(join(ROOT, "data/2025.csv"), 2025);
 const raw2026 = loadRaw(join(ROOT, "data/2026.csv"), 2026);
 
-// Merge by license number: 2025 as base, 2026 takes priority
-const rawByKey = new Map(raw2025.map((r) => [r.licenseNumber.trim(), r]));
-for (const r of raw2026) rawByKey.set(r.licenseNumber.trim(), r);
+// Merge by short license number (e.g. "нм 11-02"): 2025 as base, 2026 takes priority
+const rawByKey = new Map(raw2025.map((r) => [licenseKey(r.licenseNumber), r]));
+for (const r of raw2026) rawByKey.set(licenseKey(r.licenseNumber), r);
 
-const output = [...rawByKey.values()].map(normalize);
+const output = [...rawByKey.values()].map(normalize).map((l, i) => ({
+  ...l,
+  id: { raw: l.id.raw, value: String(i + 1) },
+}));
 
 const withCoords = output.filter((l) => l.polygon.value.length > 0).length;
 console.log(`Total licenses: ${output.length}`);
