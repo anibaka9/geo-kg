@@ -1,3 +1,6 @@
+import type { CanonicalCountry } from "./countries";
+import type { CanonicalRegion } from "./regions";
+
 export type Field<V, R = string> = {
   raw: R;
   value: V;
@@ -12,8 +15,8 @@ export interface CompanyData {
   identity: Field<CompanyIdentity>;
   inn: Field<string>;
   manager: Field<string>;
-  phone: Field<string>;
-  country: Field<string>;
+  phone: Field<string[]>;
+  country: Field<CanonicalCountry[]>;
   address: Field<string>;
   founders: Field<string>;
 }
@@ -32,7 +35,7 @@ export interface License {
   licenseNumber: Field<string>;
   objectName: Field<string>;
   company: CompanyData;
-  region: Field<string>;
+  region: Field<CanonicalRegion>;
   district: Field<string>;
   ayilAymak: Field<string>;
   licenseValidity: Field<string>;

@@ -2,6 +2,10 @@ import type { Field, CompanyData, CompanyIdentity } from "@shared/types";
 import type { RawLicense } from "../types";
 import { parseInn } from "./inn";
 import { parsePassthrough } from "./passthrough";
+import { parseCountry } from "./country";
+import { parsePhone } from "./phone";
+import { parseAddress } from "./address";
+import { parseFounders } from "./founders";
 import overrides from "../overrides/company.json";
 import managerOverrides from "../overrides/manager.json";
 
@@ -97,7 +101,7 @@ function cleanManager(value: string): string {
   // Инициалы перед фамилией: "С.М.Ахунбаев" → "Ахунбаев С.М."
   const initialsFirst = value.match(/^([А-ЯЁ]\.\s*[А-ЯЁ]\.\s*)([А-ЯЁ][а-яё]+)/);
   if (initialsFirst) {
-    value = `${initialsFirst[2]} ${initialsFirst[1].trim()}`;
+    value = `${initialsFirst[2]!} ${initialsFirst[1]!.trim()}`;
   }
 
   // Добавляем точку если инициалы без точки на конце: "Зикиров А.А" → "Зикиров А.А."
@@ -141,9 +145,9 @@ export function parseCompany(raw: RawLicense): CompanyData {
     identity: parseIdentity(raw.company),
     inn: parseInn(raw.inn),
     manager: parseManager(raw.manager),
-    phone: parsePassthrough(raw.phone),
-    country: parsePassthrough(raw.country),
-    address: parsePassthrough(raw.address),
-    founders: parsePassthrough(raw.founders),
+    phone: parsePhone(raw.phone),
+    country: parseCountry(raw.country),
+    address: parseAddress(raw.address),
+    founders: parseFounders(raw.founders),
   };
 }

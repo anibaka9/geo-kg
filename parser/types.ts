@@ -26,5 +26,6 @@ export interface RawLicense {
   beneficiaryShare: string;
   beneficiaryYear: string;
   notes: string;
+  region?: string;
   sourceYear: 2025 | 2026;
 }

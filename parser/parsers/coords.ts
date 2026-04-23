@@ -36,13 +36,13 @@ export function parseCoords(
   }
 
   // Easting has zone prefix so it's >10_000_000; northing is ~4–5M
-  const xIsEasting = xNums[0] > 10_000_000;
+  const xIsEasting = xNums[0]! > 10_000_000;
   const eastings = xIsEasting ? xNums : yNums;
   const northings = xIsEasting ? yNums : xNums;
 
   const value: [number, number][] = [];
   for (let i = 0; i < eastings.length; i++) {
-    const point = gkToWgs84(eastings[i], northings[i]);
+    const point = gkToWgs84(eastings[i]!, northings[i]!);
     if (point) value.push(point);
   }
 
