@@ -4,9 +4,15 @@
   "type": "module",
   "private": true,
   "devDependencies": {
-    "@types/bun": "latest"
+    "@types/bun": "latest",
+    "@types/papaparse": "^5.5.2",
+    "@types/proj4": "^2.19.0"
   },
   "peerDependencies": {
     "typescript": "^5"
+  },
+  "dependencies": {
+    "papaparse": "^5.5.3",
+    "proj4": "^2.20.8"
   }
 }

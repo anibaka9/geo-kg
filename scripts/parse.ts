@@ -1,0 +1,28 @@
+import { writeFileSync, mkdirSync } from "fs";
+import { join, dirname } from "path";
+import { fileURLToPath } from "url";
+import { loadRaw } from "./csv";
+import { normalize } from "./normalize";
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const ROOT = join(__dirname, "..");
+
+const raw2025 = loadRaw(join(ROOT, "data/2025.csv"), 2025);
+const raw2026 = loadRaw(join(ROOT, "data/2026.csv"), 2026);
+
+// Merge by license number: 2025 as base, 2026 takes priority
+const rawByKey = new Map(raw2025.map((r) => [r.licenseNumber.trim(), r]));
+for (const r of raw2026) rawByKey.set(r.licenseNumber.trim(), r);
+
+const output = [...rawByKey.values()].map(normalize);
+
+const withCoords = output.filter((l) => l.polygon.value.length > 0).length;
+console.log(`Total licenses: ${output.length}`);
+console.log(`  With coordinates:    ${withCoords}`);
+console.log(`  Without coordinates: ${output.length - withCoords}`);
+console.log(`  From 2025 only: ${output.filter((l) => l.sourceYear === 2025).length}`);
+console.log(`  From 2026:      ${output.filter((l) => l.sourceYear === 2026).length}`);
+
+mkdirSync(join(ROOT, "output"), { recursive: true });
+writeFileSync(join(ROOT, "output/licenses.json"), JSON.stringify(output, null, 2), "utf-8");
+console.log(`\nWritten to output/licenses.json`);
