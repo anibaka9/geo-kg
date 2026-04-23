@@ -3,6 +3,7 @@ import type { RawLicense } from "../types";
 import { parseInn } from "./inn";
 import { parsePassthrough } from "./passthrough";
 import overrides from "../overrides/company.json";
+import managerOverrides from "../overrides/manager.json";
 
 const NORMALIZATIONS: [RegExp, string][] = [
   // Case normalization
@@ -54,11 +55,92 @@ function parseIdentity(raw: string): Field<CompanyIdentity> {
   return { raw, value: { orgType, name } };
 }
 
+const INVALID_MANAGERS = new Set([
+  "1",
+  "2",
+  "нет",
+  "Сдан",
+  "Сдан в архив",
+  "выемка",
+  "передв.",
+  "ФГП \"Национальная компания \"Кыргызтемир-жолу\"",
+  "Учреждение №16 ГУИН Минюста КР",
+  "АО \"Кызыл-Киякомур\"",
+  "ОсОО \"FORESIGHT GROUP\"",
+  "ОАО \"Таш-Темир\"",
+]);
+
+const MANAGER_PREFIX_STRIP = [
+  /^гр\.\s*(КР|РК|КНР)\.?\s*/i,
+  /^гр\.\s*/i,
+  /^(КР|РК|КНР)\s+/i,
+  /^др\.\s*/i,
+  /^(рук\.?|Генеральный директор|Второй секретарь|Первый секретарь|Ген\.?директор|Председатель Совета Попечителей|директор|зам\.? директора|руководитель|главный инженер|начальник)\.?\s*/i,
+  /^Председатель Совета Попечителей\s+\S+\s+др\.\s*/i,
+];
+
+function cleanManager(value: string): string {
+  for (const pattern of MANAGER_PREFIX_STRIP) {
+    value = value.replace(pattern, "");
+  }
+  value = value.replace(/\s*%$/, "");
+  value = value.replace(/\s*-\s*100\s*%?\s*$/, "");
+  value = value.replace(/\(Написано по ЛС.*?\)/gi, "").trim();
+  value = value.replace(/\s+/g, " ");
+
+  // Висячие дефисы: "Фамилия И.О.-", "Фамилия Имя Отчество -"
+  value = value.replace(/[-\s]+$/, "");
+
+  // Запятая вместо пробела в ФИО: "Лю,Юаньлунь" → "Лю Юаньлунь"
+  value = value.replace(/([а-яёa-z])\s*,\s*([а-яёa-z])/gi, "$1 $2");
+
+  // Инициалы перед фамилией: "С.М.Ахунбаев" → "Ахунбаев С.М."
+  const initialsFirst = value.match(/^([А-ЯЁ]\.\s*[А-ЯЁ]\.\s*)([А-ЯЁ][а-яё]+)/);
+  if (initialsFirst) {
+    value = `${initialsFirst[2]} ${initialsFirst[1].trim()}`;
+  }
+
+  // Добавляем точку если инициалы без точки на конце: "Зикиров А.А" → "Зикиров А.А."
+  const missingDot = value.match(/^(.+?\s+)?([А-ЯЁ]\.[А-ЯЁ])$/);
+  if (missingDot && !value.endsWith(".")) {
+    value = value + ".";
+  }
+
+  // Точка в конце полного ФИО (не инициалы): "Иванов Иван Иванович." → "Иванов Иван Иванович"
+  // Также "Кравченко Богдан." → "Кравченко Богдан"
+  const fullNamWithDot = value.match(/^[А-ЯЁ][а-яё]+(\s+[А-ЯЁ][а-яё]+)+\.$/);
+  if (fullNamWithDot) {
+    value = value.slice(0, -1);
+  }
+
+  return value;
+}
+
+function parseManager(raw: string): Field<string> {
+  const trimmed = raw.trim().replace(/\s+/g, " ");
+
+  if (INVALID_MANAGERS.has(trimmed)) {
+    return { raw, value: "" };
+  }
+
+  const cleaned = cleanManager(trimmed);
+
+  const overridden = (managerOverrides as Record<string, string>)[cleaned];
+  if (overridden !== undefined) {
+    return { raw, value: overridden };
+  }
+
+  return {
+    raw,
+    value: cleaned,
+  };
+}
+
 export function parseCompany(raw: RawLicense): CompanyData {
   return {
     identity: parseIdentity(raw.company),
     inn: parseInn(raw.inn),
-    manager: parsePassthrough(raw.manager),
+    manager: parseManager(raw.manager),
     phone: parsePassthrough(raw.phone),
     country: parsePassthrough(raw.country),
     address: parsePassthrough(raw.address),

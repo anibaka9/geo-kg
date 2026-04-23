@@ -114,7 +114,7 @@ export function LicensePage({ license }: { license: License }) {
           raw={license.company.inn.raw}
           href={license.company.inn.value ? `https://www.osoo.kg/inn/${license.company.inn.value}/` : undefined}
         />
-        <FieldRow label="Руководитель" value={license.company.manager.value} />
+        <FieldRow label="Руководитель" value={license.company.manager.value} raw={license.company.manager.raw} />
         <FieldRow label="Телефон" value={license.company.phone.value} />
         <FieldRow label="Адрес" value={license.company.address.value} />
         <FieldRow label="Страна" value={license.company.country.value} />
