@@ -1,4 +1,4 @@
-import type { Field } from "../types";
+import type { Field } from "@shared/types";
 
 export function parseArea(raw: string): Field<number | null> {
   const m = raw.replace(",", ".").match(/([\d.]+)/);

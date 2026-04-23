@@ -7,6 +7,12 @@
     "moduleDetection": "force",
     "jsx": "react-jsx",
     "jsxImportSource": "@kitajs/html",
+    "baseUrl": ".",
+    "paths": {
+      "@shared/*": ["./shared/*"],
+      "@web/*": ["./web/*"],
+      "@parser/*": ["./parser/*"]
+    },
     "allowJs": true,
 
     // Bundler mode

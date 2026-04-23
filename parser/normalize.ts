@@ -1,4 +1,5 @@
-import type { RawLicense, License } from "./types";
+import type { RawLicense } from "./types";
+import type { License } from "@shared/types";
 import { parsePassthrough } from "./parsers/passthrough";
 import { parseMinerals } from "./parsers/minerals";
 import { parseArea } from "./parsers/area";

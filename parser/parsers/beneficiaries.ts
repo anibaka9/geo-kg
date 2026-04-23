@@ -1,4 +1,5 @@
-import type { RawLicense, Beneficiary, Field } from "../types";
+import type { RawLicense } from "../types";
+import type { Beneficiary, Field } from "@shared/types";
 import { parsePassthrough } from "./passthrough";
 
 export function parseBeneficiaries(raw: RawLicense): Field<Beneficiary[], string> {

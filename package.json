@@ -1,12 +1,12 @@
 {
   "name": "geo-kg",
-  "module": "index.ts",
   "type": "module",
   "private": true,
   "scripts": {
     "dev:server": "bun --hot server.tsx",
-    "dev:css": "bunx @tailwindcss/cli -i ./src/input.css -o ./public/output.css --watch",
-    "build:css": "bunx @tailwindcss/cli -i ./src/input.css -o ./public/output.css --minify"
+    "dev:css": "bunx @tailwindcss/cli -i ./web/input.css -o ./public/output.css --watch",
+    "build:css": "bunx @tailwindcss/cli -i ./web/input.css -o ./public/output.css --minify",
+    "parse": "bun parser/parse.ts"
   },
   "devDependencies": {
     "@tailwindcss/cli": "^4.2.4",

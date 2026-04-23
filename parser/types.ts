@@ -1,0 +1,30 @@
+export interface RawLicense {
+  id: string;
+  licenseNumber: string;
+  objectName: string;
+  company: string;
+  location: string;
+  licenseValidity: string;
+  minerals: string;
+  workType: string;
+  area: string;
+  status: string;
+  inn: string;
+  manager: string;
+  phone: string;
+  country: string;
+  coordX: string;
+  coordY: string;
+  address: string;
+  founders: string;
+  ayilAymak: string;
+  beneficiariesText: string;
+  beneficiaryName: string;
+  beneficiaryCitizenship: string;
+  beneficiaryPosition: string;
+  beneficiaryAddress: string;
+  beneficiaryShare: string;
+  beneficiaryYear: string;
+  notes: string;
+  sourceYear: 2025 | 2026;
+}

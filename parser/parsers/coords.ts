@@ -1,5 +1,5 @@
 import proj4 from "proj4";
-import type { Field } from "../types";
+import type { Field } from "@shared/types";
 
 // Pulkovo 1942 / Gauss-Kruger (SK-42), zones covering Kyrgyzstan.
 // Easting is stored with zone prefix: zone*1_000_000 + 500_000 + local_easting.

@@ -1,11 +1,11 @@
 import { Elysia } from "elysia";
 import { html } from "@elysiajs/html";
 import { staticPlugin } from "@elysiajs/static";
-import { Layout } from "./src/components/Layout";
-import { LicensesTable } from "./src/components/LicensesTable";
-import { Pagination } from "./src/components/Pagination";
-import { LicensePage } from "./src/components/LicensePage";
-import type { License } from "./scripts/types";
+import { Layout } from "@web/components/Layout";
+import { LicensesTable } from "@web/components/LicensesTable";
+import { Pagination } from "@web/components/Pagination";
+import { LicensePage } from "@web/components/LicensePage";
+import type { License } from "@shared/types";
 
 const licenses = (await Bun.file("./output/licenses.json").json()) as License[];
 const byId = new Map(licenses.map((l) => [l.id.value, l]));
@@ -24,10 +24,15 @@ new Elysia()
 
     return (
       <Layout title="Лицензии КР">
-        <div class="max-w-screen-2xl mx-auto">
-          <h1 class="text-2xl font-bold text-gray-800 mb-4">
-            Горнодобывающие лицензии Кыргызстана
-          </h1>
+        <div>
+          <div class="mb-6">
+            <h1 class="text-2xl font-semibold tracking-tight text-foreground">
+              Лицензии
+            </h1>
+            <p class="mt-1 text-sm text-muted-foreground">
+              Горнодобывающие лицензии Кыргызстана
+            </p>
+          </div>
           <LicensesTable items={items} offset={offset} />
           <Pagination
             page={safePage}

@@ -1,4 +1,4 @@
-import type { Field } from "../types";
+import type { Field } from "@shared/types";
 import { parsePassthrough } from "./passthrough";
 
 export function parseLocation(raw: string): { region: Field<string>; district: Field<string> } {
