@@ -38,3 +38,9 @@ export const CANONICAL_COUNTRIES = [
 ] as const;
 
 export type CanonicalCountry = typeof CANONICAL_COUNTRIES[number];
+
+export const CANONICAL_COUNTRIES_SET = new Set<string>(CANONICAL_COUNTRIES);
+
+export function isCanonicalCountry(c: string): c is CanonicalCountry {
+  return CANONICAL_COUNTRIES_SET.has(c);
+}

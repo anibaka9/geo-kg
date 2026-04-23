@@ -1,7 +1,7 @@
 import type { Field } from "@shared/types";
-import { CANONICAL_REGIONS, type CanonicalRegion } from "@shared/regions";
+import { CANONICAL_REGIONS, type CanonicalRegion, isCanonicalRegion } from "@shared/regions";
 
-const REGION_PATTERNS: [RegExp, string][] = [
+const REGION_PATTERNS: [RegExp, CanonicalRegion][] = [
   // г. Бишкек - must check first since it can appear inside "Чуйская область г.Бишкек"
   [/г\.\s*Бишкек|город\s*Бишкек/i, "г. Бишкек"],
   // г. Ош
@@ -153,7 +153,7 @@ function normalizeCyrillic(s: string): string {
   return s;
 }
 
-function extractRegion(raw: string): string | null {
+function extractRegion(raw: string): CanonicalRegion | null {
   let trimmed = raw.trim();
 
   if (!trimmed) return null;
@@ -168,7 +168,7 @@ function extractRegion(raw: string): string | null {
   }
 
   // Check exact canonical match first
-  if (CANONICAL_REGIONS.includes(trimmed as any)) return trimmed;
+  if (isCanonicalRegion(trimmed)) return trimmed;
 
   // Check patterns (not anchored, case-insensitive)
   for (const [pattern, replacement] of REGION_PATTERNS) {
@@ -178,7 +178,7 @@ function extractRegion(raw: string): string | null {
   }
 
   // Fallback: case-insensitive keyword search
-  const regionKeywordsLower: [string, string][] = [
+  const regionKeywordsLower: [string, CanonicalRegion][] = [
     ["баткенская", "Баткенская область"],
     ["джалал-абадская", "Джалал-Абадская область"],
     ["жалал-абадская", "Джалал-Абадская область"],
@@ -207,7 +207,7 @@ function extractRegion(raw: string): string | null {
   return null;
 }
 
-export function parseRegion(raw: string): Field<CanonicalRegion> {
+export function parseRegion(raw: string): Field<CanonicalRegion | ""> {
   const result = extractRegion(raw);
-  return { raw, value: (result || "") as CanonicalRegion };
+  return { raw, value: result ?? "" };
 }

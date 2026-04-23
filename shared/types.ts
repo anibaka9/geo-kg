@@ -35,7 +35,7 @@ export interface License {
   licenseNumber: Field<string>;
   objectName: Field<string>;
   company: CompanyData;
-  region: Field<CanonicalRegion>;
+  region: Field<CanonicalRegion | "">;
   district: Field<string>;
   ayilAymak: Field<string>;
   licenseValidity: Field<string>;

@@ -1,6 +1,6 @@
 import type { Field } from "@shared/types";
-import countryOverrides from "../overrides/country.json";
-import { CANONICAL_COUNTRIES, type CanonicalCountry } from "@shared/countries";
+import countryOverrides from "../overrides/country";
+import { CANONICAL_COUNTRIES, type CanonicalCountry, isCanonicalCountry } from "@shared/countries";
 
 const COUNTRY_NAMES = [
   "Британские Виргинские Острова", "Британские острова", "Британских островах",
@@ -51,13 +51,13 @@ function normalizeCountry(raw: string): string | null {
   }
   trimmed = trimmed.trim();
 
-  const overridden = (countryOverrides as Record<string, string>)[trimmed];
+  const overridden = countryOverrides[trimmed];
   if (overridden) return overridden;
 
   // Check for "гр. КНР" pattern
   if (/^гр\.\s*/i.test(trimmed)) {
     const withoutGr = trimmed.replace(/^гр\.\s*/i, "").trim();
-    const overriddenGr = (countryOverrides as Record<string, string>)[withoutGr];
+    const overriddenGr = countryOverrides[withoutGr];
     if (overriddenGr) return overriddenGr;
   }
 
@@ -65,7 +65,7 @@ function normalizeCountry(raw: string): string | null {
   const matches = trimmed.match(COUNTRY_PATTERN);
   if (matches && matches.length > 0) {
     const normalized = matches.map(m => {
-      const overridden = (countryOverrides as Record<string, string>)[m];
+      const overridden = countryOverrides[m];
       return overridden || m;
     });
     // Deduplicate while preserving order
@@ -86,7 +86,7 @@ export function parseCountry(raw: string): Field<CanonicalCountry[]> {
   const unique = [...new Set(countries)];
 
   // Filter to only canonical countries
-  const canonical = unique.filter((c): c is CanonicalCountry => CANONICAL_COUNTRIES.includes(c as CanonicalCountry));
+  const canonical = unique.filter(isCanonicalCountry);
 
   return { raw, value: canonical };
 }

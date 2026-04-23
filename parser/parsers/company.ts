@@ -6,8 +6,8 @@ import { parseCountry } from "./country";
 import { parsePhone } from "./phone";
 import { parseAddress } from "./address";
 import { parseFounders } from "./founders";
-import overrides from "../overrides/company.json";
-import managerOverrides from "../overrides/manager.json";
+import overrides from "../overrides/company";
+import managerOverrides from "../overrides/manager";
 
 const NORMALIZATIONS: [RegExp, string][] = [
   // Case normalization
@@ -38,7 +38,7 @@ const ORG_TYPES = [
 ];
 
 function parseIdentity(raw: string): Field<CompanyIdentity> {
-  const overridden = (overrides as Record<string, string>)[raw.trim()] ?? raw;
+  const overridden = overrides[raw.trim()] ?? raw;
   let normalized = overridden.trim();
 
   for (const [pattern, replacement] of NORMALIZATIONS) {
@@ -129,7 +129,7 @@ function parseManager(raw: string): Field<string> {
 
   const cleaned = cleanManager(trimmed);
 
-  const overridden = (managerOverrides as Record<string, string>)[cleaned];
+  const overridden = managerOverrides[cleaned];
   if (overridden !== undefined) {
     return { raw, value: overridden };
   }

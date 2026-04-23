@@ -1,4 +1,5 @@
-{
+import type { RawLicense } from "../types";
+const data: Record<string, Partial<RawLicense>> = {
   "2826-тр": { "inn": "", "country": "Кыргызстан" },
   "2533 ап": { "inn": "ИНН 02712200110249", "coordX": "", "coordY": "" },
   "4322 ар": { "inn": "ИНН 02907201110123", "coordX": "", "coordY": "", "country": "Кыргызстан" },
@@ -51,3 +52,5 @@
     "location": "Чуйская обл., Сокулукский р-н"
   }
 }
+;
+export default data;

@@ -7,7 +7,7 @@ import { Pagination } from "@web/components/Pagination";
 import { LicensePage } from "@web/components/LicensePage";
 import type { License } from "@shared/types";
 
-const licenses = (await Bun.file("./output/licenses.json").json()) as License[];
+const licenses: License[] = await Bun.file("./output/licenses.json").json();
 const byId = new Map(licenses.map((l) => [l.id.value, l]));
 
 const PAGE_SIZE = 10;

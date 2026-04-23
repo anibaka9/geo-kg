@@ -10,11 +10,12 @@ import { parseAyilAymak } from "./parsers/ayilAymak";
 import { parseLicenseValidity } from "./parsers/licenseValidity";
 import { parseBeneficiaries } from "./parsers/beneficiaries";
 import { parseCompany } from "./parsers/company";
+import { isCanonicalRegion } from "@shared/regions";
 
 export function normalize(raw: RawLicense): License {
   const { district } = parseLocation(raw.location);
-  const region = raw.region
-    ? { raw: raw.region, value: raw.region as import("@shared/regions").CanonicalRegion }
+  const region = raw.region && isCanonicalRegion(raw.region)
+    ? { raw: raw.region, value: raw.region }
     : parseRegion(raw.location);
 
   return {

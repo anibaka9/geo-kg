@@ -1,7 +1,7 @@
 import Papa from "papaparse";
 import { readFileSync } from "fs";
 import type { RawLicense } from "./types";
-import rowOverrides from "./overrides/rows.json";
+import rowOverrides from "./overrides/rows";
 
 function normalizeKey(k: string): string {
   return k.trim().toLowerCase().replace(/\s+/g, " ");
@@ -100,9 +100,7 @@ export function loadRaw(filePath: string, year: 2025 | 2026): RawLicense[] {
     const raw = rowToRaw(row, year);
     if (!raw) return [];
     fixColumnShift(raw);
-    const patch = (rowOverrides as Record<string, Partial<RawLicense>>)[
-      licenseKey(raw.licenseNumber)
-    ];
+    const patch = rowOverrides[licenseKey(raw.licenseNumber)];
     if (patch) Object.assign(raw, patch);
     return [raw];
   });
