@@ -4,11 +4,13 @@ import { staticPlugin } from "@elysiajs/static";
 import { Layout } from "./src/components/Layout";
 import { LicensesTable } from "./src/components/LicensesTable";
 import { Pagination } from "./src/components/Pagination";
+import { LicensePage } from "./src/components/LicensePage";
 import type { License } from "./scripts/types";
 
 const licenses = (await Bun.file("./output/licenses.json").json()) as License[];
+const byId = new Map(licenses.map((l) => [l.id.value, l]));
 
-const PAGE_SIZE = 50;
+const PAGE_SIZE = 10;
 
 new Elysia()
   .use(html())
@@ -34,6 +36,17 @@ new Elysia()
             pageSize={PAGE_SIZE}
           />
         </div>
+      </Layout>
+    );
+  })
+  .get("/license/:id", ({ params }) => {
+    const license = byId.get(params.id);
+    if (!license) {
+      return new Response("Лицензия не найдена", { status: 404 });
+    }
+    return (
+      <Layout title={`${license.objectName.value} — Лицензии КР`}>
+        <LicensePage license={license} />
       </Layout>
     );
   })
