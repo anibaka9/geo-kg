@@ -117,7 +117,22 @@ export function LicensePage({ license }: { license: License }) {
         <FieldRow label="Вид работ" value={license.workType.value} />
         <FieldRow label="Срок действия" value={license.licenseValidity.value} />
         <FieldRow label="Статус" value={license.status.value} />
-        <FieldRow label="Минералы" value={license.minerals.value.join(", ")} />
+        <FieldRow label="Минералы" value={license.minerals.value.map((m) => m.name).join(", ")} />
+        <div class="grid grid-cols-3 gap-4 py-3 border-b border-border">
+          <dt class="text-xs font-medium text-muted-foreground uppercase tracking-wide pt-0.5">
+            Типы
+          </dt>
+          <dd class="text-sm text-foreground col-span-2 flex flex-wrap gap-2">
+            {license.minerals.value.map((m) => (
+              <span
+                class="inline-flex items-center rounded-md bg-muted px-2 py-1 text-xs font-medium text-foreground"
+                title={m.group}
+              >
+                {m.type}
+              </span>
+            ))}
+          </dd>
+        </div>
         <FieldRow label="Площадь, га" value={license.areaHa.value} />
       </Card>
 

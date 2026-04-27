@@ -1,4 +1,5 @@
 import type { License } from "@shared/types";
+import { MineralBadge } from "./MineralBadge";
 
 interface LicensesTableProps {
   items: License[];
@@ -73,7 +74,14 @@ export function LicensesTable({ items, offset }: LicensesTableProps) {
                 <Truncate text={license.region.value} maxW="max-w-32" />
               </td>
               <td class="px-4 py-3 text-foreground">
-                <Truncate text={license.minerals.value.join(", ")} maxW="max-w-36" />
+                <div class="flex flex-wrap gap-1">
+                  {[...new Set(license.minerals.value.map((m) => m.group))].map((g) => (
+                    <MineralBadge group={g} />
+                  ))}
+                </div>
+                <div class="truncate max-w-36 text-xs text-muted-foreground mt-1" title={license.minerals.value.map((m) => m.name).join(", ")}>
+                  {license.minerals.value.map((m) => m.name).join(", ")}
+                </div>
               </td>
               <td class="px-4 py-3 tabular-nums text-right text-foreground">
                 {license.areaHa.value !== null

@@ -6,6 +6,12 @@ export type Field<V, R = string> = {
   value: V;
 };
 
+export interface MineralEntry {
+  name: string;
+  type: string;
+  group: string;
+}
+
 export interface CompanyIdentity {
   orgType: string | null;
   name: string;
@@ -39,7 +45,7 @@ export interface License {
   district: Field<string>;
   ayilAymak: Field<string>;
   licenseValidity: Field<string>;
-  minerals: Field<string[]>;
+  minerals: Field<MineralEntry[]>;
   workType: Field<string>;
   areaHa: Field<number | null>;
   status: Field<string>;
