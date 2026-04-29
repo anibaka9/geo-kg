@@ -9,7 +9,9 @@ import { parseRegion } from "./parsers/region";
 import { parseAyilAymak } from "./parsers/ayilAymak";
 import { parseLicenseValidity } from "./parsers/licenseValidity";
 import { parseBeneficiaries } from "./parsers/beneficiaries";
+import { parseWorkType } from "./parsers/workType";
 import { parseCompany } from "./parsers/company";
+import { parseStatus } from "./parsers/status";
 import { isCanonicalRegion } from "@shared/regions";
 
 export function normalize(raw: RawLicense): License {
@@ -28,9 +30,9 @@ export function normalize(raw: RawLicense): License {
     ayilAymak: parseAyilAymak(raw.ayilAymak),
     licenseValidity: parseLicenseValidity(raw.licenseValidity),
     minerals: parseMinerals(raw.minerals),
-    workType: parsePassthrough(raw.workType),
+    workType: parseWorkType(raw.workType),
     areaHa: parseArea(raw.area),
-    status: parsePassthrough(raw.status),
+    status: parseStatus(raw.status),
     polygon: parseCoords(raw.coordX, raw.coordY),
     beneficiaries: parseBeneficiaries(raw),
     notes: parsePassthrough(raw.notes),

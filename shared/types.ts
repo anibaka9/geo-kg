@@ -36,6 +36,15 @@ export interface Beneficiary {
   year: Field<string>;
 }
 
+export interface StatusData {
+  code: string | null;
+  mineralType: string | null;
+  workStage: string | null;
+  isAnnulled: boolean;
+  protocol: string | null;
+  protocolDate: string | null;
+}
+
 export interface License {
   id: Field<string>;
   licenseNumber: Field<string>;
@@ -46,9 +55,9 @@ export interface License {
   ayilAymak: Field<string>;
   licenseValidity: Field<string>;
   minerals: Field<MineralEntry[]>;
-  workType: Field<string>;
+  workType: Field<string[]>;
   areaHa: Field<number | null>;
-  status: Field<string>;
+  status: Field<StatusData>;
   polygon: Field<[number, number][], { x: string; y: string }>;
   beneficiaries: Field<Beneficiary[], string>;
   notes: Field<string>;

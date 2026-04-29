@@ -1,4 +1,4 @@
-import type { License } from "@shared/types";
+import type { License, StatusData } from "@shared/types";
 import { MineralBadge } from "./MineralBadge";
 
 interface LicensesTableProps {
@@ -13,6 +13,24 @@ function Truncate({ text, maxW = "max-w-40" }: { text: string; maxW?: string }) 
       {text}
     </span>
   );
+}
+
+function StatusBadge({ status }: { status: StatusData }) {
+  if (status.isAnnulled) {
+    return (
+      <span class="inline-flex items-center rounded-md bg-red-50 px-2 py-0.5 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/20">
+        Аннул.
+      </span>
+    );
+  }
+  if (status.code) {
+    return (
+      <span class="inline-flex items-center rounded-md bg-green-50 px-2 py-0.5 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
+        {status.code}
+      </span>
+    );
+  }
+  return <span class="text-muted-foreground">—</span>;
 }
 
 function YearBadge({ year }: { year: 2025 | 2026 }) {
@@ -41,6 +59,7 @@ export function LicensesTable({ items, offset }: LicensesTableProps) {
             <th class="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Минералы</th>
             <th class="px-4 py-3 text-right text-xs font-medium text-muted-foreground uppercase tracking-wider w-16">Га</th>
             <th class="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider w-20">Год</th>
+            <th class="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider w-24">Статус</th>
           </tr>
         </thead>
         <tbody class="divide-y divide-border bg-card">
@@ -75,8 +94,8 @@ export function LicensesTable({ items, offset }: LicensesTableProps) {
               </td>
               <td class="px-4 py-3 text-foreground">
                 <div class="flex flex-wrap gap-1">
-                  {[...new Set(license.minerals.value.map((m) => m.group))].map((g) => (
-                    <MineralBadge group={g} />
+                  {[...new Map(license.minerals.value.map((m) => [m.type, m])).values()].map((m) => (
+                    <MineralBadge name={m.type} group={m.group} />
                   ))}
                 </div>
                 <div class="truncate max-w-36 text-xs text-muted-foreground mt-1" title={license.minerals.value.map((m) => m.name).join(", ")}>
@@ -90,6 +109,9 @@ export function LicensesTable({ items, offset }: LicensesTableProps) {
               </td>
               <td class="px-4 py-3">
                 <YearBadge year={license.sourceYear} />
+              </td>
+              <td class="px-4 py-3">
+                <StatusBadge status={license.status.value} />
               </td>
             </tr>
           ))}

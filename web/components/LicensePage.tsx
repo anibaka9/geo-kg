@@ -1,4 +1,5 @@
-import type { License } from "@shared/types";
+import type { License, MineralEntry, StatusData } from "@shared/types";
+import { MineralBadge } from "./MineralBadge";
 
 interface FieldRowProps {
   label: string;
@@ -70,6 +71,151 @@ function Card({
   );
 }
 
+function WorkTypeRow({ workType }: { workType: License["workType"] }) {
+  const { value, raw } = workType;
+  const showRaw = raw.trim() !== "" && raw.trim() !== value.join(", ");
+  return (
+    <div class="grid grid-cols-3 gap-4 py-3 border-b border-border">
+      <dt class="text-xs font-medium text-muted-foreground uppercase tracking-wide pt-0.5">
+        Вид работ
+      </dt>
+      <dd class="col-span-2">
+        {value.length > 0 ? (
+          <div class="flex flex-wrap gap-1">
+            {value.map((v) => (
+              <span class="inline-flex items-center rounded-md bg-muted px-2 py-0.5 text-xs font-medium text-foreground">
+                {v}
+              </span>
+            ))}
+          </div>
+        ) : (
+          <span class="text-sm text-muted-foreground">{raw.trim() || "—"}</span>
+        )}
+        {showRaw && (
+          <details class="mt-1">
+            <summary class="text-xs text-muted-foreground/60 cursor-pointer hover:text-muted-foreground select-none w-fit">
+              raw
+            </summary>
+            <p class="text-xs font-mono mt-1 text-muted-foreground">
+              {raw.trim()}
+            </p>
+          </details>
+        )}
+      </dd>
+    </div>
+  );
+}
+
+function MineralsRow({
+  minerals,
+  raw,
+}: {
+  minerals: MineralEntry[];
+  raw: string;
+}) {
+  // Group by type, preserving order of first occurrence
+  const byType = new Map<string, MineralEntry[]>();
+  for (const m of minerals) {
+    if (!byType.has(m.type)) byType.set(m.type, []);
+    byType.get(m.type)!.push(m);
+  }
+
+  const showRaw =
+    raw.trim() !== "" && raw.trim() !== minerals.map((m) => m.name).join(", ");
+
+  return (
+    <div class="grid grid-cols-3 gap-4 py-3 border-b border-border">
+      <dt class="text-xs font-medium text-muted-foreground uppercase tracking-wide pt-0.5">
+        Полезные ископаемые
+      </dt>
+      <dd class="col-span-2 space-y-2">
+        {minerals.length === 0 ? (
+          <span class="text-sm text-muted-foreground">—</span>
+        ) : (
+          [...byType.entries()].map(([type, items]) => (
+            <div class="flex items-baseline gap-2 flex-wrap">
+              <span class="text-xs text-muted-foreground shrink-0">{type}</span>
+              <div class="flex flex-wrap gap-1">
+                {items.map((m) => (
+                  <MineralBadge name={m.name} group={m.group} type={m.type} />
+                ))}
+              </div>
+            </div>
+          ))
+        )}
+        {showRaw && (
+          <details class="mt-1">
+            <summary class="text-xs text-muted-foreground/60 cursor-pointer hover:text-muted-foreground select-none w-fit">
+              raw
+            </summary>
+            <p class="text-xs font-mono mt-1 text-muted-foreground break-all whitespace-pre-wrap">
+              {raw}
+            </p>
+          </details>
+        )}
+      </dd>
+    </div>
+  );
+}
+
+function StatusRow({ status, raw }: { status: StatusData; raw: string }) {
+  let display: JSX.Element;
+
+  if (status.isAnnulled) {
+    display = (
+      <div class="space-y-1">
+        <span class="inline-flex items-center rounded-md bg-red-50 px-2 py-0.5 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/20">
+          Аннулирована
+        </span>
+        {(status.protocol || status.protocolDate) && (
+          <p class="text-xs text-muted-foreground">
+            {status.protocol && <>Протокол №{status.protocol}</>}
+            {status.protocol && status.protocolDate && " "}
+            {status.protocolDate && <>от {status.protocolDate}</>}
+          </p>
+        )}
+      </div>
+    );
+  } else if (status.code) {
+    const decoded = [status.mineralType, status.workStage].filter(Boolean).join(", ");
+    display = (
+      <div class="space-y-0.5">
+        <span class="inline-flex items-center rounded-md bg-green-50 px-2 py-0.5 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
+          {status.code}
+        </span>
+        {decoded && (
+          <p class="text-xs text-muted-foreground">{decoded}</p>
+        )}
+      </div>
+    );
+  } else {
+    display = <span class="text-muted-foreground">—</span>;
+  }
+
+  const showRaw = raw.trim() !== "" && status.isAnnulled && raw.trim().length > 3;
+
+  return (
+    <div class="grid grid-cols-3 gap-4 py-3 border-b border-border last:border-0">
+      <dt class="text-xs font-medium text-muted-foreground uppercase tracking-wide pt-0.5">
+        Статус
+      </dt>
+      <dd class="text-sm text-foreground col-span-2">
+        {display}
+        {showRaw && (
+          <details class="mt-1">
+            <summary class="text-xs text-muted-foreground/60 cursor-pointer hover:text-muted-foreground select-none w-fit">
+              raw
+            </summary>
+            <p class="text-xs font-mono mt-1 text-muted-foreground break-all whitespace-pre-wrap">
+              {raw}
+            </p>
+          </details>
+        )}
+      </dd>
+    </div>
+  );
+}
+
 function companyDisplayName(license: License): string {
   const { orgType, name } = license.company.identity.value;
   if (!orgType) return name;
@@ -114,25 +260,13 @@ export function LicensePage({ license }: { license: License }) {
 
       <Card title="Лицензия">
         <FieldRow label="Номер" value={license.licenseNumber.value} />
-        <FieldRow label="Вид работ" value={license.workType.value} />
+        <WorkTypeRow workType={license.workType} />
         <FieldRow label="Срок действия" value={license.licenseValidity.value} />
-        <FieldRow label="Статус" value={license.status.value} />
-        <FieldRow label="Минералы" value={license.minerals.value.map((m) => m.name).join(", ")} />
-        <div class="grid grid-cols-3 gap-4 py-3 border-b border-border">
-          <dt class="text-xs font-medium text-muted-foreground uppercase tracking-wide pt-0.5">
-            Типы
-          </dt>
-          <dd class="text-sm text-foreground col-span-2 flex flex-wrap gap-2">
-            {license.minerals.value.map((m) => (
-              <span
-                class="inline-flex items-center rounded-md bg-muted px-2 py-1 text-xs font-medium text-foreground"
-                title={m.group}
-              >
-                {m.type}
-              </span>
-            ))}
-          </dd>
-        </div>
+        <StatusRow status={license.status.value} raw={license.status.raw} />
+        <MineralsRow
+          minerals={license.minerals.value}
+          raw={license.minerals.raw}
+        />
         <FieldRow label="Площадь, га" value={license.areaHa.value} />
       </Card>
 
@@ -163,7 +297,11 @@ export function LicensePage({ license }: { license: License }) {
           value={license.company.manager.value}
           raw={license.company.manager.raw}
         />
-        <FieldRow label="Телефон" value={license.company.phone.value.join(", ")} raw={license.company.phone.raw} />
+        <FieldRow
+          label="Телефон"
+          value={license.company.phone.value.join(", ")}
+          raw={license.company.phone.raw}
+        />
         <FieldRow label="Адрес" value={license.company.address.value} />
         {license.company.country.value.length > 0 ? (
           <div class="grid grid-cols-3 gap-4 py-3 border-b border-border last:border-0">
