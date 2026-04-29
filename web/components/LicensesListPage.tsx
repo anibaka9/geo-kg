@@ -3,6 +3,7 @@ import type { ActiveFilters, FilterOptions } from "@web/filters";
 import { FilterPanel } from "./FilterPanel";
 import { LicensesTable } from "./LicensesTable";
 import { Pagination } from "./Pagination";
+import { NavTabs } from "./NavTabs";
 
 interface Props {
   filters: ActiveFilters;
@@ -35,15 +36,18 @@ export function LicensesListPage({
         <FilterPanel filters={filters} options={filterOptions} />
       </aside>
       <div class="flex-1 min-w-0">
-        <div class="mb-4">
-          <h1 class="text-2xl font-semibold tracking-tight text-foreground">
-            Лицензии
-          </h1>
-          <p class="mt-1 text-sm text-muted-foreground">
-            {total !== totalAll
-              ? `${total} из ${totalAll} лицензий`
-              : `${totalAll} лицензий`}
-          </p>
+        <div class="mb-4 flex items-start justify-between gap-4">
+          <div>
+            <h1 class="text-2xl font-semibold tracking-tight text-foreground">
+              Лицензии
+            </h1>
+            <p class="mt-1 text-sm text-muted-foreground">
+              {total !== totalAll
+                ? `${total} из ${totalAll} лицензий`
+                : `${totalAll} лицензий`}
+            </p>
+          </div>
+          <NavTabs active="table" qs={qs} />
         </div>
         <LicensesTable items={items} offset={offset} />
         <Pagination

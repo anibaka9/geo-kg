@@ -4,8 +4,47 @@ import { staticPlugin } from "@elysiajs/static";
 import { Layout } from "@web/components/Layout";
 import { LicensesListPage } from "@web/components/LicensesListPage";
 import { LicensePage } from "@web/components/LicensePage";
+import { MapPage } from "@web/components/MapPage";
 import { licenses, byId, filterOptions, PAGE_SIZE } from "@web/data";
 import { parseFilters, applyFilters, filtersToQs } from "@web/filters";
+
+await Bun.build({
+  entrypoints: ["./web/map.ts"],
+  outdir: "./public",
+  target: "browser",
+  naming: "map.js",
+  minify: true,
+});
+
+const MAP_HEAD = (
+  <>
+    <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@5/dist/maplibre-gl.css" />
+    <script src="https://unpkg.com/maplibre-gl@5/dist/maplibre-gl.js" />
+    <script src="/public/map.js" defer />
+  </>
+) as JSX.Element;
+
+function toGeoJsonFeatures(filtered: typeof licenses) {
+  return filtered
+    .filter((l) => l.polygon.value.length >= 3)
+    .map((l) => {
+      const coords = l.polygon.value.map(([lat, lon]) => [lon, lat]);
+      const first = coords[0]!;
+      const last = coords.at(-1)!;
+      if (first[0] !== last[0] || first[1] !== last[1]) coords.push(first);
+      return {
+        type: "Feature",
+        geometry: { type: "Polygon", coordinates: [coords] },
+        properties: {
+          id: l.id.value,
+          licenseNumber: l.licenseNumber.value,
+          objectName: l.objectName.value,
+          mineralGroup: l.minerals.value[0]?.group ?? "прочее",
+          isAnnulled: l.status.value.isAnnulled,
+        },
+      };
+    });
+}
 
 new Elysia()
   .use(html())
@@ -19,6 +58,7 @@ new Elysia()
     const totalPages = Math.ceil(filtered.length / PAGE_SIZE);
     const safePage = Math.min(page, Math.max(1, totalPages));
     const offset = (safePage - 1) * PAGE_SIZE;
+    const qs = filtersToQs(sp);
 
     return (
       <Layout title="Лицензии КР">
@@ -32,10 +72,36 @@ new Elysia()
           total={filtered.length}
           totalAll={licenses.length}
           pageSize={PAGE_SIZE}
-          qs={filtersToQs(sp) || undefined}
+          qs={qs || undefined}
         />
       </Layout>
     );
+  })
+  .get("/map", ({ request }) => {
+    const sp = new URL(request.url).searchParams;
+    const filters = parseFilters(sp);
+    const filtered = applyFilters(licenses, filters);
+    const withCoords = filtered.filter((l) => l.polygon.value.length >= 3).length;
+    const qs = filtersToQs(sp);
+
+    return (
+      <Layout title="Карта лицензий КР" headExtra={MAP_HEAD}>
+        <MapPage
+          filters={filters}
+          filterOptions={filterOptions}
+          total={withCoords}
+          qs={qs || undefined}
+        />
+      </Layout>
+    );
+  })
+  .get("/api/features.geojson", ({ request }) => {
+    const sp = new URL(request.url).searchParams;
+    const filtered = applyFilters(licenses, parseFilters(sp));
+    const features = toGeoJsonFeatures(filtered);
+    return new Response(JSON.stringify({ type: "FeatureCollection", features }), {
+      headers: { "Content-Type": "application/geo+json" },
+    });
   })
   .get("/license/:id", ({ params }) => {
     const license = byId.get(params.id);
