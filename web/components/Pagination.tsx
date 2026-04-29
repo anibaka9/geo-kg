@@ -3,9 +3,11 @@ interface PaginationProps {
   totalPages: number;
   total: number;
   pageSize: number;
+  qs?: string;
 }
 
-export function Pagination({ page, totalPages, total, pageSize }: PaginationProps) {
+export function Pagination({ page, totalPages, total, pageSize, qs }: PaginationProps) {
+  const href = (p: number) => (qs ? `/?${qs}&page=${p}` : `/?page=${p}`);
   const from = (page - 1) * pageSize + 1;
   const to = Math.min(page * pageSize, total);
 
@@ -35,7 +37,7 @@ export function Pagination({ page, totalPages, total, pageSize }: PaginationProp
       </p>
       <div class="flex items-center gap-1">
         {page > 1 ? (
-          <a href={`/?page=${page - 1}`} class={btnDefault}>← Назад</a>
+          <a href={href(page - 1)} class={btnDefault}>← Назад</a>
         ) : (
           <span class={btnDisabled}>← Назад</span>
         )}
@@ -48,12 +50,12 @@ export function Pagination({ page, totalPages, total, pageSize }: PaginationProp
           ) : p === page ? (
             <span class={btnActive}>{p}</span>
           ) : (
-            <a href={`/?page=${p}`} class={btnDefault}>{p}</a>
+            <a href={href(p)} class={btnDefault}>{p}</a>
           )
         )}
 
         {page < totalPages ? (
-          <a href={`/?page=${page + 1}`} class={btnDefault}>Далее →</a>
+          <a href={href(page + 1)} class={btnDefault}>Далее →</a>
         ) : (
           <span class={btnDisabled}>Далее →</span>
         )}

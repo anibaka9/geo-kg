@@ -47,7 +47,7 @@ function YearBadge({ year }: { year: 2025 | 2026 }) {
 
 export function LicensesTable({ items, offset }: LicensesTableProps) {
   return (
-    <div class="rounded-lg border border-border overflow-hidden">
+    <div class="rounded-lg border border-border overflow-x-auto">
       <table class="w-full text-sm">
         <thead>
           <tr class="border-b border-border bg-muted/50">
