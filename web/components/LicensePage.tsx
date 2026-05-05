@@ -222,7 +222,7 @@ function companyDisplayName(license: License): string {
   return name ? `${orgType} "${name}"` : orgType;
 }
 
-export function LicensePage({ license }: { license: License }) {
+export function LicensePage({ license, hideBackLink }: { license: License; hideBackLink?: boolean }) {
   const hasBeneficiaries =
     Array.isArray(license.beneficiaries.value) &&
     license.beneficiaries.value.length > 0;
@@ -231,12 +231,14 @@ export function LicensePage({ license }: { license: License }) {
     <div class="max-w-3xl mx-auto space-y-5">
       {/* Header */}
       <div>
-        <a
-          href="/"
-          class="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors mb-4"
-        >
-          ← Все лицензии
-        </a>
+        {!hideBackLink && (
+          <a
+            href="/"
+            class="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors mb-4"
+          >
+            ← Все лицензии
+          </a>
+        )}
         <div class="flex items-start justify-between gap-4">
           <div>
             <h1 class="text-2xl font-semibold tracking-tight text-foreground">

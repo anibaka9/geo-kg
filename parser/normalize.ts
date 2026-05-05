@@ -12,20 +12,16 @@ import { parseBeneficiaries } from "./parsers/beneficiaries";
 import { parseWorkType } from "./parsers/workType";
 import { parseCompany } from "./parsers/company";
 import { parseStatus } from "./parsers/status";
-import { isCanonicalRegion } from "@shared/regions";
 
 export function normalize(raw: RawLicense): License {
   const { district } = parseLocation(raw.location);
-  const region = raw.region && isCanonicalRegion(raw.region)
-    ? { raw: raw.region, value: raw.region }
-    : parseRegion(raw.location);
 
   return {
     id: parsePassthrough(raw.id),
     licenseNumber: parsePassthrough(raw.licenseNumber),
     objectName: parsePassthrough(raw.objectName),
     company: parseCompany(raw),
-    region,
+    region: parseRegion(raw.location, raw.region),
     district,
     ayilAymak: parseAyilAymak(raw.ayilAymak),
     licenseValidity: parseLicenseValidity(raw.licenseValidity),

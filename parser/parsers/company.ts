@@ -8,40 +8,18 @@ import { parseAddress } from "./address";
 import { parseFounders } from "./founders";
 import overrides from "../overrides/company";
 import managerOverrides from "../overrides/manager";
-
-const NORMALIZATIONS: [RegExp, string][] = [
-  // Case normalization
-  [/^Ип\s+/i, "ИП "],
-  [/^Чп\s+/i, "ЧП "],
-  [/^аО\s+/i, "АО "],
-  // Dotted / slash variants
-  [/^Ч[\./]П\.?\s*/i, "ЧП "],
-  [/^К\.Х\.\s*/i, "КХ "],
-  [/^К\/х\s*/i, "КХ "],
-  [/^Ф\.Х\.\s*/i, "ФХ "],
-  // Cyrillic/latin mix
-  [/^ОСОО\s*/i, "ОсОО "],
-  [/^ОсОO\s*/i, "ОсОО "],  // latin O at end
-  // Missing space between type and quote
-  [/^(ЗАО|ИП|ОАО|ОсОО|ЧП|АО)"/, '$1 "'],
-  // Prefixes before ОсОО
-  [/^К-Р\s+/, ""],
-  [/^С?К{1,2}[КРС]?\s+(?=ОсОО)/i, ""],
-  [/^Совм\.\s*\S+\.?(ОсОО)/i, "$1"],
-  [/^Совместн\S*\s+\S+\s+(ОсОО)/i, "$1"],
-];
-
-const ORG_TYPES = [
-  "ОсОО", "АООТ", "АОЗТ", "ГАО", "ГКП", "ГП", "ГУ", "ЗАО", "ИП", "КФ",
-  "КХ", "МП", "НАО", "ОАО", "ОДО", "ОО", "ОФ", "ОЮЛ", "ПАО", "ПК", "РГП",
-  "СП", "ТОО", "ФГУ", "ФГУП", "ФХ", "ЧП", "ГУП", "КГП", "АО",
-];
+import {
+  COMPANY_NORMALIZATIONS,
+  ORG_TYPES,
+  INVALID_MANAGERS,
+  MANAGER_PREFIX_STRIP,
+} from "../data/company";
 
 function parseIdentity(raw: string): Field<CompanyIdentity> {
   const overridden = overrides[raw.trim()] ?? raw;
   let normalized = overridden.trim();
 
-  for (const [pattern, replacement] of NORMALIZATIONS) {
+  for (const [pattern, replacement] of COMPANY_NORMALIZATIONS) {
     normalized = normalized.replace(pattern, replacement);
   }
 
@@ -58,30 +36,6 @@ function parseIdentity(raw: string): Field<CompanyIdentity> {
 
   return { raw, value: { orgType, name } };
 }
-
-const INVALID_MANAGERS = new Set([
-  "1",
-  "2",
-  "нет",
-  "Сдан",
-  "Сдан в архив",
-  "выемка",
-  "передв.",
-  "ФГП \"Национальная компания \"Кыргызтемир-жолу\"",
-  "Учреждение №16 ГУИН Минюста КР",
-  "АО \"Кызыл-Киякомур\"",
-  "ОсОО \"FORESIGHT GROUP\"",
-  "ОАО \"Таш-Темир\"",
-]);
-
-const MANAGER_PREFIX_STRIP = [
-  /^гр\.\s*(КР|РК|КНР)\.?\s*/i,
-  /^гр\.\s*/i,
-  /^(КР|РК|КНР)\s+/i,
-  /^др\.\s*/i,
-  /^(рук\.?|Генеральный директор|Второй секретарь|Первый секретарь|Ген\.?директор|Председатель Совета Попечителей|директор|зам\.? директора|руководитель|главный инженер|начальник)\.?\s*/i,
-  /^Председатель Совета Попечителей\s+\S+\s+др\.\s*/i,
-];
 
 function cleanManager(value: string): string {
   for (const pattern of MANAGER_PREFIX_STRIP) {
@@ -111,7 +65,6 @@ function cleanManager(value: string): string {
   }
 
   // Точка в конце полного ФИО (не инициалы): "Иванов Иван Иванович." → "Иванов Иван Иванович"
-  // Также "Кравченко Богдан." → "Кравченко Богдан"
   const fullNamWithDot = value.match(/^[А-ЯЁ][а-яё]+(\s+[А-ЯЁ][а-яё]+)+\.$/);
   if (fullNamWithDot) {
     value = value.slice(0, -1);

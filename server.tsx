@@ -7,6 +7,7 @@ import { LicensePage } from "@web/components/LicensePage";
 import { MapPage } from "@web/components/MapPage";
 import { licenses, byId, filterOptions, PAGE_SIZE } from "@web/data";
 import { parseFilters, applyFilters, filtersToQs } from "@web/filters";
+import { toGeoJsonFeatures } from "@web/geojson";
 
 await Bun.build({
   entrypoints: ["./web/map.ts"],
@@ -23,28 +24,6 @@ const MAP_HEAD = (
     <script src="/public/map.js" defer />
   </>
 ) as JSX.Element;
-
-function toGeoJsonFeatures(filtered: typeof licenses) {
-  return filtered
-    .filter((l) => l.polygon.value.length >= 3)
-    .map((l) => {
-      const coords = l.polygon.value.map(([lat, lon]) => [lon, lat]);
-      const first = coords[0]!;
-      const last = coords.at(-1)!;
-      if (first[0] !== last[0] || first[1] !== last[1]) coords.push(first);
-      return {
-        type: "Feature",
-        geometry: { type: "Polygon", coordinates: [coords] },
-        properties: {
-          id: l.id.value,
-          licenseNumber: l.licenseNumber.value,
-          objectName: l.objectName.value,
-          mineralGroup: l.minerals.value[0]?.group ?? "прочее",
-          isAnnulled: l.status.value.isAnnulled,
-        },
-      };
-    });
-}
 
 new Elysia()
   .use(html())
@@ -113,5 +92,12 @@ new Elysia()
         <LicensePage license={license} />
       </Layout>
     );
+  })
+  .get("/api/license/:id/fragment", ({ params }) => {
+    const license = byId.get(params.id);
+    if (!license) return new Response("Not found", { status: 404 });
+    return new Response(String(<LicensePage license={license} hideBackLink />), {
+      headers: { "Content-Type": "text/html" },
+    });
   })
   .listen(3000, () => console.log("http://localhost:3000"));

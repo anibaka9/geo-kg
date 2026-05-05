@@ -3,6 +3,7 @@ import type {
   FilterOptions,
   MineralTypeOption,
 } from "@web/filters";
+import { MINERAL_GROUPS } from "@shared/minerals";
 
 export type { ActiveFilters, FilterOptions };
 
@@ -52,7 +53,7 @@ function CheckRow({
         name={name}
         value={value}
         checked={checked || undefined}
-        onchange="this.closest('form').submit()"
+        onchange="this.closest('form').requestSubmit()"
         class="h-3.5 w-3.5 shrink-0 rounded border-border accent-primary"
       />
       <span class="flex-1 text-sm text-foreground truncate" title={label}>
@@ -63,21 +64,15 @@ function CheckRow({
   );
 }
 
-const MINERAL_GROUP_ORDER = [
-  "металлы",
-  "топливо",
-  "строительные материалы",
-  "минералы",
-  "вода",
-  "прочее",
-];
 
 export function FilterPanel({
   filters,
   options,
+  action = "/",
 }: {
   filters: ActiveFilters;
   options: FilterOptions;
+  action?: string;
 }) {
   const totalActive =
     (filters.q ? 1 : 0) +
@@ -95,10 +90,10 @@ export function FilterPanel({
     if (!mineralByGroup.has(mt.group)) mineralByGroup.set(mt.group, []);
     mineralByGroup.get(mt.group)!.push(mt);
   }
-  const sortedGroups = MINERAL_GROUP_ORDER.filter((g) => mineralByGroup.has(g));
+  const sortedGroups = MINERAL_GROUPS.filter((g) => mineralByGroup.has(g));
 
   return (
-    <form method="GET" action="/">
+    <form method="GET" action={action}>
       <div class="rounded-lg border border-border bg-card text-card-foreground shadow-sm overflow-hidden">
         <div class="flex items-center justify-between px-4 py-3 border-b border-border">
           <span class="text-sm font-semibold text-foreground">
@@ -111,7 +106,7 @@ export function FilterPanel({
           </span>
           {totalActive > 0 && (
             <a
-              href="/"
+              href={action}
               class="text-xs text-muted-foreground hover:text-foreground transition-colors"
             >
               Сбросить
@@ -143,7 +138,7 @@ export function FilterPanel({
                 name="status"
                 value={value}
                 checked={filters.status === value || undefined}
-                onchange="this.closest('form').submit()"
+                onchange="this.closest('form').requestSubmit()"
                 class="h-3.5 w-3.5 shrink-0 border-border accent-primary"
               />
               <span class="text-sm text-foreground">{label}</span>

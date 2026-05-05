@@ -1,5 +1,5 @@
 import type { Field, MineralEntry } from "@shared/types";
-import { MINERAL_MAP, EXPAND_MAP } from "../overrides/minerals";
+import { MINERAL_MAP, EXPAND_MAP } from "../data/minerals";
 
 const NORMALIZATIONS: [RegExp, string][] = [
   [/\s{2,}/g, " "],
