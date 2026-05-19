@@ -60,7 +60,7 @@ new Elysia()
     const sp = new URL(request.url).searchParams;
     const filters = parseFilters(sp);
     const filtered = applyFilters(licenses, filters);
-    const withCoords = filtered.filter((l) => l.polygon.value.length >= 3).length;
+    const withCoords = filtered.filter((l) => l.polygon.value.length >= 1).length;
     const qs = filtersToQs(sp);
 
     return (
