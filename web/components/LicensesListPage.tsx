@@ -31,12 +31,12 @@ export function LicensesListPage({
   qs,
 }: Props) {
   return (
-    <div class="flex gap-6 items-start">
-      <aside class="w-60 shrink-0 sticky top-6 max-h-[calc(100vh-3rem)] overflow-y-auto">
+    <div class="flex gap-6 h-full">
+      <aside class="w-60 h-full shrink-0 overflow-y-auto rounded-lg border border-border bg-card shadow-sm">
         <FilterPanel filters={filters} options={filterOptions} />
       </aside>
-      <div class="flex-1 min-w-0">
-        <div class="mb-4 flex items-start justify-between gap-4">
+      <div class="flex-1 h-full min-w-0 flex flex-col">
+        <div class="mb-4 flex items-start justify-between gap-4 shrink-0">
           <div>
             <h1 class="text-2xl font-semibold tracking-tight text-foreground">
               Лицензии
@@ -49,7 +49,9 @@ export function LicensesListPage({
           </div>
           <NavTabs active="table" qs={qs} />
         </div>
-        <LicensesTable items={items} offset={offset} />
+        <div class="flex-1 overflow-y-auto min-h-0 rounded-lg border border-border">
+          <LicensesTable items={items} offset={offset} />
+        </div>
         <Pagination
           page={page}
           totalPages={totalPages}

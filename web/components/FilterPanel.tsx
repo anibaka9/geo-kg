@@ -94,7 +94,6 @@ export function FilterPanel({
 
   return (
     <form method="GET" action={action}>
-      <div class="rounded-lg border border-border bg-card text-card-foreground shadow-sm overflow-hidden">
         <div class="flex items-center justify-between px-4 py-3 border-b border-border">
           <span class="text-sm font-semibold text-foreground">
             Фильтры
@@ -250,7 +249,6 @@ export function FilterPanel({
             Применить
           </button>
         </Section>
-      </div>
     </form>
   );
 }

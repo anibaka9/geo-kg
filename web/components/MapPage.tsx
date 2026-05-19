@@ -12,7 +12,7 @@ interface Props {
 export function MapPage({ filters, filterOptions, total, qs }: Props) {
   return (
     <div class="flex gap-6 h-[calc(100vh-5rem)]">
-      <aside class="w-60 shrink-0 overflow-y-auto">
+      <aside class="w-60 shrink-0 overflow-y-auto rounded-lg border border-border bg-card shadow-sm">
         <FilterPanel filters={filters} options={filterOptions} action="/map" />
       </aside>
       <div class="flex-1 flex flex-col min-w-0 gap-3">
