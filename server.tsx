@@ -27,9 +27,9 @@ await Bun.build({
 
 const MAP_HEAD = (
   <>
-    <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@5/dist/maplibre-gl.css" />
-    <script src="https://unpkg.com/maplibre-gl@5/dist/maplibre-gl.js" />
-    <script src="/public/map.js" defer />
+    <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@5/dist/maplibre-gl.css" data-turbo-track="reload" />
+    <script src="https://unpkg.com/maplibre-gl@5/dist/maplibre-gl.js" data-turbo-track="reload" />
+    <script src="/public/map.js" defer data-turbo-track="reload" />
   </>
 ) as JSX.Element;
 
