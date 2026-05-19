@@ -24,6 +24,7 @@ export function Layout({
           rel="stylesheet"
         />
         <link rel="stylesheet" href="/public/output.css" />
+        <script type="module" src="/public/turbo.js" />
         {headExtra}
       </head>
       <body class="bg-background text-foreground h-screen overflow-hidden">

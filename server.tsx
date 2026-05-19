@@ -17,6 +17,14 @@ await Bun.build({
   minify: true,
 });
 
+await Bun.build({
+  entrypoints: ["./node_modules/@hotwired/turbo/dist/turbo.es2017-esm.js"],
+  outdir: "./public",
+  target: "browser",
+  naming: "turbo.js",
+  minify: true,
+});
+
 const MAP_HEAD = (
   <>
     <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@5/dist/maplibre-gl.css" />

@@ -7,6 +7,7 @@
       "dependencies": {
         "@elysiajs/html": "^1.4.0",
         "@elysiajs/static": "^1.4.9",
+        "@hotwired/turbo": "^8.0.23",
         "elysia": "^1.4.28",
         "papaparse": "^5.5.3",
         "proj4": "^2.20.8",
@@ -29,6 +30,8 @@
     "@elysiajs/html": ["@elysiajs/html@1.4.0", "", { "dependencies": { "@kitajs/html": "^4.1.0", "@kitajs/ts-html-plugin": "^4.0.1" }, "peerDependencies": { "elysia": ">= 1.4.0" } }, "sha512-j4jFqGEkIC8Rg2XiTOujb9s0WLnz1dnY/4uqczyCdOVruDeJtGP+6+GvF0A76SxEvltn8UR1yCUnRdLqRi3vuw=="],
 
     "@elysiajs/static": ["@elysiajs/static@1.4.9", "", { "peerDependencies": { "elysia": ">= 1.4.0" } }, "sha512-b4niBOvl1daqkBqQEStugUfYL0/LaEJHywAzH9Wxhv2tc6d0H6PmwOKl9jEpzhj2PDsG4iJ1kyqDNCKG0Pl36A=="],
+
+    "@hotwired/turbo": ["@hotwired/turbo@8.0.23", "", {}, "sha512-GZ7cijxEZ6Ig71u7rD6LHaRv/wcE/hNsc+nEfiWOkLNqUgLOwo5MNGWOy5ZV9ZUDSiQx1no7YxjTNnT4O6//cQ=="],
 
     "@jridgewell/gen-mapping": ["@jridgewell/gen-mapping@0.3.13", "", { "dependencies": { "@jridgewell/sourcemap-codec": "^1.5.0", "@jridgewell/trace-mapping": "^0.3.24" } }, "sha512-2kkt/7niJ6MgEPxF0bYdQ6etZaA+fQvDcLKckhy1yIQOzaoKjBBjSj63/aLVjYE3qhRt5dvM+uUyfCg6UKCBbA=="],
 

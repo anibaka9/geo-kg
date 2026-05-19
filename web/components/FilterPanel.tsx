@@ -93,24 +93,30 @@ export function FilterPanel({
   const sortedGroups = MINERAL_GROUPS.filter((g) => mineralByGroup.has(g));
 
   return (
-    <form method="GET" action={action}>
+    <form method="GET" action={action} data-turbo-frame="results">
         <div class="flex items-center justify-between px-4 py-3 border-b border-border">
-          <span class="text-sm font-semibold text-foreground">
+          <span class="text-sm font-semibold text-foreground flex items-center gap-1.5">
             Фильтры
             {totalActive > 0 && (
-              <span class="ml-1.5 bg-primary text-primary-foreground rounded-full text-xs px-1.5 py-0.5">
-                {totalActive}
-              </span>
+              <>
+                <span class="bg-primary text-primary-foreground rounded-full text-xs px-1.5 py-0.5">
+                  {totalActive}
+                </span>
+                <a
+                  href={action}
+                  class="font-normal text-xs text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  Сбросить
+                </a>
+              </>
             )}
           </span>
-          {totalActive > 0 && (
-            <a
-              href={action}
-              class="text-xs text-muted-foreground hover:text-foreground transition-colors"
-            >
-              Сбросить
-            </a>
-          )}
+          <button
+            type="submit"
+            class="text-xs rounded-md border border-border bg-background px-2 py-1 text-foreground hover:bg-accent transition-colors shrink-0"
+          >
+            Применить
+          </button>
         </div>
 
         <div class="px-4 py-3 border-b border-border">

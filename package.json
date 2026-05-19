@@ -21,6 +21,7 @@
   "dependencies": {
     "@elysiajs/html": "^1.4.0",
     "@elysiajs/static": "^1.4.9",
+    "@hotwired/turbo": "^8.0.23",
     "elysia": "^1.4.28",
     "papaparse": "^5.5.3",
     "proj4": "^2.20.8"

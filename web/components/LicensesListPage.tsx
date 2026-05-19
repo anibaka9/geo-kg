@@ -35,7 +35,7 @@ export function LicensesListPage({
       <aside class="w-60 h-full shrink-0 overflow-y-auto rounded-lg border border-border bg-card shadow-sm">
         <FilterPanel filters={filters} options={filterOptions} />
       </aside>
-      <div class="flex-1 h-full min-w-0 flex flex-col">
+      <turbo-frame id="results" data-turbo-action="advance" class="flex-1 h-full min-w-0 flex flex-col">
         <div class="mb-4 flex items-start justify-between gap-4 shrink-0">
           <div>
             <h1 class="text-2xl font-semibold tracking-tight text-foreground">
@@ -59,7 +59,7 @@ export function LicensesListPage({
           pageSize={pageSize}
           qs={qs}
         />
-      </div>
+      </turbo-frame>
     </div>
   );
 }
