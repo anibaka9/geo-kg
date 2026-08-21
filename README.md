@@ -190,6 +190,16 @@ This allows showing original data alongside normalized values in the UI — crit
 | `GET /api/features.geojson`     | GeoJSON FeatureCollection (supports same filters as `/`) |
 | `GET /api/license/:id/fragment` | HTML fragment for map popup panel                        |
 
+## Testing
+
+```bash
+bun test              # Run all 170 tests
+
+bun run check         # Full check: types + lint + tests
+```
+
+Tests use `bun:test` (built into Bun runtime). No external test library needed.
+
 ## License
 
 MIT

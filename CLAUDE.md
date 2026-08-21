@@ -14,6 +14,8 @@
 | `bun run lint:fix`     | Линтер с автофиксом — `oxlint --fix`                                   |
 | `bun run format`       | Форматтер — `oxfmt --write .`                                          |
 | `bun run format:check` | Проверить форматирование — `oxfmt --check .`                           |
+| `bun test`             | Запустить все тесты — 170 тестов в 22 файлах                           |
+| `bun run check`        | Полная проверка: типы + линт + тесты                                    |
 
 ## Суть проекта
 
@@ -137,9 +139,27 @@ type Field<V, R = string> = { raw: R; value: V };
 - **Имена**: camelCase для переменных/функций, PascalCase для компонентов/типов.
 - **noUncheckedIndexedAccess**: включён в tsconfig. Обращаться к массивам через `[0]!` или проверять.
 
-## Нет тестов
+## Тесты
 
-В проекте нет тестов. Если добавляешь новую логику в парсеры или фильтры — стоит написать тесты через `bun test`.
+170 тестов в 22 файлах. Используется `bun:test` (встроенный в Bun). Запуск: `bun test`.
+
+```
+parser/__tests__/csv.test.ts       — licenseKey, getCol
+parser/__tests__/normalize.test.ts — сквозная нормализация RawLicense → License
+parser/parsers/__tests__/
+  area.test.ts, inn.test.ts, phone.test.ts,
+  address.test.ts, ayilAymak.test.ts, founders.test.ts,
+  licenseValidity.test.ts, passthrough.test.ts,
+  workType.test.ts, district.test.ts, location.test.ts,
+  country.test.ts, status.test.ts, beneficiaries.test.ts,
+  minerals.test.ts, company.test.ts, region.test.ts,
+  coords.test.ts
+web/__tests__/
+  filters.test.ts         — parseFilters, applyFilters, filtersToQs, buildFilterOptions
+  geojson.test.ts         — License → GeoJSON Feature
+```
+
+При добавлении нового парсера или фильтра — обязательно добавить тесты в соответствующий `__tests__/` файл.
 
 ## Карта
 
