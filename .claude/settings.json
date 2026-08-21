@@ -5,10 +5,10 @@
       "Edit(/.oxfmtrc.json)",
       "Edit(/lefthook.yml)",
       "Edit(/tsconfig.json)",
-      "Write(/public/map.js)",
-      "Write(/public/turbo.js)",
-      "Write(/public/output.css)",
-      "Write(/output/licenses.json)"
+      "Edit(/public/map.js)",
+      "Edit(/public/turbo.js)",
+      "Edit(/public/output.css)",
+      "Edit(/output/licenses.json)"
     ]
   },
   "hooks": {

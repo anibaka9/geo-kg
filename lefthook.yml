@@ -2,7 +2,7 @@ pre-commit:
   parallel: true
   commands:
     lint:
-      glob: "*.{ts,tsx,js,json}"
+      glob: "*.{ts,tsx,js}"
       run: bunx oxlint {staged_files}
     format:
       glob: "*.{ts,tsx,js,json,md,yml,yaml}"
