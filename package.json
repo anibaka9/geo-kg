@@ -4,9 +4,12 @@
   "private": true,
   "scripts": {
     "dev:server": "bun --hot server.tsx",
+    "predev:server": "bun run build:css",
     "dev:css": "bunx @tailwindcss/cli -i ./web/input.css -o ./public/output.css --watch",
+    "dev": "bun run build:css && bun --hot server.tsx",
     "build:css": "bunx @tailwindcss/cli -i ./web/input.css -o ./public/output.css --minify",
-    "parse": "bun parser/parse.ts"
+    "parse": "bun parser/parse.ts",
+    "typecheck": "bunx tsc --noEmit"
   },
   "devDependencies": {
     "@tailwindcss/cli": "^4.2.4",

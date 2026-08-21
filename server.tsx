@@ -28,8 +28,8 @@ await Bun.build({
 const MAP_HEAD = (
   <>
     <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@5/dist/maplibre-gl.css" data-turbo-track="reload" />
-    <script src="https://unpkg.com/maplibre-gl@5/dist/maplibre-gl.js" data-turbo-track="reload" />
-    <script src="/public/map.js" defer data-turbo-track="reload" />
+    <script src="https://unpkg.com/maplibre-gl@5/dist/maplibre-gl.js" data-turbo-track="reload"></script>
+    <script src="/public/map.js" defer data-turbo-track="reload"></script>
   </>
 ) as JSX.Element;
 
@@ -93,7 +93,7 @@ new Elysia()
   .get("/license/:id", ({ params }) => {
     const license = byId.get(params.id);
     if (!license) {
-      return new Response("Лицензия не найдена", { status: 404 });
+      return new Response("Лицензия не найдена", { status: 404, headers: { "Content-Type": "text/html; charset=utf-8" } });
     }
     return (
       <Layout title={`${license.objectName.value} — Лицензии КР`}>
@@ -103,9 +103,11 @@ new Elysia()
   })
   .get("/api/license/:id/fragment", ({ params }) => {
     const license = byId.get(params.id);
-    if (!license) return new Response("Not found", { status: 404 });
+    if (!license) return new Response("Not found", { status: 404, headers: { "Content-Type": "text/html; charset=utf-8" } });
     return new Response(String(<LicensePage license={license} hideBackLink />), {
       headers: { "Content-Type": "text/html" },
     });
   })
-  .listen(3000, () => console.log("http://localhost:3000"));
+  .listen(Number(process.env.PORT) || 3000, ({ hostname, port }) =>
+    console.log(`http://${hostname}:${port}`),
+  );

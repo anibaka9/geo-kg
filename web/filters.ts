@@ -57,14 +57,14 @@ export function buildFilterOptions(all: License[]): FilterOptions {
   const toArr = (map: Map<string, number>): FilterOption[] =>
     [...map.entries()]
       .map(([value, count]) => ({ value, count }))
-      .sort((a, b) => b.count - a.count);
+      .sort((a, b) => b.count - a.count || a.value.localeCompare(b.value));
 
   return {
     regions: toArr(regionCounts),
     workTypes: toArr(workTypeCounts),
     mineralTypes: [...mineralTypeCounts.entries()]
       .map(([value, { count, group }]) => ({ value, count, group }))
-      .sort((a, b) => b.count - a.count),
+      .sort((a, b) => b.count - a.count || a.value.localeCompare(b.value)),
     countries: toArr(countryCounts),
     years: toArr(yearCounts),
   };
@@ -105,9 +105,11 @@ export function applyFilters(all: License[], f: ActiveFilters): License[] {
     if (f.countries.length && !l.company.country.value.some((c) => f.countries.includes(c)))
       return false;
     if (f.years.length && !f.years.includes(String(l.sourceYear))) return false;
-    if (f.areaMin !== "" && (l.areaHa.value === null || l.areaHa.value < Number(f.areaMin)))
+    const areaMin = Number(f.areaMin);
+    const areaMax = Number(f.areaMax);
+    if (f.areaMin !== "" && (isNaN(areaMin) || l.areaHa.value === null || l.areaHa.value < areaMin))
       return false;
-    if (f.areaMax !== "" && (l.areaHa.value === null || l.areaHa.value > Number(f.areaMax)))
+    if (f.areaMax !== "" && (isNaN(areaMax) || l.areaHa.value === null || l.areaHa.value > areaMax))
       return false;
     return true;
   });

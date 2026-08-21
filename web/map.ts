@@ -130,8 +130,13 @@ map.on("load", () => {
   function clickLicense(e: any) {
     const p = e.features[0].properties;
     fetch(`/api/license/${p.id}/fragment`)
-      .then((r) => r.text())
-      .then(openPanel);
+      .then((r) => (r.ok ? r.text() : Promise.reject(new Error(r.statusText))))
+      .then(openPanel)
+      .catch(() => {
+        panelContent.innerHTML =
+          '<div class="text-red-600 p-4">Ошибка загрузки. Попробуйте позже.</div>';
+        openPanel("");
+      });
   }
 
   map.on("click", "license-fill", clickLicense);

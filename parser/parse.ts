@@ -14,10 +14,7 @@ const raw2026 = loadRaw(join(ROOT, "data/2026.csv"), 2026);
 const rawByKey = new Map(raw2025.map((r) => [licenseKey(r.licenseNumber), r]));
 for (const r of raw2026) rawByKey.set(licenseKey(r.licenseNumber), r);
 
-const output = [...rawByKey.values()].map(normalize).map((l, i) => ({
-  ...l,
-  id: { raw: l.id.raw, value: String(i + 1) },
-}));
+const output = [...rawByKey.values()].map(normalize);
 
 const withCoords = output.filter((l) => l.polygon.value.length > 0).length;
 console.log(`Total licenses: ${output.length}`);
