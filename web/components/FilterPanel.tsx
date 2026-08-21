@@ -88,7 +88,7 @@ export function FilterPanel({
   const sortedGroups = MINERAL_GROUPS.filter((g) => mineralByGroup.has(g));
 
   return (
-    <form method="GET" action={action} data-turbo-frame="results">
+    <form method="GET" action={action} data-turbo-frame="results" aria-label="Фильтры">
       <div class="flex items-center justify-between px-4 py-3 border-b border-border">
         <span class="text-sm font-semibold text-foreground flex items-center gap-1.5">
           Фильтры
@@ -115,7 +115,11 @@ export function FilterPanel({
       </div>
 
       <div class="px-4 py-3 border-b border-border">
+        <label class="sr-only" for="search-input">
+          Поиск
+        </label>
         <input
+          id="search-input"
           type="text"
           name="q"
           value={filters.q}

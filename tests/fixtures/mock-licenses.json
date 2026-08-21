@@ -1,0 +1,3235 @@
+[
+  {
+    "id": {
+      "raw": "1",
+      "value": "1"
+    },
+    "licenseNumber": {
+      "raw": "НМ 100-02",
+      "value": "НМ 100-02"
+    },
+    "objectName": {
+      "raw": "скв 100",
+      "value": "скв 100"
+    },
+    "company": {
+      "identity": {
+        "raw": "ОсОО Золотые недра",
+        "value": {
+          "orgType": "ОсОО",
+          "name": "Золотые недра"
+        }
+      },
+      "inn": {
+        "raw": "",
+        "value": ""
+      },
+      "manager": {
+        "raw": "Иванов И.И.",
+        "value": "Иванов И.И."
+      },
+      "phone": {
+        "raw": "0555123456",
+        "value": [
+          "0555123456"
+        ]
+      },
+      "country": {
+        "raw": "Кыргызстан",
+        "value": [
+          "Кыргызстан"
+        ]
+      },
+      "address": {
+        "raw": "г. Бишкек",
+        "value": "г. Бишкек"
+      },
+      "founders": {
+        "raw": "Иванов - 100%",
+        "value": "Иванов - 100%"
+      }
+    },
+    "region": {
+      "raw": "Баткенская область",
+      "value": "Баткенская область"
+    },
+    "district": {
+      "raw": "Баткенскаяский район",
+      "value": "Баткенскаяский район"
+    },
+    "ayilAymak": {
+      "raw": "",
+      "value": ""
+    },
+    "licenseValidity": {
+      "raw": "с 01.01.2020 по 31.12.2025",
+      "value": "с 01.01.2020 по 31.12.2025"
+    },
+    "minerals": {
+      "raw": "золото",
+      "value": [
+        {
+          "name": "золото",
+          "type": "благородные металлы",
+          "group": "металлы"
+        }
+      ]
+    },
+    "workType": {
+      "raw": "поисково-оценочные работы",
+      "value": [
+        "поисково-оценочные работы"
+      ]
+    },
+    "areaHa": {
+      "raw": "10",
+      "value": 10
+    },
+    "status": {
+      "raw": "Аннулирована",
+      "value": {
+        "code": null,
+        "mineralType": null,
+        "workStage": null,
+        "isAnnulled": true,
+        "protocol": "328",
+        "protocolDate": "23.06.17"
+      }
+    },
+    "polygon": {
+      "raw": "",
+      "value": [
+        [
+          42.5,
+          74.5
+        ]
+      ]
+    },
+    "beneficiaries": {
+      "raw": "",
+      "value": []
+    },
+    "notes": {
+      "raw": "",
+      "value": ""
+    },
+    "sourceYear": 2025
+  },
+  {
+    "id": {
+      "raw": "2",
+      "value": "2"
+    },
+    "licenseNumber": {
+      "raw": "НМ 101-02",
+      "value": "НМ 101-02"
+    },
+    "objectName": {
+      "raw": "Месторождение №2",
+      "value": "Месторождение №2"
+    },
+    "company": {
+      "identity": {
+        "raw": "АО Горная компания",
+        "value": {
+          "orgType": "АО",
+          "name": "Горная компания"
+        }
+      },
+      "inn": {
+        "raw": "",
+        "value": ""
+      },
+      "manager": {
+        "raw": "Иванов И.И.",
+        "value": "Иванов И.И."
+      },
+      "phone": {
+        "raw": "0555123456",
+        "value": [
+          "0555123456"
+        ]
+      },
+      "country": {
+        "raw": "Китай",
+        "value": [
+          "Китай"
+        ]
+      },
+      "address": {
+        "raw": "г. Бишкек",
+        "value": "г. Бишкек"
+      },
+      "founders": {
+        "raw": "Иванов - 100%",
+        "value": "Иванов - 100%"
+      }
+    },
+    "region": {
+      "raw": "Чуйская область",
+      "value": "Чуйская область"
+    },
+    "district": {
+      "raw": "Чуйскаяский район",
+      "value": "Чуйскаяский район"
+    },
+    "ayilAymak": {
+      "raw": "",
+      "value": ""
+    },
+    "licenseValidity": {
+      "raw": "с 01.01.2020 по 31.12.2025",
+      "value": "с 01.01.2020 по 31.12.2025"
+    },
+    "minerals": {
+      "raw": "медь",
+      "value": [
+        {
+          "name": "медь",
+          "type": "цветные металлы",
+          "group": "металлы"
+        }
+      ]
+    },
+    "workType": {
+      "raw": "разведочные работы",
+      "value": [
+        "разведочные работы"
+      ]
+    },
+    "areaHa": {
+      "raw": "20",
+      "value": 20
+    },
+    "status": {
+      "raw": "ВЕ",
+      "value": {
+        "code": "ВЕ",
+        "mineralType": null,
+        "workStage": null,
+        "isAnnulled": false,
+        "protocol": null,
+        "protocolDate": null
+      }
+    },
+    "polygon": {
+      "raw": "",
+      "value": [
+        [
+          42.51,
+          74.51
+        ]
+      ]
+    },
+    "beneficiaries": {
+      "raw": "",
+      "value": []
+    },
+    "notes": {
+      "raw": "",
+      "value": ""
+    },
+    "sourceYear": 2026
+  },
+  {
+    "id": {
+      "raw": "3",
+      "value": "3"
+    },
+    "licenseNumber": {
+      "raw": "НМ 102-02",
+      "value": "НМ 102-02"
+    },
+    "objectName": {
+      "raw": "Месторождение №3",
+      "value": "Месторождение №3"
+    },
+    "company": {
+      "identity": {
+        "raw": "ИП Золотые недра",
+        "value": {
+          "orgType": "ИП",
+          "name": "Золотые недра"
+        }
+      },
+      "inn": {
+        "raw": "",
+        "value": ""
+      },
+      "manager": {
+        "raw": "Иванов И.И.",
+        "value": "Иванов И.И."
+      },
+      "phone": {
+        "raw": "0555123456",
+        "value": [
+          "0555123456"
+        ]
+      },
+      "country": {
+        "raw": "Россия",
+        "value": [
+          "Россия"
+        ]
+      },
+      "address": {
+        "raw": "г. Бишкек",
+        "value": "г. Бишкек"
+      },
+      "founders": {
+        "raw": "Иванов - 100%",
+        "value": "Иванов - 100%"
+      }
+    },
+    "region": {
+      "raw": "Чуйская область",
+      "value": "Чуйская область"
+    },
+    "district": {
+      "raw": "Чуйскаяский район",
+      "value": "Чуйскаяский район"
+    },
+    "ayilAymak": {
+      "raw": "",
+      "value": ""
+    },
+    "licenseValidity": {
+      "raw": "с 01.01.2020 по 31.12.2025",
+      "value": "с 01.01.2020 по 31.12.2025"
+    },
+    "minerals": {
+      "raw": "уголь",
+      "value": [
+        {
+          "name": "уголь",
+          "type": "каменный уголь",
+          "group": "топливо"
+        }
+      ]
+    },
+    "workType": {
+      "raw": "эксплуатационные работы",
+      "value": [
+        "эксплуатационные работы"
+      ]
+    },
+    "areaHa": {
+      "raw": "30",
+      "value": 30
+    },
+    "status": {
+      "raw": "ВЕ",
+      "value": {
+        "code": "ВЕ",
+        "mineralType": null,
+        "workStage": null,
+        "isAnnulled": false,
+        "protocol": null,
+        "protocolDate": null
+      }
+    },
+    "polygon": {
+      "raw": "",
+      "value": [
+        [
+          42.52,
+          74.52
+        ]
+      ]
+    },
+    "beneficiaries": {
+      "raw": "",
+      "value": []
+    },
+    "notes": {
+      "raw": "",
+      "value": ""
+    },
+    "sourceYear": 2025
+  },
+  {
+    "id": {
+      "raw": "4",
+      "value": "4"
+    },
+    "licenseNumber": {
+      "raw": "НМ 103-02",
+      "value": "НМ 103-02"
+    },
+    "objectName": {
+      "raw": "Месторождение №4",
+      "value": "Месторождение №4"
+    },
+    "company": {
+      "identity": {
+        "raw": "ОсОО Каменный карьер",
+        "value": {
+          "orgType": "ОсОО",
+          "name": "Каменный карьер"
+        }
+      },
+      "inn": {
+        "raw": "",
+        "value": ""
+      },
+      "manager": {
+        "raw": "Иванов И.И.",
+        "value": "Иванов И.И."
+      },
+      "phone": {
+        "raw": "0555123456",
+        "value": [
+          "0555123456"
+        ]
+      },
+      "country": {
+        "raw": "Казахстан",
+        "value": [
+          "Казахстан"
+        ]
+      },
+      "address": {
+        "raw": "г. Бишкек",
+        "value": "г. Бишкек"
+      },
+      "founders": {
+        "raw": "Иванов - 100%",
+        "value": "Иванов - 100%"
+      }
+    },
+    "region": {
+      "raw": "Чуйская область",
+      "value": "Чуйская область"
+    },
+    "district": {
+      "raw": "Чуйскаяский район",
+      "value": "Чуйскаяский район"
+    },
+    "ayilAymak": {
+      "raw": "",
+      "value": ""
+    },
+    "licenseValidity": {
+      "raw": "с 01.01.2020 по 31.12.2025",
+      "value": "с 01.01.2020 по 31.12.2025"
+    },
+    "minerals": {
+      "raw": "песок",
+      "value": [
+        {
+          "name": "песок",
+          "type": "строительный песок",
+          "group": "строительные материалы"
+        }
+      ]
+    },
+    "workType": {
+      "raw": "поисково-оценочные работы, разведочные работы",
+      "value": [
+        "поисково-оценочные работы",
+        "разведочные работы"
+      ]
+    },
+    "areaHa": {
+      "raw": "40",
+      "value": 40
+    },
+    "status": {
+      "raw": "ВЕ",
+      "value": {
+        "code": "ВЕ",
+        "mineralType": null,
+        "workStage": null,
+        "isAnnulled": false,
+        "protocol": null,
+        "protocolDate": null
+      }
+    },
+    "polygon": {
+      "raw": "",
+      "value": [
+        [
+          42.53,
+          74.53
+        ]
+      ]
+    },
+    "beneficiaries": {
+      "raw": "",
+      "value": []
+    },
+    "notes": {
+      "raw": "",
+      "value": ""
+    },
+    "sourceYear": 2026
+  },
+  {
+    "id": {
+      "raw": "5",
+      "value": "5"
+    },
+    "licenseNumber": {
+      "raw": "НМ 104-02",
+      "value": "НМ 104-02"
+    },
+    "objectName": {
+      "raw": "Месторождение №5",
+      "value": "Месторождение №5"
+    },
+    "company": {
+      "identity": {
+        "raw": "АО Водный ресурс",
+        "value": {
+          "orgType": "АО",
+          "name": "Водный ресурс"
+        }
+      },
+      "inn": {
+        "raw": "",
+        "value": ""
+      },
+      "manager": {
+        "raw": "Иванов И.И.",
+        "value": "Иванов И.И."
+      },
+      "phone": {
+        "raw": "0555123456",
+        "value": [
+          "0555123456"
+        ]
+      },
+      "country": {
+        "raw": "Кыргызстан",
+        "value": [
+          "Кыргызстан"
+        ]
+      },
+      "address": {
+        "raw": "г. Бишкек",
+        "value": "г. Бишкек"
+      },
+      "founders": {
+        "raw": "Иванов - 100%",
+        "value": "Иванов - 100%"
+      }
+    },
+    "region": {
+      "raw": "Чуйская область",
+      "value": "Чуйская область"
+    },
+    "district": {
+      "raw": "Чуйскаяский район",
+      "value": "Чуйскаяский район"
+    },
+    "ayilAymak": {
+      "raw": "",
+      "value": ""
+    },
+    "licenseValidity": {
+      "raw": "с 01.01.2020 по 31.12.2025",
+      "value": "с 01.01.2020 по 31.12.2025"
+    },
+    "minerals": {
+      "raw": "подземные воды",
+      "value": [
+        {
+          "name": "подземные воды",
+          "type": "подземные воды",
+          "group": "вода"
+        }
+      ]
+    },
+    "workType": {
+      "raw": "поисково-оценочные работы",
+      "value": [
+        "поисково-оценочные работы"
+      ]
+    },
+    "areaHa": {
+      "raw": "50",
+      "value": 50
+    },
+    "status": {
+      "raw": "ВЕ",
+      "value": {
+        "code": "ВЕ",
+        "mineralType": null,
+        "workStage": null,
+        "isAnnulled": false,
+        "protocol": null,
+        "protocolDate": null
+      }
+    },
+    "polygon": {
+      "raw": "",
+      "value": [
+        [
+          42.54,
+          74.54
+        ]
+      ]
+    },
+    "beneficiaries": {
+      "raw": "",
+      "value": []
+    },
+    "notes": {
+      "raw": "",
+      "value": ""
+    },
+    "sourceYear": 2025
+  },
+  {
+    "id": {
+      "raw": "6",
+      "value": "6"
+    },
+    "licenseNumber": {
+      "raw": "НМ 105-02",
+      "value": "НМ 105-02"
+    },
+    "objectName": {
+      "raw": "Месторождение №6",
+      "value": "Месторождение №6"
+    },
+    "company": {
+      "identity": {
+        "raw": "ИП Медный рудник",
+        "value": {
+          "orgType": "ИП",
+          "name": "Медный рудник"
+        }
+      },
+      "inn": {
+        "raw": "",
+        "value": ""
+      },
+      "manager": {
+        "raw": "Иванов И.И.",
+        "value": "Иванов И.И."
+      },
+      "phone": {
+        "raw": "0555123456",
+        "value": [
+          "0555123456"
+        ]
+      },
+      "country": {
+        "raw": "Китай",
+        "value": [
+          "Китай"
+        ]
+      },
+      "address": {
+        "raw": "г. Бишкек",
+        "value": "г. Бишкек"
+      },
+      "founders": {
+        "raw": "Иванов - 100%",
+        "value": "Иванов - 100%"
+      }
+    },
+    "region": {
+      "raw": "Чуйская область",
+      "value": "Чуйская область"
+    },
+    "district": {
+      "raw": "Чуйскаяский район",
+      "value": "Чуйскаяский район"
+    },
+    "ayilAymak": {
+      "raw": "",
+      "value": ""
+    },
+    "licenseValidity": {
+      "raw": "с 01.01.2020 по 31.12.2025",
+      "value": "с 01.01.2020 по 31.12.2025"
+    },
+    "minerals": {
+      "raw": "золото",
+      "value": [
+        {
+          "name": "золото",
+          "type": "благородные металлы",
+          "group": "металлы"
+        }
+      ]
+    },
+    "workType": {
+      "raw": "разведочные работы",
+      "value": [
+        "разведочные работы"
+      ]
+    },
+    "areaHa": {
+      "raw": "60",
+      "value": 60
+    },
+    "status": {
+      "raw": "ВЕ",
+      "value": {
+        "code": "ВЕ",
+        "mineralType": null,
+        "workStage": null,
+        "isAnnulled": false,
+        "protocol": null,
+        "protocolDate": null
+      }
+    },
+    "polygon": {
+      "raw": "",
+      "value": [
+        [
+          42.55,
+          74.55
+        ]
+      ]
+    },
+    "beneficiaries": {
+      "raw": "",
+      "value": []
+    },
+    "notes": {
+      "raw": "",
+      "value": ""
+    },
+    "sourceYear": 2026
+  },
+  {
+    "id": {
+      "raw": "7",
+      "value": "7"
+    },
+    "licenseNumber": {
+      "raw": "НМ 106-02",
+      "value": "НМ 106-02"
+    },
+    "objectName": {
+      "raw": "Месторождение №7",
+      "value": "Месторождение №7"
+    },
+    "company": {
+      "identity": {
+        "raw": "ОсОО Талас-Голд",
+        "value": {
+          "orgType": "ОсОО",
+          "name": "Талас-Голд"
+        }
+      },
+      "inn": {
+        "raw": "",
+        "value": ""
+      },
+      "manager": {
+        "raw": "Иванов И.И.",
+        "value": "Иванов И.И."
+      },
+      "phone": {
+        "raw": "0555123456",
+        "value": [
+          "0555123456"
+        ]
+      },
+      "country": {
+        "raw": "Россия",
+        "value": [
+          "Россия"
+        ]
+      },
+      "address": {
+        "raw": "г. Бишкек",
+        "value": "г. Бишкек"
+      },
+      "founders": {
+        "raw": "Иванов - 100%",
+        "value": "Иванов - 100%"
+      }
+    },
+    "region": {
+      "raw": "Чуйская область",
+      "value": "Чуйская область"
+    },
+    "district": {
+      "raw": "Чуйскаяский район",
+      "value": "Чуйскаяский район"
+    },
+    "ayilAymak": {
+      "raw": "",
+      "value": ""
+    },
+    "licenseValidity": {
+      "raw": "с 01.01.2020 по 31.12.2025",
+      "value": "с 01.01.2020 по 31.12.2025"
+    },
+    "minerals": {
+      "raw": "медь",
+      "value": [
+        {
+          "name": "медь",
+          "type": "цветные металлы",
+          "group": "металлы"
+        }
+      ]
+    },
+    "workType": {
+      "raw": "эксплуатационные работы",
+      "value": [
+        "эксплуатационные работы"
+      ]
+    },
+    "areaHa": {
+      "raw": "70",
+      "value": 70
+    },
+    "status": {
+      "raw": "ВЕ",
+      "value": {
+        "code": "ВЕ",
+        "mineralType": null,
+        "workStage": null,
+        "isAnnulled": false,
+        "protocol": null,
+        "protocolDate": null
+      }
+    },
+    "polygon": {
+      "raw": "",
+      "value": [
+        [
+          42.56,
+          74.56
+        ]
+      ]
+    },
+    "beneficiaries": {
+      "raw": "",
+      "value": []
+    },
+    "notes": {
+      "raw": "",
+      "value": ""
+    },
+    "sourceYear": 2025
+  },
+  {
+    "id": {
+      "raw": "8",
+      "value": "8"
+    },
+    "licenseNumber": {
+      "raw": "НМ 107-02",
+      "value": "НМ 107-02"
+    },
+    "objectName": {
+      "raw": "Месторождение №8",
+      "value": "Месторождение №8"
+    },
+    "company": {
+      "identity": {
+        "raw": "АО Нарын-Энерго",
+        "value": {
+          "orgType": "АО",
+          "name": "Нарын-Энерго"
+        }
+      },
+      "inn": {
+        "raw": "",
+        "value": ""
+      },
+      "manager": {
+        "raw": "Иванов И.И.",
+        "value": "Иванов И.И."
+      },
+      "phone": {
+        "raw": "0555123456",
+        "value": [
+          "0555123456"
+        ]
+      },
+      "country": {
+        "raw": "Казахстан",
+        "value": [
+          "Казахстан"
+        ]
+      },
+      "address": {
+        "raw": "г. Бишкек",
+        "value": "г. Бишкек"
+      },
+      "founders": {
+        "raw": "Иванов - 100%",
+        "value": "Иванов - 100%"
+      }
+    },
+    "region": {
+      "raw": "Ошская область",
+      "value": "Ошская область"
+    },
+    "district": {
+      "raw": "Ошскаяский район",
+      "value": "Ошскаяский район"
+    },
+    "ayilAymak": {
+      "raw": "",
+      "value": ""
+    },
+    "licenseValidity": {
+      "raw": "с 01.01.2020 по 31.12.2025",
+      "value": "с 01.01.2020 по 31.12.2025"
+    },
+    "minerals": {
+      "raw": "уголь",
+      "value": [
+        {
+          "name": "уголь",
+          "type": "каменный уголь",
+          "group": "топливо"
+        }
+      ]
+    },
+    "workType": {
+      "raw": "поисково-оценочные работы, разведочные работы",
+      "value": [
+        "поисково-оценочные работы",
+        "разведочные работы"
+      ]
+    },
+    "areaHa": {
+      "raw": "80",
+      "value": 80
+    },
+    "status": {
+      "raw": "ВЕ",
+      "value": {
+        "code": "ВЕ",
+        "mineralType": null,
+        "workStage": null,
+        "isAnnulled": false,
+        "protocol": null,
+        "protocolDate": null
+      }
+    },
+    "polygon": {
+      "raw": "",
+      "value": [
+        [
+          42.57,
+          74.57
+        ]
+      ]
+    },
+    "beneficiaries": {
+      "raw": "",
+      "value": []
+    },
+    "notes": {
+      "raw": "",
+      "value": ""
+    },
+    "sourceYear": 2026
+  },
+  {
+    "id": {
+      "raw": "9",
+      "value": "9"
+    },
+    "licenseNumber": {
+      "raw": "НМ 108-02",
+      "value": "НМ 108-02"
+    },
+    "objectName": {
+      "raw": "Месторождение №9",
+      "value": "Месторождение №9"
+    },
+    "company": {
+      "identity": {
+        "raw": "ИП Баткен-Минералс",
+        "value": {
+          "orgType": "ИП",
+          "name": "Баткен-Минералс"
+        }
+      },
+      "inn": {
+        "raw": "",
+        "value": ""
+      },
+      "manager": {
+        "raw": "Иванов И.И.",
+        "value": "Иванов И.И."
+      },
+      "phone": {
+        "raw": "0555123456",
+        "value": [
+          "0555123456"
+        ]
+      },
+      "country": {
+        "raw": "Кыргызстан",
+        "value": [
+          "Кыргызстан"
+        ]
+      },
+      "address": {
+        "raw": "г. Бишкек",
+        "value": "г. Бишкек"
+      },
+      "founders": {
+        "raw": "Иванов - 100%",
+        "value": "Иванов - 100%"
+      }
+    },
+    "region": {
+      "raw": "Ошская область",
+      "value": "Ошская область"
+    },
+    "district": {
+      "raw": "Ошскаяский район",
+      "value": "Ошскаяский район"
+    },
+    "ayilAymak": {
+      "raw": "",
+      "value": ""
+    },
+    "licenseValidity": {
+      "raw": "с 01.01.2020 по 31.12.2025",
+      "value": "с 01.01.2020 по 31.12.2025"
+    },
+    "minerals": {
+      "raw": "песок",
+      "value": [
+        {
+          "name": "песок",
+          "type": "строительный песок",
+          "group": "строительные материалы"
+        }
+      ]
+    },
+    "workType": {
+      "raw": "поисково-оценочные работы",
+      "value": [
+        "поисково-оценочные работы"
+      ]
+    },
+    "areaHa": {
+      "raw": "90",
+      "value": 90
+    },
+    "status": {
+      "raw": "ВЕ",
+      "value": {
+        "code": "ВЕ",
+        "mineralType": null,
+        "workStage": null,
+        "isAnnulled": false,
+        "protocol": null,
+        "protocolDate": null
+      }
+    },
+    "polygon": {
+      "raw": "",
+      "value": [
+        [
+          42.58,
+          74.58
+        ]
+      ]
+    },
+    "beneficiaries": {
+      "raw": "",
+      "value": []
+    },
+    "notes": {
+      "raw": "",
+      "value": ""
+    },
+    "sourceYear": 2025
+  },
+  {
+    "id": {
+      "raw": "10",
+      "value": "10"
+    },
+    "licenseNumber": {
+      "raw": "НМ 109-02",
+      "value": "НМ 109-02"
+    },
+    "objectName": {
+      "raw": "Месторождение №10",
+      "value": "Месторождение №10"
+    },
+    "company": {
+      "identity": {
+        "raw": "ОсОО Иссык-Куль Инвест",
+        "value": {
+          "orgType": "ОсОО",
+          "name": "Иссык-Куль Инвест"
+        }
+      },
+      "inn": {
+        "raw": "",
+        "value": ""
+      },
+      "manager": {
+        "raw": "Иванов И.И.",
+        "value": "Иванов И.И."
+      },
+      "phone": {
+        "raw": "0555123456",
+        "value": [
+          "0555123456"
+        ]
+      },
+      "country": {
+        "raw": "Китай",
+        "value": [
+          "Китай"
+        ]
+      },
+      "address": {
+        "raw": "г. Бишкек",
+        "value": "г. Бишкек"
+      },
+      "founders": {
+        "raw": "Иванов - 100%",
+        "value": "Иванов - 100%"
+      }
+    },
+    "region": {
+      "raw": "Ошская область",
+      "value": "Ошская область"
+    },
+    "district": {
+      "raw": "Ошскаяский район",
+      "value": "Ошскаяский район"
+    },
+    "ayilAymak": {
+      "raw": "",
+      "value": ""
+    },
+    "licenseValidity": {
+      "raw": "с 01.01.2020 по 31.12.2025",
+      "value": "с 01.01.2020 по 31.12.2025"
+    },
+    "minerals": {
+      "raw": "подземные воды",
+      "value": [
+        {
+          "name": "подземные воды",
+          "type": "подземные воды",
+          "group": "вода"
+        }
+      ]
+    },
+    "workType": {
+      "raw": "разведочные работы",
+      "value": [
+        "разведочные работы"
+      ]
+    },
+    "areaHa": {
+      "raw": "100",
+      "value": 100
+    },
+    "status": {
+      "raw": "ВЕ",
+      "value": {
+        "code": "ВЕ",
+        "mineralType": null,
+        "workStage": null,
+        "isAnnulled": false,
+        "protocol": null,
+        "protocolDate": null
+      }
+    },
+    "polygon": {
+      "raw": "",
+      "value": [
+        [
+          42.59,
+          74.59
+        ]
+      ]
+    },
+    "beneficiaries": {
+      "raw": "",
+      "value": []
+    },
+    "notes": {
+      "raw": "",
+      "value": ""
+    },
+    "sourceYear": 2026
+  },
+  {
+    "id": {
+      "raw": "11",
+      "value": "11"
+    },
+    "licenseNumber": {
+      "raw": "НМ 110-02",
+      "value": "НМ 110-02"
+    },
+    "objectName": {
+      "raw": "Месторождение №11",
+      "value": "Месторождение №11"
+    },
+    "company": {
+      "identity": {
+        "raw": "АО Кыргызалтын",
+        "value": {
+          "orgType": "АО",
+          "name": "Кыргызалтын"
+        }
+      },
+      "inn": {
+        "raw": "",
+        "value": ""
+      },
+      "manager": {
+        "raw": "Иванов И.И.",
+        "value": "Иванов И.И."
+      },
+      "phone": {
+        "raw": "0555123456",
+        "value": [
+          "0555123456"
+        ]
+      },
+      "country": {
+        "raw": "Россия",
+        "value": [
+          "Россия"
+        ]
+      },
+      "address": {
+        "raw": "г. Бишкек",
+        "value": "г. Бишкек"
+      },
+      "founders": {
+        "raw": "Иванов - 100%",
+        "value": "Иванов - 100%"
+      }
+    },
+    "region": {
+      "raw": "Ошская область",
+      "value": "Ошская область"
+    },
+    "district": {
+      "raw": "Ошскаяский район",
+      "value": "Ошскаяский район"
+    },
+    "ayilAymak": {
+      "raw": "",
+      "value": ""
+    },
+    "licenseValidity": {
+      "raw": "с 01.01.2020 по 31.12.2025",
+      "value": "с 01.01.2020 по 31.12.2025"
+    },
+    "minerals": {
+      "raw": "золото",
+      "value": [
+        {
+          "name": "золото",
+          "type": "благородные металлы",
+          "group": "металлы"
+        }
+      ]
+    },
+    "workType": {
+      "raw": "эксплуатационные работы",
+      "value": [
+        "эксплуатационные работы"
+      ]
+    },
+    "areaHa": {
+      "raw": "110",
+      "value": 110
+    },
+    "status": {
+      "raw": "ВЕ",
+      "value": {
+        "code": "ВЕ",
+        "mineralType": null,
+        "workStage": null,
+        "isAnnulled": false,
+        "protocol": null,
+        "protocolDate": null
+      }
+    },
+    "polygon": {
+      "raw": "",
+      "value": [
+        [
+          42.6,
+          74.6
+        ]
+      ]
+    },
+    "beneficiaries": {
+      "raw": "",
+      "value": []
+    },
+    "notes": {
+      "raw": "",
+      "value": ""
+    },
+    "sourceYear": 2025
+  },
+  {
+    "id": {
+      "raw": "12",
+      "value": "12"
+    },
+    "licenseNumber": {
+      "raw": "НМ 111-02",
+      "value": "НМ 111-02"
+    },
+    "objectName": {
+      "raw": "Месторождение №12",
+      "value": "Месторождение №12"
+    },
+    "company": {
+      "identity": {
+        "raw": "ИП Горная компания",
+        "value": {
+          "orgType": "ИП",
+          "name": "Горная компания"
+        }
+      },
+      "inn": {
+        "raw": "",
+        "value": ""
+      },
+      "manager": {
+        "raw": "Иванов И.И.",
+        "value": "Иванов И.И."
+      },
+      "phone": {
+        "raw": "0555123456",
+        "value": [
+          "0555123456"
+        ]
+      },
+      "country": {
+        "raw": "Казахстан",
+        "value": [
+          "Казахстан"
+        ]
+      },
+      "address": {
+        "raw": "г. Бишкек",
+        "value": "г. Бишкек"
+      },
+      "founders": {
+        "raw": "Иванов - 100%",
+        "value": "Иванов - 100%"
+      }
+    },
+    "region": {
+      "raw": "Ошская область",
+      "value": "Ошская область"
+    },
+    "district": {
+      "raw": "Ошскаяский район",
+      "value": "Ошскаяский район"
+    },
+    "ayilAymak": {
+      "raw": "",
+      "value": ""
+    },
+    "licenseValidity": {
+      "raw": "с 01.01.2020 по 31.12.2025",
+      "value": "с 01.01.2020 по 31.12.2025"
+    },
+    "minerals": {
+      "raw": "медь",
+      "value": [
+        {
+          "name": "медь",
+          "type": "цветные металлы",
+          "group": "металлы"
+        }
+      ]
+    },
+    "workType": {
+      "raw": "поисково-оценочные работы, разведочные работы",
+      "value": [
+        "поисково-оценочные работы",
+        "разведочные работы"
+      ]
+    },
+    "areaHa": {
+      "raw": "120",
+      "value": 120
+    },
+    "status": {
+      "raw": "ВЕ",
+      "value": {
+        "code": "ВЕ",
+        "mineralType": null,
+        "workStage": null,
+        "isAnnulled": false,
+        "protocol": null,
+        "protocolDate": null
+      }
+    },
+    "polygon": {
+      "raw": "",
+      "value": [
+        [
+          42.61,
+          74.61
+        ]
+      ]
+    },
+    "beneficiaries": {
+      "raw": "",
+      "value": []
+    },
+    "notes": {
+      "raw": "",
+      "value": ""
+    },
+    "sourceYear": 2026
+  },
+  {
+    "id": {
+      "raw": "13",
+      "value": "13"
+    },
+    "licenseNumber": {
+      "raw": "НМ 112-02",
+      "value": "НМ 112-02"
+    },
+    "objectName": {
+      "raw": "Месторождение №13",
+      "value": "Месторождение №13"
+    },
+    "company": {
+      "identity": {
+        "raw": "ОсОО Золотые недра",
+        "value": {
+          "orgType": "ОсОО",
+          "name": "Золотые недра"
+        }
+      },
+      "inn": {
+        "raw": "",
+        "value": ""
+      },
+      "manager": {
+        "raw": "Иванов И.И.",
+        "value": "Иванов И.И."
+      },
+      "phone": {
+        "raw": "0555123456",
+        "value": [
+          "0555123456"
+        ]
+      },
+      "country": {
+        "raw": "Кыргызстан",
+        "value": [
+          "Кыргызстан"
+        ]
+      },
+      "address": {
+        "raw": "г. Бишкек",
+        "value": "г. Бишкек"
+      },
+      "founders": {
+        "raw": "Иванов - 100%",
+        "value": "Иванов - 100%"
+      }
+    },
+    "region": {
+      "raw": "Ошская область",
+      "value": "Ошская область"
+    },
+    "district": {
+      "raw": "Ошскаяский район",
+      "value": "Ошскаяский район"
+    },
+    "ayilAymak": {
+      "raw": "",
+      "value": ""
+    },
+    "licenseValidity": {
+      "raw": "с 01.01.2020 по 31.12.2025",
+      "value": "с 01.01.2020 по 31.12.2025"
+    },
+    "minerals": {
+      "raw": "уголь",
+      "value": [
+        {
+          "name": "уголь",
+          "type": "каменный уголь",
+          "group": "топливо"
+        }
+      ]
+    },
+    "workType": {
+      "raw": "поисково-оценочные работы",
+      "value": [
+        "поисково-оценочные работы"
+      ]
+    },
+    "areaHa": {
+      "raw": "130",
+      "value": 130
+    },
+    "status": {
+      "raw": "ВЕ",
+      "value": {
+        "code": "ВЕ",
+        "mineralType": null,
+        "workStage": null,
+        "isAnnulled": false,
+        "protocol": null,
+        "protocolDate": null
+      }
+    },
+    "polygon": {
+      "raw": "",
+      "value": [
+        [
+          42.62,
+          74.62
+        ]
+      ]
+    },
+    "beneficiaries": {
+      "raw": "",
+      "value": []
+    },
+    "notes": {
+      "raw": "",
+      "value": ""
+    },
+    "sourceYear": 2025
+  },
+  {
+    "id": {
+      "raw": "14",
+      "value": "14"
+    },
+    "licenseNumber": {
+      "raw": "НМ 113-02",
+      "value": "НМ 113-02"
+    },
+    "objectName": {
+      "raw": "Месторождение №14",
+      "value": "Месторождение №14"
+    },
+    "company": {
+      "identity": {
+        "raw": "АО Каменный карьер",
+        "value": {
+          "orgType": "АО",
+          "name": "Каменный карьер"
+        }
+      },
+      "inn": {
+        "raw": "",
+        "value": ""
+      },
+      "manager": {
+        "raw": "Иванов И.И.",
+        "value": "Иванов И.И."
+      },
+      "phone": {
+        "raw": "0555123456",
+        "value": [
+          "0555123456"
+        ]
+      },
+      "country": {
+        "raw": "Китай",
+        "value": [
+          "Китай"
+        ]
+      },
+      "address": {
+        "raw": "г. Бишкек",
+        "value": "г. Бишкек"
+      },
+      "founders": {
+        "raw": "Иванов - 100%",
+        "value": "Иванов - 100%"
+      }
+    },
+    "region": {
+      "raw": "Джалал-Абадская область",
+      "value": "Джалал-Абадская область"
+    },
+    "district": {
+      "raw": "Джалал-Абадскаяский район",
+      "value": "Джалал-Абадскаяский район"
+    },
+    "ayilAymak": {
+      "raw": "",
+      "value": ""
+    },
+    "licenseValidity": {
+      "raw": "с 01.01.2020 по 31.12.2025",
+      "value": "с 01.01.2020 по 31.12.2025"
+    },
+    "minerals": {
+      "raw": "подземные воды",
+      "value": [
+        {
+          "name": "подземные воды",
+          "type": "подземные воды",
+          "group": "вода"
+        }
+      ]
+    },
+    "workType": {
+      "raw": "разведочные работы",
+      "value": [
+        "разведочные работы"
+      ]
+    },
+    "areaHa": {
+      "raw": "140",
+      "value": 140
+    },
+    "status": {
+      "raw": "ВЕ",
+      "value": {
+        "code": "ВЕ",
+        "mineralType": null,
+        "workStage": null,
+        "isAnnulled": false,
+        "protocol": null,
+        "protocolDate": null
+      }
+    },
+    "polygon": {
+      "raw": "",
+      "value": [
+        [
+          42.63,
+          74.63
+        ]
+      ]
+    },
+    "beneficiaries": {
+      "raw": "",
+      "value": []
+    },
+    "notes": {
+      "raw": "",
+      "value": ""
+    },
+    "sourceYear": 2026
+  },
+  {
+    "id": {
+      "raw": "15",
+      "value": "15"
+    },
+    "licenseNumber": {
+      "raw": "НМ 114-02",
+      "value": "НМ 114-02"
+    },
+    "objectName": {
+      "raw": "Месторождение №15",
+      "value": "Месторождение №15"
+    },
+    "company": {
+      "identity": {
+        "raw": "ИП Водный ресурс",
+        "value": {
+          "orgType": "ИП",
+          "name": "Водный ресурс"
+        }
+      },
+      "inn": {
+        "raw": "",
+        "value": ""
+      },
+      "manager": {
+        "raw": "Иванов И.И.",
+        "value": "Иванов И.И."
+      },
+      "phone": {
+        "raw": "0555123456",
+        "value": [
+          "0555123456"
+        ]
+      },
+      "country": {
+        "raw": "Россия",
+        "value": [
+          "Россия"
+        ]
+      },
+      "address": {
+        "raw": "г. Бишкек",
+        "value": "г. Бишкек"
+      },
+      "founders": {
+        "raw": "Иванов - 100%",
+        "value": "Иванов - 100%"
+      }
+    },
+    "region": {
+      "raw": "Джалал-Абадская область",
+      "value": "Джалал-Абадская область"
+    },
+    "district": {
+      "raw": "Джалал-Абадскаяский район",
+      "value": "Джалал-Абадскаяский район"
+    },
+    "ayilAymak": {
+      "raw": "",
+      "value": ""
+    },
+    "licenseValidity": {
+      "raw": "с 01.01.2020 по 31.12.2025",
+      "value": "с 01.01.2020 по 31.12.2025"
+    },
+    "minerals": {
+      "raw": "подземные воды",
+      "value": [
+        {
+          "name": "подземные воды",
+          "type": "подземные воды",
+          "group": "вода"
+        }
+      ]
+    },
+    "workType": {
+      "raw": "эксплуатационные работы",
+      "value": [
+        "эксплуатационные работы"
+      ]
+    },
+    "areaHa": {
+      "raw": "150",
+      "value": 150
+    },
+    "status": {
+      "raw": "ВЕ",
+      "value": {
+        "code": "ВЕ",
+        "mineralType": null,
+        "workStage": null,
+        "isAnnulled": false,
+        "protocol": null,
+        "protocolDate": null
+      }
+    },
+    "polygon": {
+      "raw": "",
+      "value": []
+    },
+    "beneficiaries": {
+      "raw": "",
+      "value": []
+    },
+    "notes": {
+      "raw": "",
+      "value": ""
+    },
+    "sourceYear": 2025
+  },
+  {
+    "id": {
+      "raw": "16",
+      "value": "16"
+    },
+    "licenseNumber": {
+      "raw": "НМ 115-02",
+      "value": "НМ 115-02"
+    },
+    "objectName": {
+      "raw": "Месторождение №16",
+      "value": "Месторождение №16"
+    },
+    "company": {
+      "identity": {
+        "raw": "ОсОО Медный рудник",
+        "value": {
+          "orgType": "ОсОО",
+          "name": "Медный рудник"
+        }
+      },
+      "inn": {
+        "raw": "",
+        "value": ""
+      },
+      "manager": {
+        "raw": "Иванов И.И.",
+        "value": "Иванов И.И."
+      },
+      "phone": {
+        "raw": "0555123456",
+        "value": [
+          "0555123456"
+        ]
+      },
+      "country": {
+        "raw": "Казахстан",
+        "value": [
+          "Казахстан"
+        ]
+      },
+      "address": {
+        "raw": "г. Бишкек",
+        "value": "г. Бишкек"
+      },
+      "founders": {
+        "raw": "Иванов - 100%",
+        "value": "Иванов - 100%"
+      }
+    },
+    "region": {
+      "raw": "Джалал-Абадская область",
+      "value": "Джалал-Абадская область"
+    },
+    "district": {
+      "raw": "Джалал-Абадскаяский район",
+      "value": "Джалал-Абадскаяский район"
+    },
+    "ayilAymak": {
+      "raw": "",
+      "value": ""
+    },
+    "licenseValidity": {
+      "raw": "с 01.01.2020 по 31.12.2025",
+      "value": "с 01.01.2020 по 31.12.2025"
+    },
+    "minerals": {
+      "raw": "подземные воды",
+      "value": [
+        {
+          "name": "подземные воды",
+          "type": "подземные воды",
+          "group": "вода"
+        }
+      ]
+    },
+    "workType": {
+      "raw": "поисково-оценочные работы, разведочные работы",
+      "value": [
+        "поисково-оценочные работы",
+        "разведочные работы"
+      ]
+    },
+    "areaHa": {
+      "raw": "160",
+      "value": 160
+    },
+    "status": {
+      "raw": "ВЕ",
+      "value": {
+        "code": "ВЕ",
+        "mineralType": null,
+        "workStage": null,
+        "isAnnulled": false,
+        "protocol": null,
+        "protocolDate": null
+      }
+    },
+    "polygon": {
+      "raw": "",
+      "value": [
+        [
+          42.65,
+          74.65
+        ]
+      ]
+    },
+    "beneficiaries": {
+      "raw": "",
+      "value": []
+    },
+    "notes": {
+      "raw": "",
+      "value": ""
+    },
+    "sourceYear": 2026
+  },
+  {
+    "id": {
+      "raw": "17",
+      "value": "17"
+    },
+    "licenseNumber": {
+      "raw": "НМ 116-02",
+      "value": "НМ 116-02"
+    },
+    "objectName": {
+      "raw": "Месторождение №17",
+      "value": "Месторождение №17"
+    },
+    "company": {
+      "identity": {
+        "raw": "АО Талас-Голд",
+        "value": {
+          "orgType": "АО",
+          "name": "Талас-Голд"
+        }
+      },
+      "inn": {
+        "raw": "",
+        "value": ""
+      },
+      "manager": {
+        "raw": "Иванов И.И.",
+        "value": "Иванов И.И."
+      },
+      "phone": {
+        "raw": "0555123456",
+        "value": [
+          "0555123456"
+        ]
+      },
+      "country": {
+        "raw": "Кыргызстан",
+        "value": [
+          "Кыргызстан"
+        ]
+      },
+      "address": {
+        "raw": "г. Бишкек",
+        "value": "г. Бишкек"
+      },
+      "founders": {
+        "raw": "Иванов - 100%",
+        "value": "Иванов - 100%"
+      }
+    },
+    "region": {
+      "raw": "Джалал-Абадская область",
+      "value": "Джалал-Абадская область"
+    },
+    "district": {
+      "raw": "Джалал-Абадскаяский район",
+      "value": "Джалал-Абадскаяский район"
+    },
+    "ayilAymak": {
+      "raw": "",
+      "value": ""
+    },
+    "licenseValidity": {
+      "raw": "с 01.01.2020 по 31.12.2025",
+      "value": "с 01.01.2020 по 31.12.2025"
+    },
+    "minerals": {
+      "raw": "золото",
+      "value": [
+        {
+          "name": "золото",
+          "type": "благородные металлы",
+          "group": "металлы"
+        }
+      ]
+    },
+    "workType": {
+      "raw": "поисково-оценочные работы",
+      "value": [
+        "поисково-оценочные работы"
+      ]
+    },
+    "areaHa": {
+      "raw": "170",
+      "value": 170
+    },
+    "status": {
+      "raw": "ВЕ",
+      "value": {
+        "code": "ВЕ",
+        "mineralType": null,
+        "workStage": null,
+        "isAnnulled": false,
+        "protocol": null,
+        "protocolDate": null
+      }
+    },
+    "polygon": {
+      "raw": "",
+      "value": []
+    },
+    "beneficiaries": {
+      "raw": "",
+      "value": []
+    },
+    "notes": {
+      "raw": "",
+      "value": ""
+    },
+    "sourceYear": 2025
+  },
+  {
+    "id": {
+      "raw": "18",
+      "value": "18"
+    },
+    "licenseNumber": {
+      "raw": "НМ 117-02",
+      "value": "НМ 117-02"
+    },
+    "objectName": {
+      "raw": "Месторождение №18",
+      "value": "Месторождение №18"
+    },
+    "company": {
+      "identity": {
+        "raw": "ИП Нарын-Энерго",
+        "value": {
+          "orgType": "ИП",
+          "name": "Нарын-Энерго"
+        }
+      },
+      "inn": {
+        "raw": "",
+        "value": ""
+      },
+      "manager": {
+        "raw": "Иванов И.И.",
+        "value": "Иванов И.И."
+      },
+      "phone": {
+        "raw": "0555123456",
+        "value": [
+          "0555123456"
+        ]
+      },
+      "country": {
+        "raw": "Китай",
+        "value": [
+          "Китай"
+        ]
+      },
+      "address": {
+        "raw": "г. Бишкек",
+        "value": "г. Бишкек"
+      },
+      "founders": {
+        "raw": "Иванов - 100%",
+        "value": "Иванов - 100%"
+      }
+    },
+    "region": {
+      "raw": "Джалал-Абадская область",
+      "value": "Джалал-Абадская область"
+    },
+    "district": {
+      "raw": "Джалал-Абадскаяский район",
+      "value": "Джалал-Абадскаяский район"
+    },
+    "ayilAymak": {
+      "raw": "",
+      "value": ""
+    },
+    "licenseValidity": {
+      "raw": "с 01.01.2020 по 31.12.2025",
+      "value": "с 01.01.2020 по 31.12.2025"
+    },
+    "minerals": {
+      "raw": "медь",
+      "value": [
+        {
+          "name": "медь",
+          "type": "цветные металлы",
+          "group": "металлы"
+        }
+      ]
+    },
+    "workType": {
+      "raw": "разведочные работы",
+      "value": [
+        "разведочные работы"
+      ]
+    },
+    "areaHa": {
+      "raw": "180",
+      "value": 180
+    },
+    "status": {
+      "raw": "ВЕ",
+      "value": {
+        "code": "ВЕ",
+        "mineralType": null,
+        "workStage": null,
+        "isAnnulled": false,
+        "protocol": null,
+        "protocolDate": null
+      }
+    },
+    "polygon": {
+      "raw": "",
+      "value": [
+        [
+          42.67,
+          74.67
+        ]
+      ]
+    },
+    "beneficiaries": {
+      "raw": "",
+      "value": []
+    },
+    "notes": {
+      "raw": "",
+      "value": ""
+    },
+    "sourceYear": 2026
+  },
+  {
+    "id": {
+      "raw": "19",
+      "value": "19"
+    },
+    "licenseNumber": {
+      "raw": "НМ 118-02",
+      "value": "НМ 118-02"
+    },
+    "objectName": {
+      "raw": "Месторождение №19",
+      "value": "Месторождение №19"
+    },
+    "company": {
+      "identity": {
+        "raw": "ОсОО Баткен-Минералс",
+        "value": {
+          "orgType": "ОсОО",
+          "name": "Баткен-Минералс"
+        }
+      },
+      "inn": {
+        "raw": "",
+        "value": ""
+      },
+      "manager": {
+        "raw": "Иванов И.И.",
+        "value": "Иванов И.И."
+      },
+      "phone": {
+        "raw": "0555123456",
+        "value": [
+          "0555123456"
+        ]
+      },
+      "country": {
+        "raw": "Россия",
+        "value": [
+          "Россия"
+        ]
+      },
+      "address": {
+        "raw": "г. Бишкек",
+        "value": "г. Бишкек"
+      },
+      "founders": {
+        "raw": "Иванов - 100%",
+        "value": "Иванов - 100%"
+      }
+    },
+    "region": {
+      "raw": "Джалал-Абадская область",
+      "value": "Джалал-Абадская область"
+    },
+    "district": {
+      "raw": "Джалал-Абадскаяский район",
+      "value": "Джалал-Абадскаяский район"
+    },
+    "ayilAymak": {
+      "raw": "",
+      "value": ""
+    },
+    "licenseValidity": {
+      "raw": "с 01.01.2020 по 31.12.2025",
+      "value": "с 01.01.2020 по 31.12.2025"
+    },
+    "minerals": {
+      "raw": "уголь",
+      "value": [
+        {
+          "name": "уголь",
+          "type": "каменный уголь",
+          "group": "топливо"
+        }
+      ]
+    },
+    "workType": {
+      "raw": "эксплуатационные работы",
+      "value": [
+        "эксплуатационные работы"
+      ]
+    },
+    "areaHa": {
+      "raw": "190",
+      "value": 190
+    },
+    "status": {
+      "raw": "ВЕ",
+      "value": {
+        "code": "ВЕ",
+        "mineralType": null,
+        "workStage": null,
+        "isAnnulled": false,
+        "protocol": null,
+        "protocolDate": null
+      }
+    },
+    "polygon": {
+      "raw": "",
+      "value": []
+    },
+    "beneficiaries": {
+      "raw": "",
+      "value": []
+    },
+    "notes": {
+      "raw": "",
+      "value": ""
+    },
+    "sourceYear": 2025
+  },
+  {
+    "id": {
+      "raw": "20",
+      "value": "20"
+    },
+    "licenseNumber": {
+      "raw": "НМ 119-02",
+      "value": "НМ 119-02"
+    },
+    "objectName": {
+      "raw": "Месторождение №20",
+      "value": "Месторождение №20"
+    },
+    "company": {
+      "identity": {
+        "raw": "АО Китайская горная",
+        "value": {
+          "orgType": "АО",
+          "name": "Китайская горная"
+        }
+      },
+      "inn": {
+        "raw": "",
+        "value": ""
+      },
+      "manager": {
+        "raw": "Иванов И.И.",
+        "value": "Иванов И.И."
+      },
+      "phone": {
+        "raw": "0555123456",
+        "value": [
+          "0555123456"
+        ]
+      },
+      "country": {
+        "raw": "Китай",
+        "value": [
+          "Китай"
+        ]
+      },
+      "address": {
+        "raw": "г. Бишкек",
+        "value": "г. Бишкек"
+      },
+      "founders": {
+        "raw": "Иванов - 100%",
+        "value": "Иванов - 100%"
+      }
+    },
+    "region": {
+      "raw": "Нарынская область",
+      "value": "Нарынская область"
+    },
+    "district": {
+      "raw": "Нарынскаяский район",
+      "value": "Нарынскаяский район"
+    },
+    "ayilAymak": {
+      "raw": "",
+      "value": ""
+    },
+    "licenseValidity": {
+      "raw": "с 01.01.2020 по 31.12.2025",
+      "value": "с 01.01.2020 по 31.12.2025"
+    },
+    "minerals": {
+      "raw": "уголь",
+      "value": [
+        {
+          "name": "уголь",
+          "type": "каменный уголь",
+          "group": "топливо"
+        }
+      ]
+    },
+    "workType": {
+      "raw": "эксплуатационные работы",
+      "value": [
+        "эксплуатационные работы"
+      ]
+    },
+    "areaHa": {
+      "raw": "200",
+      "value": 200
+    },
+    "status": {
+      "raw": "ВЕ",
+      "value": {
+        "code": "ВЕ",
+        "mineralType": null,
+        "workStage": null,
+        "isAnnulled": false,
+        "protocol": null,
+        "protocolDate": null
+      }
+    },
+    "polygon": {
+      "raw": "",
+      "value": [
+        [
+          42.69,
+          74.69
+        ]
+      ]
+    },
+    "beneficiaries": {
+      "raw": "",
+      "value": []
+    },
+    "notes": {
+      "raw": "",
+      "value": ""
+    },
+    "sourceYear": 2026
+  },
+  {
+    "id": {
+      "raw": "21",
+      "value": "21"
+    },
+    "licenseNumber": {
+      "raw": "НМ 120-02",
+      "value": "НМ 120-02"
+    },
+    "objectName": {
+      "raw": "Месторождение №21",
+      "value": "Месторождение №21"
+    },
+    "company": {
+      "identity": {
+        "raw": "АО Китайская горная",
+        "value": {
+          "orgType": "АО",
+          "name": "Китайская горная"
+        }
+      },
+      "inn": {
+        "raw": "",
+        "value": ""
+      },
+      "manager": {
+        "raw": "Иванов И.И.",
+        "value": "Иванов И.И."
+      },
+      "phone": {
+        "raw": "0555123456",
+        "value": [
+          "0555123456"
+        ]
+      },
+      "country": {
+        "raw": "Китай",
+        "value": [
+          "Китай"
+        ]
+      },
+      "address": {
+        "raw": "г. Бишкек",
+        "value": "г. Бишкек"
+      },
+      "founders": {
+        "raw": "Иванов - 100%",
+        "value": "Иванов - 100%"
+      }
+    },
+    "region": {
+      "raw": "Нарынская область",
+      "value": "Нарынская область"
+    },
+    "district": {
+      "raw": "Нарынскаяский район",
+      "value": "Нарынскаяский район"
+    },
+    "ayilAymak": {
+      "raw": "",
+      "value": ""
+    },
+    "licenseValidity": {
+      "raw": "с 01.01.2020 по 31.12.2025",
+      "value": "с 01.01.2020 по 31.12.2025"
+    },
+    "minerals": {
+      "raw": "уголь",
+      "value": [
+        {
+          "name": "уголь",
+          "type": "каменный уголь",
+          "group": "топливо"
+        }
+      ]
+    },
+    "workType": {
+      "raw": "эксплуатационные работы",
+      "value": [
+        "эксплуатационные работы"
+      ]
+    },
+    "areaHa": {
+      "raw": "210",
+      "value": 210
+    },
+    "status": {
+      "raw": "ВЕ",
+      "value": {
+        "code": "ВЕ",
+        "mineralType": null,
+        "workStage": null,
+        "isAnnulled": false,
+        "protocol": null,
+        "protocolDate": null
+      }
+    },
+    "polygon": {
+      "raw": "",
+      "value": [
+        [
+          42.7,
+          74.7
+        ]
+      ]
+    },
+    "beneficiaries": {
+      "raw": "",
+      "value": []
+    },
+    "notes": {
+      "raw": "",
+      "value": ""
+    },
+    "sourceYear": 2025
+  },
+  {
+    "id": {
+      "raw": "22",
+      "value": "22"
+    },
+    "licenseNumber": {
+      "raw": "НМ 121-02",
+      "value": "НМ 121-02"
+    },
+    "objectName": {
+      "raw": "Месторождение №22",
+      "value": "Месторождение №22"
+    },
+    "company": {
+      "identity": {
+        "raw": "АО Китайская горная",
+        "value": {
+          "orgType": "АО",
+          "name": "Китайская горная"
+        }
+      },
+      "inn": {
+        "raw": "",
+        "value": ""
+      },
+      "manager": {
+        "raw": "Иванов И.И.",
+        "value": "Иванов И.И."
+      },
+      "phone": {
+        "raw": "0555123456",
+        "value": [
+          "0555123456"
+        ]
+      },
+      "country": {
+        "raw": "Китай",
+        "value": [
+          "Китай"
+        ]
+      },
+      "address": {
+        "raw": "г. Бишкек",
+        "value": "г. Бишкек"
+      },
+      "founders": {
+        "raw": "Иванов - 100%",
+        "value": "Иванов - 100%"
+      }
+    },
+    "region": {
+      "raw": "Нарынская область",
+      "value": "Нарынская область"
+    },
+    "district": {
+      "raw": "Нарынскаяский район",
+      "value": "Нарынскаяский район"
+    },
+    "ayilAymak": {
+      "raw": "",
+      "value": ""
+    },
+    "licenseValidity": {
+      "raw": "с 01.01.2020 по 31.12.2025",
+      "value": "с 01.01.2020 по 31.12.2025"
+    },
+    "minerals": {
+      "raw": "уголь",
+      "value": [
+        {
+          "name": "уголь",
+          "type": "каменный уголь",
+          "group": "топливо"
+        }
+      ]
+    },
+    "workType": {
+      "raw": "эксплуатационные работы",
+      "value": [
+        "эксплуатационные работы"
+      ]
+    },
+    "areaHa": {
+      "raw": "220",
+      "value": 220
+    },
+    "status": {
+      "raw": "ВЕ",
+      "value": {
+        "code": "ВЕ",
+        "mineralType": null,
+        "workStage": null,
+        "isAnnulled": false,
+        "protocol": null,
+        "protocolDate": null
+      }
+    },
+    "polygon": {
+      "raw": "",
+      "value": [
+        [
+          42.71,
+          74.71
+        ]
+      ]
+    },
+    "beneficiaries": {
+      "raw": "",
+      "value": []
+    },
+    "notes": {
+      "raw": "",
+      "value": ""
+    },
+    "sourceYear": 2026
+  },
+  {
+    "id": {
+      "raw": "23",
+      "value": "23"
+    },
+    "licenseNumber": {
+      "raw": "НМ 122-02",
+      "value": "НМ 122-02"
+    },
+    "objectName": {
+      "raw": "Месторождение №23",
+      "value": "Месторождение №23"
+    },
+    "company": {
+      "identity": {
+        "raw": "АО Китайская горная",
+        "value": {
+          "orgType": "АО",
+          "name": "Китайская горная"
+        }
+      },
+      "inn": {
+        "raw": "",
+        "value": ""
+      },
+      "manager": {
+        "raw": "Иванов И.И.",
+        "value": "Иванов И.И."
+      },
+      "phone": {
+        "raw": "0555123456",
+        "value": [
+          "0555123456"
+        ]
+      },
+      "country": {
+        "raw": "Китай",
+        "value": [
+          "Китай"
+        ]
+      },
+      "address": {
+        "raw": "г. Бишкек",
+        "value": "г. Бишкек"
+      },
+      "founders": {
+        "raw": "Иванов - 100%",
+        "value": "Иванов - 100%"
+      }
+    },
+    "region": {
+      "raw": "Нарынская область",
+      "value": "Нарынская область"
+    },
+    "district": {
+      "raw": "Нарынскаяский район",
+      "value": "Нарынскаяский район"
+    },
+    "ayilAymak": {
+      "raw": "",
+      "value": ""
+    },
+    "licenseValidity": {
+      "raw": "с 01.01.2020 по 31.12.2025",
+      "value": "с 01.01.2020 по 31.12.2025"
+    },
+    "minerals": {
+      "raw": "уголь",
+      "value": [
+        {
+          "name": "уголь",
+          "type": "каменный уголь",
+          "group": "топливо"
+        }
+      ]
+    },
+    "workType": {
+      "raw": "эксплуатационные работы",
+      "value": [
+        "эксплуатационные работы"
+      ]
+    },
+    "areaHa": {
+      "raw": "230",
+      "value": 230
+    },
+    "status": {
+      "raw": "ВЕ",
+      "value": {
+        "code": "ВЕ",
+        "mineralType": null,
+        "workStage": null,
+        "isAnnulled": false,
+        "protocol": null,
+        "protocolDate": null
+      }
+    },
+    "polygon": {
+      "raw": "",
+      "value": [
+        [
+          42.72,
+          74.72
+        ]
+      ]
+    },
+    "beneficiaries": {
+      "raw": "",
+      "value": []
+    },
+    "notes": {
+      "raw": "",
+      "value": ""
+    },
+    "sourceYear": 2025
+  },
+  {
+    "id": {
+      "raw": "24",
+      "value": "24"
+    },
+    "licenseNumber": {
+      "raw": "НМ 123-02",
+      "value": "НМ 123-02"
+    },
+    "objectName": {
+      "raw": "Месторождение №24",
+      "value": "Месторождение №24"
+    },
+    "company": {
+      "identity": {
+        "raw": "АО Китайская горная",
+        "value": {
+          "orgType": "АО",
+          "name": "Китайская горная"
+        }
+      },
+      "inn": {
+        "raw": "",
+        "value": ""
+      },
+      "manager": {
+        "raw": "Иванов И.И.",
+        "value": "Иванов И.И."
+      },
+      "phone": {
+        "raw": "0555123456",
+        "value": [
+          "0555123456"
+        ]
+      },
+      "country": {
+        "raw": "Китай",
+        "value": [
+          "Китай"
+        ]
+      },
+      "address": {
+        "raw": "г. Бишкек",
+        "value": "г. Бишкек"
+      },
+      "founders": {
+        "raw": "Иванов - 100%",
+        "value": "Иванов - 100%"
+      }
+    },
+    "region": {
+      "raw": "Нарынская область",
+      "value": "Нарынская область"
+    },
+    "district": {
+      "raw": "Нарынскаяский район",
+      "value": "Нарынскаяский район"
+    },
+    "ayilAymak": {
+      "raw": "",
+      "value": ""
+    },
+    "licenseValidity": {
+      "raw": "с 01.01.2020 по 31.12.2025",
+      "value": "с 01.01.2020 по 31.12.2025"
+    },
+    "minerals": {
+      "raw": "уголь",
+      "value": [
+        {
+          "name": "уголь",
+          "type": "каменный уголь",
+          "group": "топливо"
+        }
+      ]
+    },
+    "workType": {
+      "raw": "эксплуатационные работы",
+      "value": [
+        "эксплуатационные работы"
+      ]
+    },
+    "areaHa": {
+      "raw": "240",
+      "value": 240
+    },
+    "status": {
+      "raw": "ВЕ",
+      "value": {
+        "code": "ВЕ",
+        "mineralType": null,
+        "workStage": null,
+        "isAnnulled": false,
+        "protocol": null,
+        "protocolDate": null
+      }
+    },
+    "polygon": {
+      "raw": "",
+      "value": [
+        [
+          42.73,
+          74.73
+        ]
+      ]
+    },
+    "beneficiaries": {
+      "raw": "",
+      "value": []
+    },
+    "notes": {
+      "raw": "",
+      "value": ""
+    },
+    "sourceYear": 2026
+  },
+  {
+    "id": {
+      "raw": "25",
+      "value": "25"
+    },
+    "licenseNumber": {
+      "raw": "НМ 124-02",
+      "value": "НМ 124-02"
+    },
+    "objectName": {
+      "raw": "Месторождение №25",
+      "value": "Месторождение №25"
+    },
+    "company": {
+      "identity": {
+        "raw": "ОсОО Водный ресурс",
+        "value": {
+          "orgType": "ОсОО",
+          "name": "Водный ресурс"
+        }
+      },
+      "inn": {
+        "raw": "",
+        "value": ""
+      },
+      "manager": {
+        "raw": "Иванов И.И.",
+        "value": "Иванов И.И."
+      },
+      "phone": {
+        "raw": "0555123456",
+        "value": [
+          "0555123456"
+        ]
+      },
+      "country": {
+        "raw": "Казахстан",
+        "value": [
+          "Казахстан"
+        ]
+      },
+      "address": {
+        "raw": "г. Бишкек",
+        "value": "г. Бишкек"
+      },
+      "founders": {
+        "raw": "Иванов - 100%",
+        "value": "Иванов - 100%"
+      }
+    },
+    "region": {
+      "raw": "Таласская область",
+      "value": "Таласская область"
+    },
+    "district": {
+      "raw": "Таласскаяский район",
+      "value": "Таласскаяский район"
+    },
+    "ayilAymak": {
+      "raw": "",
+      "value": ""
+    },
+    "licenseValidity": {
+      "raw": "с 01.01.2020 по 31.12.2025",
+      "value": "с 01.01.2020 по 31.12.2025"
+    },
+    "minerals": {
+      "raw": "подземные воды",
+      "value": [
+        {
+          "name": "подземные воды",
+          "type": "подземные воды",
+          "group": "вода"
+        }
+      ]
+    },
+    "workType": {
+      "raw": "поисково-оценочные работы",
+      "value": [
+        "поисково-оценочные работы"
+      ]
+    },
+    "areaHa": {
+      "raw": "250",
+      "value": 250
+    },
+    "status": {
+      "raw": "ВЕ",
+      "value": {
+        "code": "ВЕ",
+        "mineralType": null,
+        "workStage": null,
+        "isAnnulled": false,
+        "protocol": null,
+        "protocolDate": null
+      }
+    },
+    "polygon": {
+      "raw": "",
+      "value": []
+    },
+    "beneficiaries": {
+      "raw": "",
+      "value": []
+    },
+    "notes": {
+      "raw": "",
+      "value": ""
+    },
+    "sourceYear": 2025
+  },
+  {
+    "id": {
+      "raw": "26",
+      "value": "26"
+    },
+    "licenseNumber": {
+      "raw": "НМ 125-02",
+      "value": "НМ 125-02"
+    },
+    "objectName": {
+      "raw": "Месторождение №26",
+      "value": "Месторождение №26"
+    },
+    "company": {
+      "identity": {
+        "raw": "АО Медный рудник",
+        "value": {
+          "orgType": "АО",
+          "name": "Медный рудник"
+        }
+      },
+      "inn": {
+        "raw": "",
+        "value": ""
+      },
+      "manager": {
+        "raw": "Иванов И.И.",
+        "value": "Иванов И.И."
+      },
+      "phone": {
+        "raw": "0555123456",
+        "value": [
+          "0555123456"
+        ]
+      },
+      "country": {
+        "raw": "Россия",
+        "value": [
+          "Россия"
+        ]
+      },
+      "address": {
+        "raw": "г. Бишкек",
+        "value": "г. Бишкек"
+      },
+      "founders": {
+        "raw": "Иванов - 100%",
+        "value": "Иванов - 100%"
+      }
+    },
+    "region": {
+      "raw": "Иссык-Кульская область",
+      "value": "Иссык-Кульская область"
+    },
+    "district": {
+      "raw": "Иссык-Кульскаяский район",
+      "value": "Иссык-Кульскаяский район"
+    },
+    "ayilAymak": {
+      "raw": "",
+      "value": ""
+    },
+    "licenseValidity": {
+      "raw": "с 01.01.2020 по 31.12.2025",
+      "value": "с 01.01.2020 по 31.12.2025"
+    },
+    "minerals": {
+      "raw": "золото",
+      "value": [
+        {
+          "name": "золото",
+          "type": "благородные металлы",
+          "group": "металлы"
+        }
+      ]
+    },
+    "workType": {
+      "raw": "разведочные работы",
+      "value": [
+        "разведочные работы"
+      ]
+    },
+    "areaHa": {
+      "raw": "null",
+      "value": null
+    },
+    "status": {
+      "raw": "ВЕ",
+      "value": {
+        "code": "ВЕ",
+        "mineralType": null,
+        "workStage": null,
+        "isAnnulled": false,
+        "protocol": null,
+        "protocolDate": null
+      }
+    },
+    "polygon": {
+      "raw": "",
+      "value": []
+    },
+    "beneficiaries": {
+      "raw": "",
+      "value": []
+    },
+    "notes": {
+      "raw": "",
+      "value": ""
+    },
+    "sourceYear": 2026
+  },
+  {
+    "id": {
+      "raw": "27",
+      "value": "27"
+    },
+    "licenseNumber": {
+      "raw": "НМ 126-02",
+      "value": "НМ 126-02"
+    },
+    "objectName": {
+      "raw": "Месторождение №27",
+      "value": "Месторождение №27"
+    },
+    "company": {
+      "identity": {
+        "raw": "ИП Талас-Голд",
+        "value": {
+          "orgType": "ИП",
+          "name": "Талас-Голд"
+        }
+      },
+      "inn": {
+        "raw": "",
+        "value": ""
+      },
+      "manager": {
+        "raw": "Иванов И.И.",
+        "value": "Иванов И.И."
+      },
+      "phone": {
+        "raw": "0555123456",
+        "value": [
+          "0555123456"
+        ]
+      },
+      "country": {
+        "raw": "Россия",
+        "value": [
+          "Россия"
+        ]
+      },
+      "address": {
+        "raw": "г. Бишкек",
+        "value": "г. Бишкек"
+      },
+      "founders": {
+        "raw": "Иванов - 100%",
+        "value": "Иванов - 100%"
+      }
+    },
+    "region": {
+      "raw": "Чуйская область",
+      "value": "Чуйская область"
+    },
+    "district": {
+      "raw": "Чуйскаяский район",
+      "value": "Чуйскаяский район"
+    },
+    "ayilAymak": {
+      "raw": "",
+      "value": ""
+    },
+    "licenseValidity": {
+      "raw": "с 01.01.2020 по 31.12.2025",
+      "value": "с 01.01.2020 по 31.12.2025"
+    },
+    "minerals": {
+      "raw": "уголь, золото",
+      "value": [
+        {
+          "name": "уголь",
+          "type": "каменный уголь",
+          "group": "топливо"
+        },
+        {
+          "name": "золото",
+          "type": "благородные металлы",
+          "group": "металлы"
+        }
+      ]
+    },
+    "workType": {
+      "raw": "эксплуатационные работы",
+      "value": [
+        "эксплуатационные работы"
+      ]
+    },
+    "areaHa": {
+      "raw": "500",
+      "value": 500
+    },
+    "status": {
+      "raw": "Аннулирована",
+      "value": {
+        "code": null,
+        "mineralType": null,
+        "workStage": null,
+        "isAnnulled": true,
+        "protocol": "328",
+        "protocolDate": "23.06.17"
+      }
+    },
+    "polygon": {
+      "raw": "",
+      "value": [
+        [
+          42.76,
+          74.76
+        ]
+      ]
+    },
+    "beneficiaries": {
+      "raw": "",
+      "value": []
+    },
+    "notes": {
+      "raw": "",
+      "value": ""
+    },
+    "sourceYear": 2025
+  },
+  {
+    "id": {
+      "raw": "28",
+      "value": "28"
+    },
+    "licenseNumber": {
+      "raw": "НМ 127-02",
+      "value": "НМ 127-02"
+    },
+    "objectName": {
+      "raw": "Месторождение №28",
+      "value": "Месторождение №28"
+    },
+    "company": {
+      "identity": {
+        "raw": "ОсОО Нарын-Энерго",
+        "value": {
+          "orgType": "ОсОО",
+          "name": "Нарын-Энерго"
+        }
+      },
+      "inn": {
+        "raw": "",
+        "value": ""
+      },
+      "manager": {
+        "raw": "Иванов И.И.",
+        "value": "Иванов И.И."
+      },
+      "phone": {
+        "raw": "0555123456",
+        "value": [
+          "0555123456"
+        ]
+      },
+      "country": {
+        "raw": "Казахстан",
+        "value": [
+          "Казахстан"
+        ]
+      },
+      "address": {
+        "raw": "г. Бишкек",
+        "value": "г. Бишкек"
+      },
+      "founders": {
+        "raw": "Иванов - 100%",
+        "value": "Иванов - 100%"
+      }
+    },
+    "region": {
+      "raw": "Ошская область",
+      "value": "Ошская область"
+    },
+    "district": {
+      "raw": "Ошскаяский район",
+      "value": "Ошскаяский район"
+    },
+    "ayilAymak": {
+      "raw": "",
+      "value": ""
+    },
+    "licenseValidity": {
+      "raw": "с 01.01.2020 по 31.12.2025",
+      "value": "с 01.01.2020 по 31.12.2025"
+    },
+    "minerals": {
+      "raw": "уголь",
+      "value": [
+        {
+          "name": "уголь",
+          "type": "каменный уголь",
+          "group": "топливо"
+        }
+      ]
+    },
+    "workType": {
+      "raw": "поисково-оценочные работы, разведочные работы",
+      "value": [
+        "поисково-оценочные работы",
+        "разведочные работы"
+      ]
+    },
+    "areaHa": {
+      "raw": "200",
+      "value": 200
+    },
+    "status": {
+      "raw": "ВЕ",
+      "value": {
+        "code": "ВЕ",
+        "mineralType": null,
+        "workStage": null,
+        "isAnnulled": false,
+        "protocol": null,
+        "protocolDate": null
+      }
+    },
+    "polygon": {
+      "raw": "",
+      "value": [
+        [
+          42.77,
+          74.77
+        ]
+      ]
+    },
+    "beneficiaries": {
+      "raw": "",
+      "value": []
+    },
+    "notes": {
+      "raw": "",
+      "value": ""
+    },
+    "sourceYear": 2026
+  }
+]
