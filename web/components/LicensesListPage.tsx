@@ -35,16 +35,16 @@ export function LicensesListPage({
       <aside class="w-60 h-full shrink-0 overflow-y-auto rounded-lg border border-border bg-card shadow-sm">
         <FilterPanel filters={filters} options={filterOptions} />
       </aside>
-      <turbo-frame id="results" data-turbo-action="advance" class="flex-1 h-full min-w-0 flex flex-col">
+      <turbo-frame
+        id="results"
+        data-turbo-action="advance"
+        class="flex-1 h-full min-w-0 flex flex-col"
+      >
         <div class="mb-4 flex items-start justify-between gap-4 shrink-0">
           <div>
-            <h1 class="text-2xl font-semibold tracking-tight text-foreground">
-              Лицензии
-            </h1>
+            <h1 class="text-2xl font-semibold tracking-tight text-foreground">Лицензии</h1>
             <p class="mt-1 text-sm text-muted-foreground">
-              {total !== totalAll
-                ? `${total} из ${totalAll} лицензий`
-                : `${totalAll} лицензий`}
+              {total !== totalAll ? `${total} из ${totalAll} лицензий` : `${totalAll} лицензий`}
             </p>
           </div>
           <NavTabs active="table" qs={qs} />
@@ -52,13 +52,7 @@ export function LicensesListPage({
         <div class="flex-1 overflow-y-auto min-h-0 rounded-lg border border-border">
           <LicensesTable items={items} offset={offset} />
         </div>
-        <Pagination
-          page={page}
-          totalPages={totalPages}
-          total={total}
-          pageSize={pageSize}
-          qs={qs}
-        />
+        <Pagination page={page} totalPages={totalPages} total={total} pageSize={pageSize} qs={qs} />
       </turbo-frame>
     </div>
   );

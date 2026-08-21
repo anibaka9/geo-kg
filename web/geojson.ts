@@ -8,7 +8,7 @@ function isBoreholeLicense(l: License): boolean {
 
 export function toGeoJsonFeatures(filtered: License[]) {
   return filtered
-    .filter((l) => l.polygon.value.length >= 1)
+    .filter((l) => l.polygon.value.length > 0)
     .map((l) => {
       const pts = l.polygon.value;
       const properties = {

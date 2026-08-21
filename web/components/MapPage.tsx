@@ -18,9 +18,7 @@ export function MapPage({ filters, filterOptions, total, qs }: Props) {
       <div class="flex-1 flex flex-col min-w-0 gap-3">
         <div class="flex items-center justify-between">
           <NavTabs active="map" qs={qs} />
-          <p class="text-sm text-muted-foreground">
-            {total} лицензий с координатами
-          </p>
+          <p class="text-sm text-muted-foreground">{total} лицензий с координатами</p>
         </div>
         <div
           id="map"

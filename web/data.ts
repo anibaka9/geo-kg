@@ -6,7 +6,7 @@ export const PAGE_SIZE = 25;
 let licenses: License[];
 const file = Bun.file("./output/licenses.json");
 if (await file.exists()) {
-  licenses = await file.json() as License[];
+  licenses = (await file.json()) as License[];
 } else {
   console.warn("output/licenses.json not found. Run: bun run parse");
   licenses = [];

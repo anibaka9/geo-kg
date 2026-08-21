@@ -2,18 +2,23 @@
 
 ## Команды
 
-| Команда | Назначение |
-|---------|-----------|
-| `bun run dev` | Собрать CSS и запустить сервер с HMR |
-| `bun run dev:server` | Запустить сервер с `--hot` (авто-перезагрузка) |
-| `bun run dev:css` | Собрать CSS и пересобирать при изменениях |
-| `bun run parse` | Прочитать `data/*.csv`, нормализовать, записать `output/licenses.json` |
-| `bun run build:css` | Собрать CSS один раз (минифицированный) |
-| `bun run typecheck` | Проверить типы — `bunx tsc --noEmit` |
+| Команда                | Назначение                                                             |
+| ---------------------- | ---------------------------------------------------------------------- |
+| `bun run dev`          | Собрать CSS и запустить сервер с HMR                                   |
+| `bun run dev:server`   | Запустить сервер с `--hot` (авто-перезагрузка)                         |
+| `bun run dev:css`      | Собрать CSS и пересобирать при изменениях                              |
+| `bun run parse`        | Прочитать `data/*.csv`, нормализовать, записать `output/licenses.json` |
+| `bun run build:css`    | Собрать CSS один раз (минифицированный)                                |
+| `bun run typecheck`    | Проверить типы — `bunx tsc --noEmit`                                   |
+| `bun run lint`         | Линтер — `oxlint`                                                      |
+| `bun run lint:fix`     | Линтер с автофиксом — `oxlint --fix`                                   |
+| `bun run format`       | Форматтер — `oxfmt --write .`                                          |
+| `bun run format:check` | Проверить форматирование — `oxfmt --check .`                           |
 
 ## Суть проекта
 
 Веб-приложение для просмотра лицензий на недропользование в Кыргызстане. Состоит из двух частей:
+
 - **Parser** — пайплайн, который из грязных CSV-выгрузок госреестра делает чистый JSON
 - **Web-сервер** — читает JSON и отдаёт SSR-страницы с таблицей и картой
 
@@ -89,10 +94,12 @@ CSV (data/2025.csv, data/2026.csv)
 Все в `web/components/` — plain functions, возвращающие JSX.Element. Никакого React, состояния, хуков. Входные данные приходят через props. Компоненты рендерятся на сервере через `@kitajs/html`.
 
 CSS-классы — Tailwind. Используются кастомные токены из темы в `web/input.css`:
+
 - `bg-background`, `text-foreground`, `text-muted-foreground`, `border-border`
 - Отдельные компоненты используют shadcn-like паттерн: `bg-card`, `bg-muted`
 
 Интерактивность — через HTML-атрибуты:
+
 - Фильтры: `<form method="GET">` — submit делает полный релоад страницы с query string
 - Пагинация: обычные `<a href="/?page=2&...">`
 - Сортировка: ссылки с query string
@@ -105,7 +112,7 @@ CSS-классы — Tailwind. Используются кастомные то�
 Каждое поле хранит и оригинал, и нормализованное значение:
 
 ```ts
-type Field<V, R = string> = { raw: R; value: V }
+type Field<V, R = string> = { raw: R; value: V };
 ```
 
 Импортировать из `@shared/types`. В компонентах использовать `.value` для отображения (нормализованное), `.raw` — когда нужно показать оригинал для аудита.
@@ -113,6 +120,7 @@ type Field<V, R = string> = { raw: R; value: V }
 ### License
 
 Корневой тип в `shared/types.ts`. Содержит ~20 полей, все — `Field<T>`. Примеры:
+
 ```ts
 { id: Field<string>, licenseNumber: Field<string>, minerals: Field<MineralEntry[]>, ... }
 ```

@@ -6,7 +6,7 @@ const el = document.getElementById("map");
 if (!el) throw new Error("No #map element");
 
 const qs = (el as HTMLElement).dataset["qs"];
-const geojsonUrl = `/api/features.geojson${qs ? "?" + qs : ""}`;
+const geojsonUrl = `/api/features.geojson${qs ? `?${qs}` : ""}`;
 
 const form = document.querySelector("form") as HTMLFormElement | null;
 form?.addEventListener("submit", (e) => {
@@ -14,8 +14,8 @@ form?.addEventListener("submit", (e) => {
   const params = new URLSearchParams();
   new FormData(form).forEach((value, key) => params.append(key, value as string));
   const newQs = params.toString();
-  history.pushState({}, "", "/map" + (newQs ? "?" + newQs : ""));
-  const url = `/api/features.geojson${newQs ? "?" + newQs : ""}`;
+  history.pushState({}, "", `/map${newQs ? `?${newQs}` : ""}`);
+  const url = `/api/features.geojson${newQs ? `?${newQs}` : ""}`;
   (map.getSource("licenses") as any)?.setData(url);
 });
 
@@ -38,7 +38,12 @@ map.on("load", () => {
         "case",
         ["get", "isAnnulled"],
         "#fca5a5",
-        ["match", ["get", "mineralGroup"], ...Object.entries(MINERAL_GROUP_COLORS).flat(), "#9ca3af"],
+        [
+          "match",
+          ["get", "mineralGroup"],
+          ...Object.entries(MINERAL_GROUP_COLORS).flat(),
+          "#9ca3af",
+        ],
       ],
       "fill-opacity": 0.5,
     },
@@ -70,7 +75,12 @@ map.on("load", () => {
         "case",
         ["get", "isAnnulled"],
         "#fca5a5",
-        ["match", ["get", "mineralGroup"], ...Object.entries(MINERAL_GROUP_COLORS).flat(), "#9ca3af"],
+        [
+          "match",
+          ["get", "mineralGroup"],
+          ...Object.entries(MINERAL_GROUP_COLORS).flat(),
+          "#9ca3af",
+        ],
       ],
       "circle-stroke-width": 1,
       "circle-stroke-color": "#374151",
@@ -104,12 +114,20 @@ map.on("load", () => {
 
   map.on("mousemove", "license-point", (e: any) => {
     map.getCanvas().style.cursor = "pointer";
-    map.setFilter("license-point-hover", ["all", ["==", "$type", "Point"], ["==", ["get", "id"], e.features[0].properties.id]]);
+    map.setFilter("license-point-hover", [
+      "all",
+      ["==", "$type", "Point"],
+      ["==", ["get", "id"], e.features[0].properties.id],
+    ]);
   });
 
   map.on("mouseleave", "license-point", () => {
     map.getCanvas().style.cursor = "";
-    map.setFilter("license-point-hover", ["all", ["==", "$type", "Point"], ["==", ["get", "id"], ""]]);
+    map.setFilter("license-point-hover", [
+      "all",
+      ["==", "$type", "Point"],
+      ["==", ["get", "id"], ""],
+    ]);
   });
 
   const panel = document.getElementById("license-panel")!;
@@ -143,7 +161,9 @@ map.on("load", () => {
   map.on("click", "license-point", clickLicense);
 
   map.on("click", (e: any) => {
-    if (!map.queryRenderedFeatures(e.point, { layers: ["license-fill", "license-point"] }).length) {
+    if (
+      map.queryRenderedFeatures(e.point, { layers: ["license-fill", "license-point"] }).length === 0
+    ) {
       closePanel();
     }
   });

@@ -16,7 +16,7 @@ export function parseStatus(raw: string): Field<StatusData> {
   if (!trimmed) return { raw, value: EMPTY };
 
   // Code pattern: 2 Cyrillic letters, optionally with /letter suffix (e.g. "ВЕ", "АЕ/Р")
-  if (/^[А-ЯЁ]{2}(?:\/[А-ЯЁ])?$/.test(trimmed)) {
+  if (/^[А-ЯЁ]{2}(?:\/[А-ЯЁ])?$/u.test(trimmed)) {
     const base = trimmed.split("/")[0]!;
     return {
       raw,
@@ -33,17 +33,17 @@ export function parseStatus(raw: string): Field<StatusData> {
 
   // Annulment: starts with "Ан" variant, or contains "протокол", or known annulment phrases
   const isAnnulled =
-    /^ан/i.test(trimmed) ||
-    /протокол/i.test(trimmed) ||
-    /перечень анн/i.test(trimmed);
+    trimmed.toLowerCase().startsWith("ан") ||
+    /протокол/iu.test(trimmed) ||
+    /перечень анн/iu.test(trimmed);
 
   if (isAnnulled) {
     const protocolMatch = trimmed.match(
-      /протокол[а-яё]?\s*(?:№|N|#)?\s*([\d][\d\-А-ЯЁа-яёA-Za-z]*)/i
+      /протокол[а-яё]?\s*(?:№|N|#)?\s*([\d][\d\-А-ЯЁа-яёA-Za-z]*)/iu,
     );
     const dateMatch =
-      trimmed.match(/от\s+(\d{1,2}[.\-]\d{2}[.\-]\d{2,4})/i) ??
-      trimmed.match(/(\d{1,2}[.\-]\d{2}[.\-]\d{2,4})(?:г\.?)?/);
+      trimmed.match(/от\s+(\d{1,2}[.\-]\d{2}[.\-]\d{2,4})/iu) ??
+      trimmed.match(/(\d{1,2}[.\-]\d{2}[.\-]\d{2,4})(?:г\.?)?/u);
     return {
       raw,
       value: {

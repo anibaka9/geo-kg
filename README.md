@@ -17,18 +17,18 @@ Kyrgyzstan's government publishes mining and drilling license data as CSV files 
 
 ## Tech Stack
 
-| Layer | Technology |
-|-------|-----------|
-| Runtime | [Bun](https://bun.com) |
-| Language | TypeScript (strict) |
-| Server | [Elysia](https://elysiajs.com) |
-| SSR / JSX | [@kitajs/html](https://github.com/kitajs/html) (no React, no hydration) |
-| CSS | Tailwind CSS v4 |
-| SPA navigation | [Hotwire Turbo](https://turbo.hotwired.dev) |
-| Maps | [MapLibre GL](https://maplibre.org) |
-| Coordinate conversion | [proj4](https://github.com/proj4js/proj4js) (SK-42 → WGS84) |
-| CSV parsing | [PapaParse](https://www.papaparse.com) |
-| Database | None — in-memory filtering (~22 MB JSON) |
+| Layer                 | Technology                                                              |
+| --------------------- | ----------------------------------------------------------------------- |
+| Runtime               | [Bun](https://bun.com)                                                  |
+| Language              | TypeScript (strict)                                                     |
+| Server                | [Elysia](https://elysiajs.com)                                          |
+| SSR / JSX             | [@kitajs/html](https://github.com/kitajs/html) (no React, no hydration) |
+| CSS                   | Tailwind CSS v4                                                         |
+| SPA navigation        | [Hotwire Turbo](https://turbo.hotwired.dev)                             |
+| Maps                  | [MapLibre GL](https://maplibre.org)                                     |
+| Coordinate conversion | [proj4](https://github.com/proj4js/proj4js) (SK-42 → WGS84)             |
+| CSV parsing           | [PapaParse](https://www.papaparse.com)                                  |
+| Database              | None — in-memory filtering (~22 MB JSON)                                |
 
 ## Getting Started
 
@@ -167,7 +167,7 @@ A significant portion of coordinates in the source data are corrupted — wrong 
 Every parsed field stores both the raw and cleaned value:
 
 ```ts
-type Field<V, R = string> = { raw: R; value: V }
+type Field<V, R = string> = { raw: R; value: V };
 ```
 
 This allows showing original data alongside normalized values in the UI — critical for data quality auditing.
@@ -182,13 +182,13 @@ This allows showing original data alongside normalized values in the UI — crit
 
 ## API
 
-| Endpoint | Description |
-|----------|-------------|
-| `GET /` | Table view (filters via query string) |
-| `GET /map` | Map view |
-| `GET /license/:id` | Single license page |
-| `GET /api/features.geojson` | GeoJSON FeatureCollection (supports same filters as `/`) |
-| `GET /api/license/:id/fragment` | HTML fragment for map popup panel |
+| Endpoint                        | Description                                              |
+| ------------------------------- | -------------------------------------------------------- |
+| `GET /`                         | Table view (filters via query string)                    |
+| `GET /map`                      | Map view                                                 |
+| `GET /license/:id`              | Single license page                                      |
+| `GET /api/features.geojson`     | GeoJSON FeatureCollection (supports same filters as `/`) |
+| `GET /api/license/:id/fragment` | HTML fragment for map popup panel                        |
 
 ## License
 

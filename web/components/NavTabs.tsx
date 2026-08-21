@@ -1,10 +1,4 @@
-export function NavTabs({
-  active,
-  qs,
-}: {
-  active: "table" | "map";
-  qs?: string;
-}) {
+export function NavTabs({ active, qs }: { active: "table" | "map"; qs?: string }) {
   const tableHref = qs ? `/?${qs}` : "/";
   const mapHref = qs ? `/map?${qs}` : "/map";
 
@@ -15,7 +9,11 @@ export function NavTabs({
 
   return (
     <div class="inline-flex items-center gap-1 rounded-lg border border-border bg-muted/50 p-1">
-      <a href={tableHref} class={active === "table" ? activeStyle : inactiveStyle} data-turbo-frame="_top">
+      <a
+        href={tableHref}
+        class={active === "table" ? activeStyle : inactiveStyle}
+        data-turbo-frame="_top"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="14"
@@ -32,7 +30,11 @@ export function NavTabs({
         </svg>
         Таблица
       </a>
-      <a href={mapHref} class={active === "map" ? activeStyle : inactiveStyle} data-turbo-frame="_top">
+      <a
+        href={mapHref}
+        class={active === "map" ? activeStyle : inactiveStyle}
+        data-turbo-frame="_top"
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="14"

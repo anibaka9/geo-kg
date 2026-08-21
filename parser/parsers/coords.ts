@@ -33,17 +33,29 @@ function northingCandidates(v: number): number[] {
   const seen = new Set<number>();
 
   const add = (c: number) => {
-    if (c >= KG_N_MIN && c <= KG_N_MAX && !seen.has(c)) { out.push(c); seen.add(c); }
+    if (c >= KG_N_MIN && c <= KG_N_MAX && !seen.has(c)) {
+      out.push(c);
+      seen.add(c);
+    }
   };
 
   if (s.length === 6) {
-    add(4_000_000 + v);                                              // missing leading '4'
-    for (let i = 0; i <= 7; i++)                                    // try any single insertion
+    add(4_000_000 + v); // missing leading '4'
+    for (
+      let i = 0;
+      i <= 7;
+      i++ // try any single insertion
+    )
       for (let d = 0; d <= 9; d++) add(parseInt(s.slice(0, i) + String(d) + s.slice(i), 10));
   }
-  if (s.length === 8) for (let i = 0; i < 8; i++)                  // extra digit
-    add(parseInt(s.slice(0, i) + s.slice(i + 1), 10));
-  if (s.length === 7) add(parseInt("4" + s.slice(1), 10));          // wrong first digit
+  if (s.length === 8)
+    for (
+      let i = 0;
+      i < 8;
+      i++ // extra digit
+    )
+      add(parseInt(s.slice(0, i) + s.slice(i + 1), 10));
+  if (s.length === 7) add(parseInt(`4${s.slice(1)}`, 10)); // wrong first digit
 
   return out.length > 0 ? out : [v];
 }
@@ -53,7 +65,7 @@ function northingCandidates(v: number): number[] {
 // and adjacent-digit transpositions (e.g. 4357500→4537500, 4783397→4738397).
 function bestNorthing(v: number, refNorthing: number): number {
   const cs = northingCandidates(v);
-  let best = cs.reduce((b, c) => Math.abs(c - refNorthing) < Math.abs(b - refNorthing) ? c : b);
+  let best = cs.reduce((b, c) => (Math.abs(c - refNorthing) < Math.abs(b - refNorthing) ? c : b));
 
   if (Math.abs(best - refNorthing) > 30_000) {
     const s = String(Math.round(best));
@@ -62,14 +74,22 @@ function bestNorthing(v: number, refNorthing: number): number {
         for (let d = 0; d <= 9; d++) {
           if (s[pos] === String(d)) continue;
           const c = parseInt(s.slice(0, pos) + String(d) + s.slice(pos + 1), 10);
-          if (c >= KG_N_MIN && c <= KG_N_MAX && Math.abs(c - refNorthing) < Math.abs(best - refNorthing))
+          if (
+            c >= KG_N_MIN &&
+            c <= KG_N_MAX &&
+            Math.abs(c - refNorthing) < Math.abs(best - refNorthing)
+          )
             best = c;
         }
       }
       for (let pos = 0; pos < s.length - 1; pos++) {
         if (s[pos] === s[pos + 1]) continue;
         const c = parseInt(s.slice(0, pos) + s[pos + 1]! + s[pos]! + s.slice(pos + 2), 10);
-        if (c >= KG_N_MIN && c <= KG_N_MAX && Math.abs(c - refNorthing) < Math.abs(best - refNorthing))
+        if (
+          c >= KG_N_MIN &&
+          c <= KG_N_MAX &&
+          Math.abs(c - refNorthing) < Math.abs(best - refNorthing)
+        )
           best = c;
       }
     }
@@ -90,7 +110,7 @@ function majorityZone(eastings: number[]): number | null {
     const z = Math.floor(e / 1_000_000);
     if (GK_ZONE[z]) counts.set(z, (counts.get(z) ?? 0) + 1);
   }
-  return [...counts.entries()].sort((a, b) => b[1] - a[1])[0]?.[0] ?? null;
+  return [...counts.entries()].toSorted((a, b) => b[1] - a[1])[0]?.[0] ?? null;
 }
 
 // Candidates for a null-point easting via single-digit deletion/insertion.
@@ -100,16 +120,17 @@ function eastingRepairCandidates(e: number): number[] {
   const seen = new Set<number>();
   const add = (c: number) => {
     const z = Math.floor(c / 1_000_000);
-    if ((z === 12 || z === 13) && !seen.has(c)) { out.push(c); seen.add(c); }
+    if ((z === 12 || z === 13) && !seen.has(c)) {
+      out.push(c);
+      seen.add(c);
+    }
   };
   // single-digit deletion (handles extra digit, e.g. 9-digit easting)
-  for (let i = 0; i < s.length; i++)
-    add(parseInt(s.slice(0, i) + s.slice(i + 1), 10));
+  for (let i = 0; i < s.length; i++) add(parseInt(s.slice(0, i) + s.slice(i + 1), 10));
   // single-digit insertion for short eastings (handles missing digit, e.g. 7-digit)
   if (s.length <= 7) {
     for (let i = 0; i <= s.length; i++)
-      for (let d = 0; d <= 9; d++)
-        add(parseInt(s.slice(0, i) + String(d) + s.slice(i), 10));
+      for (let d = 0; d <= 9; d++) add(parseInt(s.slice(0, i) + String(d) + s.slice(i), 10));
   }
   return out;
 }
@@ -117,7 +138,7 @@ function eastingRepairCandidates(e: number): number[] {
 // ── Helpers ──────────────────────────────────────────────────────────────────
 
 function median(values: number[]): number {
-  const s = [...values].sort((a, b) => a - b);
+  const s = values.toSorted((a, b) => a - b);
   return s[Math.floor(s.length / 2)]!;
 }
 
@@ -126,7 +147,7 @@ function dist2(pt: [number, number], refLat: number, refLon: number): number {
 }
 
 function splitNums(raw: string): number[] {
-  return raw.trim().split(/\s+/).filter(Boolean).map(Number);
+  return raw.trim().split(/\s+/u).filter(Boolean).map(Number);
 }
 
 function inRegion(pt: [number, number]): boolean {
@@ -134,15 +155,18 @@ function inRegion(pt: [number, number]): boolean {
 }
 
 function segmentsIntersect(
-  p1: [number, number], p2: [number, number],
-  p3: [number, number], p4: [number, number],
+  p1: [number, number],
+  p2: [number, number],
+  p3: [number, number],
+  p4: [number, number],
 ): boolean {
-  const cross = (O: [number,number], A: [number,number], B: [number,number]) =>
+  const cross = (O: [number, number], A: [number, number], B: [number, number]) =>
     (A[1] - O[1]) * (B[0] - O[0]) - (A[0] - O[0]) * (B[1] - O[1]);
-  const d1 = cross(p3, p4, p1), d2 = cross(p3, p4, p2);
-  const d3 = cross(p1, p2, p3), d4 = cross(p1, p2, p4);
-  return ((d1 > 0 && d2 < 0) || (d1 < 0 && d2 > 0)) &&
-         ((d3 > 0 && d4 < 0) || (d3 < 0 && d4 > 0));
+  const d1 = cross(p3, p4, p1),
+    d2 = cross(p3, p4, p2);
+  const d3 = cross(p1, p2, p3),
+    d4 = cross(p1, p2, p4);
+  return ((d1 > 0 && d2 < 0) || (d1 < 0 && d2 > 0)) && ((d3 > 0 && d4 < 0) || (d3 < 0 && d4 > 0));
 }
 
 function isSelfIntersecting(pts: [number, number][]): boolean {
@@ -152,8 +176,8 @@ function isSelfIntersecting(pts: [number, number][]): boolean {
       if (i === 0 && j === n - 2) continue;
       if (segmentsIntersect(pts[i]!, pts[i + 1]!, pts[j]!, pts[j + 1]!)) return true;
     }
-    if (i > 0 && i < n - 2 &&
-        segmentsIntersect(pts[n - 1]!, pts[0]!, pts[i]!, pts[i + 1]!)) return true;
+    if (i > 0 && i < n - 2 && segmentsIntersect(pts[n - 1]!, pts[0]!, pts[i]!, pts[i + 1]!))
+      return true;
   }
   return false;
 }
@@ -161,20 +185,18 @@ function isSelfIntersecting(pts: [number, number][]): boolean {
 // Andrew's monotone chain convex hull; returns points in CCW order.
 function convexHull(pts: [number, number][]): [number, number][] {
   if (pts.length < 3) return pts;
-  const p = [...pts].sort((a, b) => a[1] !== b[1] ? a[1] - b[1] : a[0] - b[0]);
-  const cross = (O: [number,number], A: [number,number], B: [number,number]) =>
+  const p = pts.toSorted((a, b) => (a[1] !== b[1] ? a[1] - b[1] : a[0] - b[0]));
+  const cross = (O: [number, number], A: [number, number], B: [number, number]) =>
     (A[1] - O[1]) * (B[0] - O[0]) - (A[0] - O[0]) * (B[1] - O[1]);
   const hull: [number, number][] = [];
   for (const pt of p) {
-    while (hull.length >= 2 && cross(hull[hull.length - 2]!, hull[hull.length - 1]!, pt) <= 0)
-      hull.pop();
+    while (hull.length >= 2 && cross(hull.at(-2)!, hull.at(-1)!, pt) <= 0) hull.pop();
     hull.push(pt);
   }
   const lower = hull.length + 1;
   for (let i = p.length - 2; i >= 0; i--) {
     const pt = p[i]!;
-    while (hull.length >= lower && cross(hull[hull.length - 2]!, hull[hull.length - 1]!, pt) <= 0)
-      hull.pop();
+    while (hull.length >= lower && cross(hull.at(-2)!, hull.at(-1)!, pt) <= 0) hull.pop();
     hull.push(pt);
   }
   hull.pop();
@@ -237,11 +259,15 @@ export function parseCoords(
       }
       for (const ec of candidates) {
         const fp = gkToWgs84(ec, repairedN[i]!);
-        if (fp && fp[1] >= KG_LON_MIN && fp[1] <= KG_LON_MAX && inRegion(fp)) {
-          if (!pt || dist2(fp, refLat, refLon) < dist2(pt, refLat, refLon)) {
-            pt = fp;
-            repairedE = ec;
-          }
+        if (
+          fp &&
+          fp[1] >= KG_LON_MIN &&
+          fp[1] <= KG_LON_MAX &&
+          inRegion(fp) &&
+          (!pt || dist2(fp, refLat, refLon) < dist2(pt, refLat, refLon))
+        ) {
+          pt = fp;
+          repairedE = ec;
         }
       }
     } else if (mZone !== null) {
@@ -249,8 +275,12 @@ export function parseCoords(
       if (zone !== mZone) {
         const fixedE = mZone * 1_000_000 + (e - zone * 1_000_000);
         const fp = gkToWgs84(fixedE, repairedN[i]!);
-        if (fp && fp[1] >= KG_LON_MIN && fp[1] <= KG_LON_MAX &&
-            dist2(fp, refLat, refLon) < dist2(pt, refLat, refLon)) {
+        if (
+          fp &&
+          fp[1] >= KG_LON_MIN &&
+          fp[1] <= KG_LON_MAX &&
+          dist2(fp, refLat, refLon) < dist2(pt, refLat, refLon)
+        ) {
           pt = fp;
           repairedE = fixedE;
         }
@@ -276,7 +306,10 @@ export function parseCoords(
             const fp = gkToWgs84(c, repairedN[i]!);
             if (fp && fp[1] >= KG_LON_MIN && fp[1] <= KG_LON_MAX && inRegion(fp)) {
               const fpD2 = dist2(fp, refLat, refLon);
-              if (fpD2 < bestD2) { bestD2 = fpD2; bestFp = fp; }
+              if (fpD2 < bestD2) {
+                bestD2 = fpD2;
+                bestFp = fp;
+              }
             }
           }
         }
@@ -293,7 +326,10 @@ export function parseCoords(
             const fp = gkToWgs84(repairedE, nc);
             if (fp && fp[1] >= KG_LON_MIN && fp[1] <= KG_LON_MAX && inRegion(fp)) {
               const fpD2 = dist2(fp, refLat, refLon);
-              if (fpD2 < bestD2) { bestD2 = fpD2; bestFp = fp; }
+              if (fpD2 < bestD2) {
+                bestD2 = fpD2;
+                bestFp = fp;
+              }
             }
           }
         }
@@ -304,7 +340,10 @@ export function parseCoords(
           const fp = gkToWgs84(repairedE, nc);
           if (fp && fp[1] >= KG_LON_MIN && fp[1] <= KG_LON_MAX && inRegion(fp)) {
             const fpD2 = dist2(fp, refLat, refLon);
-            if (fpD2 < bestD2) { bestD2 = fpD2; bestFp = fp; }
+            if (fpD2 < bestD2) {
+              bestD2 = fpD2;
+              bestFp = fp;
+            }
           }
         }
       }
@@ -317,9 +356,7 @@ export function parseCoords(
 
   // Step 5: if the polygon self-intersects (bad vertex order or borehole points),
   // replace with convex hull — always produces a valid simple polygon.
-  const result = value.length >= 3 && isSelfIntersecting(value)
-    ? convexHull(value)
-    : value;
+  const result = value.length >= 3 && isSelfIntersecting(value) ? convexHull(value) : value;
 
   return { raw, value: result };
 }

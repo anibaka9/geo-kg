@@ -1,10 +1,10 @@
 import type { CanonicalCountry } from "./countries";
 import type { CanonicalRegion } from "./regions";
 
-export type Field<V, R = string> = {
+export interface Field<V, R = string> {
   raw: R;
   value: V;
-};
+}
 
 export interface MineralEntry {
   name: string;

@@ -43,7 +43,10 @@ function extractRegion(raw: string): CanonicalRegion | null {
   return null;
 }
 
-export function parseRegion(location: string, regionOverride?: string): Field<CanonicalRegion | ""> {
+export function parseRegion(
+  location: string,
+  regionOverride?: string,
+): Field<CanonicalRegion | ""> {
   if (regionOverride && isCanonicalRegion(regionOverride)) {
     return { raw: regionOverride, value: regionOverride };
   }

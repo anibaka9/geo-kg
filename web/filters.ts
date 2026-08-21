@@ -41,15 +41,13 @@ export function buildFilterOptions(all: License[]): FilterOptions {
   for (const l of all) {
     if (l.region.value)
       regionCounts.set(l.region.value, (regionCounts.get(l.region.value) ?? 0) + 1);
-    for (const wt of l.workType.value)
-      workTypeCounts.set(wt, (workTypeCounts.get(wt) ?? 0) + 1);
+    for (const wt of l.workType.value) workTypeCounts.set(wt, (workTypeCounts.get(wt) ?? 0) + 1);
     for (const m of l.minerals.value) {
       const ex = mineralTypeCounts.get(m.type);
       if (ex) ex.count++;
       else mineralTypeCounts.set(m.type, { count: 1, group: m.group });
     }
-    for (const c of l.company.country.value)
-      countryCounts.set(c, (countryCounts.get(c) ?? 0) + 1);
+    for (const c of l.company.country.value) countryCounts.set(c, (countryCounts.get(c) ?? 0) + 1);
     const y = String(l.sourceYear);
     yearCounts.set(y, (yearCounts.get(y) ?? 0) + 1);
   }
@@ -57,14 +55,14 @@ export function buildFilterOptions(all: License[]): FilterOptions {
   const toArr = (map: Map<string, number>): FilterOption[] =>
     [...map.entries()]
       .map(([value, count]) => ({ value, count }))
-      .sort((a, b) => b.count - a.count || a.value.localeCompare(b.value));
+      .toSorted((a, b) => b.count - a.count || a.value.localeCompare(b.value));
 
   return {
     regions: toArr(regionCounts),
     workTypes: toArr(workTypeCounts),
     mineralTypes: [...mineralTypeCounts.entries()]
       .map(([value, { count, group }]) => ({ value, count, group }))
-      .sort((a, b) => b.count - a.count || a.value.localeCompare(b.value)),
+      .toSorted((a, b) => b.count - a.count || a.value.localeCompare(b.value)),
     countries: toArr(countryCounts),
     years: toArr(yearCounts),
   };
@@ -97,14 +95,14 @@ export function applyFilters(all: License[], f: ActiveFilters): License[] {
     }
     if (f.status === "active" && l.status.value.isAnnulled) return false;
     if (f.status === "annulled" && !l.status.value.isAnnulled) return false;
-    if (f.regions.length && !f.regions.includes(l.region.value)) return false;
-    if (f.workTypes.length && !l.workType.value.some((wt) => f.workTypes.includes(wt)))
+    if (f.regions.length > 0 && !f.regions.includes(l.region.value)) return false;
+    if (f.workTypes.length > 0 && !l.workType.value.some((wt) => f.workTypes.includes(wt)))
       return false;
-    if (f.mineralTypes.length && !l.minerals.value.some((m) => f.mineralTypes.includes(m.type)))
+    if (f.mineralTypes.length > 0 && !l.minerals.value.some((m) => f.mineralTypes.includes(m.type)))
       return false;
-    if (f.countries.length && !l.company.country.value.some((c) => f.countries.includes(c)))
+    if (f.countries.length > 0 && !l.company.country.value.some((c) => f.countries.includes(c)))
       return false;
-    if (f.years.length && !f.years.includes(String(l.sourceYear))) return false;
+    if (f.years.length > 0 && !f.years.includes(String(l.sourceYear))) return false;
     const areaMin = Number(f.areaMin);
     const areaMax = Number(f.areaMax);
     if (f.areaMin !== "" && (isNaN(areaMin) || l.areaHa.value === null || l.areaHa.value < areaMin))

@@ -8,13 +8,26 @@ interface FieldRowProps {
   href?: string;
 }
 
+function FieldValue({ display, href }: { display: string; href?: string }) {
+  if (href) {
+    return (
+      <a
+        href={href}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="text-primary hover:underline underline-offset-4"
+      >
+        {display}
+      </a>
+    );
+  }
+  return <>{display}</>;
+}
+
 function FieldRow({ label, value, raw, href }: FieldRowProps) {
   const display =
-    value !== null && value !== undefined && String(value).trim() !== ""
-      ? String(value)
-      : null;
-  const showRaw =
-    raw !== undefined && raw.trim() !== "" && raw.trim() !== display;
+    value !== null && value !== undefined && String(value).trim() !== "" ? String(value) : null;
+  const showRaw = raw !== undefined && raw.trim() !== "" && raw.trim() !== display;
   return (
     <div class="grid grid-cols-3 gap-4 py-3 border-b border-border last:border-0">
       <dt class="text-xs font-medium text-muted-foreground uppercase tracking-wide pt-0.5">
@@ -22,18 +35,7 @@ function FieldRow({ label, value, raw, href }: FieldRowProps) {
       </dt>
       <dd class="text-sm text-foreground col-span-2">
         {display ? (
-          href ? (
-            <a
-              href={href}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="text-primary hover:underline underline-offset-4"
-            >
-              {display}
-            </a>
-          ) : (
-            display
-          )
+          <FieldValue display={display} href={href} />
         ) : (
           <span class="text-muted-foreground">—</span>
         )}
@@ -52,13 +54,7 @@ function FieldRow({ label, value, raw, href }: FieldRowProps) {
   );
 }
 
-function Card({
-  title,
-  children,
-}: {
-  title: string;
-  children: JSX.Element | JSX.Element[];
-}) {
+function Card({ title, children }: { title: string; children: JSX.Element | JSX.Element[] }) {
   return (
     <div class="rounded-lg border border-border bg-card text-card-foreground shadow-sm">
       <div class="px-6 py-4 border-b border-border">
@@ -96,9 +92,7 @@ function WorkTypeRow({ workType }: { workType: License["workType"] }) {
             <summary class="text-xs text-muted-foreground/60 cursor-pointer hover:text-muted-foreground select-none w-fit">
               raw
             </summary>
-            <p class="text-xs font-mono mt-1 text-muted-foreground">
-              {raw.trim()}
-            </p>
+            <p class="text-xs font-mono mt-1 text-muted-foreground">{raw.trim()}</p>
           </details>
         )}
       </dd>
@@ -106,13 +100,7 @@ function WorkTypeRow({ workType }: { workType: License["workType"] }) {
   );
 }
 
-function MineralsRow({
-  minerals,
-  raw,
-}: {
-  minerals: MineralEntry[];
-  raw: string;
-}) {
+function MineralsRow({ minerals, raw }: { minerals: MineralEntry[]; raw: string }) {
   // Group by type, preserving order of first occurrence
   const byType = new Map<string, MineralEntry[]>();
   for (const m of minerals) {
@@ -120,8 +108,7 @@ function MineralsRow({
     byType.get(m.type)!.push(m);
   }
 
-  const showRaw =
-    raw.trim() !== "" && raw.trim() !== minerals.map((m) => m.name).join(", ");
+  const showRaw = raw.trim() !== "" && raw.trim() !== minerals.map((m) => m.name).join(", ");
 
   return (
     <div class="grid grid-cols-3 gap-4 py-3 border-b border-border">
@@ -183,9 +170,7 @@ function StatusRow({ status, raw }: { status: StatusData; raw: string }) {
         <span class="inline-flex items-center rounded-md bg-green-50 px-2 py-0.5 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
           {status.code}
         </span>
-        {decoded && (
-          <p class="text-xs text-muted-foreground">{decoded}</p>
-        )}
+        {decoded && <p class="text-xs text-muted-foreground">{decoded}</p>}
       </div>
     );
   } else {
@@ -222,10 +207,15 @@ function companyDisplayName(license: License): string {
   return name ? `${orgType} "${name}"` : orgType;
 }
 
-export function LicensePage({ license, hideBackLink }: { license: License; hideBackLink?: boolean }) {
+export function LicensePage({
+  license,
+  hideBackLink,
+}: {
+  license: License;
+  hideBackLink?: boolean;
+}) {
   const hasBeneficiaries =
-    Array.isArray(license.beneficiaries.value) &&
-    license.beneficiaries.value.length > 0;
+    Array.isArray(license.beneficiaries.value) && license.beneficiaries.value.length > 0;
 
   return (
     <div class="max-w-3xl mx-auto space-y-5">
@@ -244,9 +234,7 @@ export function LicensePage({ license, hideBackLink }: { license: License; hideB
             <h1 class="text-2xl font-semibold tracking-tight text-foreground">
               {license.objectName.value}
             </h1>
-            <p class="mt-1 text-sm text-muted-foreground">
-              {license.licenseNumber.value}
-            </p>
+            <p class="mt-1 text-sm text-muted-foreground">{license.licenseNumber.value}</p>
           </div>
           <span
             class={`shrink-0 inline-flex items-center rounded-md px-2.5 py-1 text-xs font-medium ring-1 ring-inset ${
@@ -265,10 +253,7 @@ export function LicensePage({ license, hideBackLink }: { license: License; hideB
         <WorkTypeRow workType={license.workType} />
         <FieldRow label="Срок действия" value={license.licenseValidity.value} />
         <StatusRow status={license.status.value} raw={license.status.raw} />
-        <MineralsRow
-          minerals={license.minerals.value}
-          raw={license.minerals.raw}
-        />
+        <MineralsRow minerals={license.minerals.value} raw={license.minerals.raw} />
         <FieldRow label="Площадь, га" value={license.areaHa.value} />
       </Card>
 
@@ -318,8 +303,7 @@ export function LicensePage({ license, hideBackLink }: { license: License; hideB
               ))}
               {license.company.country.raw &&
                 license.company.country.raw.trim() !== "" &&
-                license.company.country.raw.trim() !==
-                  license.company.country.value.join(", ") && (
+                license.company.country.raw.trim() !== license.company.country.value.join(", ") && (
                   <details class="w-full">
                     <summary class="text-xs text-muted-foreground/60 cursor-pointer hover:text-muted-foreground select-none w-fit">
                       raw
@@ -338,17 +322,16 @@ export function LicensePage({ license, hideBackLink }: { license: License; hideB
             </dt>
             <dd class="text-sm text-foreground col-span-2">
               <span class="text-muted-foreground">—</span>
-              {license.company.country.raw &&
-                license.company.country.raw.trim() !== "" && (
-                  <details class="mt-1">
-                    <summary class="text-xs text-muted-foreground/60 cursor-pointer hover:text-muted-foreground select-none w-fit">
-                      raw
-                    </summary>
-                    <p class="text-xs font-mono mt-1 text-muted-foreground break-all whitespace-pre-wrap">
-                      {license.company.country.raw}
-                    </p>
-                  </details>
-                )}
+              {license.company.country.raw && license.company.country.raw.trim() !== "" && (
+                <details class="mt-1">
+                  <summary class="text-xs text-muted-foreground/60 cursor-pointer hover:text-muted-foreground select-none w-fit">
+                    raw
+                  </summary>
+                  <p class="text-xs font-mono mt-1 text-muted-foreground break-all whitespace-pre-wrap">
+                    {license.company.country.raw}
+                  </p>
+                </details>
+              )}
             </dd>
           </div>
         )}
@@ -377,9 +360,7 @@ export function LicensePage({ license, hideBackLink }: { license: License; hideB
 
       {license.notes.value && (
         <Card title="Примечания">
-          <p class="py-3 text-sm text-foreground whitespace-pre-wrap">
-            {license.notes.value}
-          </p>
+          <p class="py-3 text-sm text-foreground whitespace-pre-wrap">{license.notes.value}</p>
         </Card>
       )}
 
@@ -389,23 +370,15 @@ export function LicensePage({ license, hideBackLink }: { license: License; hideB
             <table class="text-xs font-mono">
               <thead>
                 <tr>
-                  <th class="pr-8 pb-2 text-left font-medium text-muted-foreground">
-                    Широта
-                  </th>
-                  <th class="pb-2 text-left font-medium text-muted-foreground">
-                    Долгота
-                  </th>
+                  <th class="pr-8 pb-2 text-left font-medium text-muted-foreground">Широта</th>
+                  <th class="pb-2 text-left font-medium text-muted-foreground">Долгота</th>
                 </tr>
               </thead>
               <tbody class="divide-y divide-border">
                 {license.polygon.value.map(([lat, lon]) => (
                   <tr class="hover:bg-muted/40">
-                    <td class="pr-8 py-1 tabular-nums text-foreground">
-                      {lat.toFixed(6)}
-                    </td>
-                    <td class="py-1 tabular-nums text-foreground">
-                      {lon.toFixed(6)}
-                    </td>
+                    <td class="pr-8 py-1 tabular-nums text-foreground">{lat.toFixed(6)}</td>
+                    <td class="py-1 tabular-nums text-foreground">{lon.toFixed(6)}</td>
                   </tr>
                 ))}
               </tbody>

@@ -2,9 +2,9 @@ import type { Field, MineralEntry } from "@shared/types";
 import { MINERAL_MAP, EXPAND_MAP } from "../data/minerals";
 
 const NORMALIZATIONS: [RegExp, string][] = [
-  [/\s{2,}/g, " "],
-  [/^и\s+/i, ""],
-  [/[.\s]+$/g, ""],
+  [/\s{2,}/gu, " "],
+  [/^и\s+/iu, ""],
+  [/[.\s]+$/gu, ""],
 ];
 
 function normalizeToken(s: string): string {
@@ -22,7 +22,12 @@ export function parseMinerals(raw: string): Field<MineralEntry[]> {
     if (!normalized) continue;
 
     const expanded = EXPAND_MAP[normalized];
-    const tokens = expanded ?? normalized.split(" и ").map((s) => s.trim()).filter(Boolean);
+    const tokens =
+      expanded ??
+      normalized
+        .split(" и ")
+        .map((s) => s.trim())
+        .filter(Boolean);
 
     for (const token of tokens) {
       const entry = MINERAL_MAP[token] ?? { name: token, type: "прочее", group: "прочее" };

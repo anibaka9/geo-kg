@@ -27,8 +27,15 @@ await Bun.build({
 
 const MAP_HEAD = (
   <>
-    <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@5/dist/maplibre-gl.css" data-turbo-track="reload" />
-    <script src="https://unpkg.com/maplibre-gl@5/dist/maplibre-gl.js" data-turbo-track="reload"></script>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/maplibre-gl@5/dist/maplibre-gl.css"
+      data-turbo-track="reload"
+    />
+    <script
+      src="https://unpkg.com/maplibre-gl@5/dist/maplibre-gl.js"
+      data-turbo-track="reload"
+    ></script>
     <script src="/public/map.js" defer data-turbo-track="reload"></script>
   </>
 ) as JSX.Element;
@@ -68,7 +75,7 @@ new Elysia()
     const sp = new URL(request.url).searchParams;
     const filters = parseFilters(sp);
     const filtered = applyFilters(licenses, filters);
-    const withCoords = filtered.filter((l) => l.polygon.value.length >= 1).length;
+    const withCoords = filtered.filter((l) => l.polygon.value.length > 0).length;
     const qs = filtersToQs(sp);
 
     return (
@@ -86,14 +93,18 @@ new Elysia()
     const sp = new URL(request.url).searchParams;
     const filtered = applyFilters(licenses, parseFilters(sp));
     const features = toGeoJsonFeatures(filtered);
-    return new Response(JSON.stringify({ type: "FeatureCollection", features }), {
-      headers: { "Content-Type": "application/geo+json" },
-    });
+    return Response.json(
+      { type: "FeatureCollection", features },
+      { headers: { "Content-Type": "application/geo+json" } },
+    );
   })
   .get("/license/:id", ({ params }) => {
     const license = byId.get(params.id);
     if (!license) {
-      return new Response("Лицензия не найдена", { status: 404, headers: { "Content-Type": "text/html; charset=utf-8" } });
+      return new Response("Лицензия не найдена", {
+        status: 404,
+        headers: { "Content-Type": "text/html; charset=utf-8" },
+      });
     }
     return (
       <Layout title={`${license.objectName.value} — Лицензии КР`}>
@@ -103,7 +114,11 @@ new Elysia()
   })
   .get("/api/license/:id/fragment", ({ params }) => {
     const license = byId.get(params.id);
-    if (!license) return new Response("Not found", { status: 404, headers: { "Content-Type": "text/html; charset=utf-8" } });
+    if (!license)
+      return new Response("Not found", {
+        status: 404,
+        headers: { "Content-Type": "text/html; charset=utf-8" },
+      });
     return new Response(String(<LicensePage license={license} hideBackLink />), {
       headers: { "Content-Type": "text/html" },
     });

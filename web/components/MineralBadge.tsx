@@ -1,7 +1,17 @@
 import { MINERAL_GROUP_STYLES } from "@shared/minerals";
 
-export function MineralBadge({ name, group, type }: { name: string; group: string; type?: string }) {
-  const style = MINERAL_GROUP_STYLES[group as keyof typeof MINERAL_GROUP_STYLES] ?? MINERAL_GROUP_STYLES["прочее"];
+export function MineralBadge({
+  name,
+  group,
+  type,
+}: {
+  name: string;
+  group: string;
+  type?: string;
+}) {
+  const style =
+    MINERAL_GROUP_STYLES[group as keyof typeof MINERAL_GROUP_STYLES] ??
+    MINERAL_GROUP_STYLES["прочее"];
   const tooltip = type ? `${group} → ${type}` : group;
   return (
     <span

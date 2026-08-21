@@ -10,7 +10,7 @@ export const CANONICAL_REGIONS = [
   "г. Ош",
 ] as const;
 
-export type CanonicalRegion = typeof CANONICAL_REGIONS[number];
+export type CanonicalRegion = (typeof CANONICAL_REGIONS)[number];
 
 export const CANONICAL_REGIONS_SET = new Set<string>(CANONICAL_REGIONS);
 

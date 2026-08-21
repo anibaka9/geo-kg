@@ -1,7 +1,7 @@
 {
   "name": "geo-kg",
-  "type": "module",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev:server": "bun --hot server.tsx",
     "predev:server": "bun run build:css",
@@ -9,17 +9,11 @@
     "dev": "bun run build:css && bun --hot server.tsx",
     "build:css": "bunx @tailwindcss/cli -i ./web/input.css -o ./public/output.css --minify",
     "parse": "bun parser/parse.ts",
-    "typecheck": "bunx tsc --noEmit"
-  },
-  "devDependencies": {
-    "@tailwindcss/cli": "^4.2.4",
-    "@types/bun": "latest",
-    "@types/papaparse": "^5.5.2",
-    "@types/proj4": "^2.19.0",
-    "tailwindcss": "^4.2.4"
-  },
-  "peerDependencies": {
-    "typescript": "^5"
+    "typecheck": "bunx tsc --noEmit",
+    "lint": "oxlint",
+    "lint:fix": "oxlint --fix",
+    "format": "oxfmt --write .",
+    "format:check": "oxfmt --check ."
   },
   "dependencies": {
     "@elysiajs/html": "^1.4.0",
@@ -28,5 +22,17 @@
     "elysia": "^1.4.28",
     "papaparse": "^5.5.3",
     "proj4": "^2.20.8"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.2.4",
+    "@types/bun": "latest",
+    "@types/papaparse": "^5.5.2",
+    "@types/proj4": "^2.19.0",
+    "oxfmt": "^0.64.0",
+    "oxlint": "^1.79.0",
+    "tailwindcss": "^4.2.4"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
   }
 }

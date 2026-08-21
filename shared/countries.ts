@@ -37,7 +37,7 @@ export const CANONICAL_COUNTRIES = [
   "Япония",
 ] as const;
 
-export type CanonicalCountry = typeof CANONICAL_COUNTRIES[number];
+export type CanonicalCountry = (typeof CANONICAL_COUNTRIES)[number];
 
 export const CANONICAL_COUNTRIES_SET = new Set<string>(CANONICAL_COUNTRIES);
 
