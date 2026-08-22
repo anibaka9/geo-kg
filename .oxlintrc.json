@@ -105,5 +105,12 @@
     "browser": true,
     "node": true
   },
-  "ignorePatterns": ["public/*", "node_modules/*", "output/*", ".claude/*", "tests/fixtures/*"]
+  "ignorePatterns": [
+    "public/*",
+    "node_modules/*",
+    "output/*",
+    ".claude/*",
+    "tests/fixtures/*",
+    ".github/*"
+  ]
 }

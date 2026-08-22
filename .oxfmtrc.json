@@ -9,5 +9,5 @@
   "bracketSpacing": true,
   "bracketSameLine": false,
   "arrowParens": "always",
-  "ignorePatterns": ["public/*", "node_modules/*", "output/*", "bun.lock"]
+  "ignorePatterns": ["public/*", "node_modules/*", "output/*", "bun.lock", ".github/*"]
 }
