@@ -1,0 +1,12 @@
+node_modules
+.git
+.claude
+public
+output
+test-results
+playwright-report
+tests/fixtures/*.db*
+e2e
+*.log
+.DS_Store
+.env*
