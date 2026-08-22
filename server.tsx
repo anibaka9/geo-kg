@@ -7,7 +7,7 @@ import { LicensePage } from "@web/components/LicensePage";
 import { MapPage } from "@web/components/MapPage";
 import { licenses, byId, filterOptions, PAGE_SIZE } from "@web/data";
 import { parseFilters, applyFilters, filtersToQs } from "@web/filters";
-import { toGeoJsonFeatures } from "@web/geojson";
+import { toGeoJsonFeatures } from "@shared/geojson";
 
 if (!(await Bun.file("./public/output.css").exists())) {
   console.error("public/output.css not found. Run: bun run build");
