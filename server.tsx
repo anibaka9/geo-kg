@@ -5,11 +5,20 @@ import { Layout } from "@web/components/Layout";
 import { LicensesListPage } from "@web/components/LicensesListPage";
 import { LicensePage } from "@web/components/LicensePage";
 import { MapPage } from "@web/components/MapPage";
-import { repository, PAGE_SIZE } from "@web/repository";
+import { Repository, PAGE_SIZE } from "@web/repository";
 import { parseFilters, filtersToQs } from "@web/filters";
+import { openDb, resolveDatabasePath } from "./db/client";
 
 if (!(await Bun.file("./public/output.css").exists())) {
   console.error("public/output.css not found. Run: bun run build");
+  process.exit(1);
+}
+
+let repository: Repository;
+try {
+  repository = new Repository(openDb(resolveDatabasePath()));
+} catch (error) {
+  console.error(error instanceof Error ? error.message : String(error));
   process.exit(1);
 }
 
