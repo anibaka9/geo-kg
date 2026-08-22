@@ -9,21 +9,10 @@ import { licenses, byId, filterOptions, PAGE_SIZE } from "@web/data";
 import { parseFilters, applyFilters, filtersToQs } from "@web/filters";
 import { toGeoJsonFeatures } from "@web/geojson";
 
-await Bun.build({
-  entrypoints: ["./web/map.ts"],
-  outdir: "./public",
-  target: "browser",
-  naming: "map.js",
-  minify: true,
-});
-
-await Bun.build({
-  entrypoints: ["./node_modules/@hotwired/turbo/dist/turbo.es2017-esm.js"],
-  outdir: "./public",
-  target: "browser",
-  naming: "turbo.js",
-  minify: true,
-});
+if (!(await Bun.file("./public/output.css").exists())) {
+  console.error("public/output.css not found. Run: bun run build");
+  process.exit(1);
+}
 
 const MAP_HEAD = (
   <>

@@ -18,7 +18,7 @@ export default defineConfig({
     screenshot: "only-on-failure",
   },
   webServer: {
-    command: `bun run build:css && bun server.tsx`,
+    command: `bun run build && bun run start`,
     url: `http://127.0.0.1:${PORT}`,
     reuseExistingServer: !process.env.CI,
     timeout: 15_000,

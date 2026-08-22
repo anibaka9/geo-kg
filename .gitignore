@@ -35,6 +35,8 @@ report.[0-9]_.[0-9]_.[0-9]_.[0-9]_.json
 
 # output
 public/output.css
+public/map.js
+public/turbo.js
 output/licenses.json
 
 # Playwright
