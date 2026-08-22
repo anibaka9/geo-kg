@@ -180,8 +180,8 @@ test.describe("filter panel sync", { tag: ["@critical"] }, () => {
     await test.step("reset link and badge appear without a manual page reload", async () => {
       await expect(page.getByRole("link", { name: "Сбросить" })).toBeVisible();
       await expect(
-        page.locator("summary", { hasText: "Регион" }).locator(".bg-primary"),
-      ).toHaveText("1");
+        page.getByRole("status", { name: "Активных фильтров в разделе «Регион»: 1" }),
+      ).toBeVisible();
     });
   });
 

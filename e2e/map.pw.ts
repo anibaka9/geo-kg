@@ -6,28 +6,28 @@ test.describe("map filter sync", { tag: ["@critical"] }, () => {
   }) => {
     await test.step("navigate to map", async () => {
       await page.goto("/map");
-      await expect(page.locator(".maplibregl-canvas")).toBeVisible();
+      await expect(page.getByRole("region", { name: "Map", exact: true })).toBeVisible();
     });
     await test.step("check a region filter", async () => {
       await page.getByRole("checkbox", { name: "Чуйская область" }).check();
     });
     await test.step("reset link appears without breaking the map", async () => {
       await expect(page.getByRole("link", { name: "Сбросить" })).toBeVisible();
-      await expect(page.locator(".maplibregl-canvas")).toHaveCount(1);
+      await expect(page.getByRole("region", { name: "Map", exact: true })).toHaveCount(1);
     });
   });
 
   test("reset link restores the map instead of leaving it blank", async ({ page }) => {
     await test.step("navigate to map with an active filter", async () => {
       await page.goto("/map?region=Чуйская+область");
-      await expect(page.locator(".maplibregl-canvas")).toBeVisible();
+      await expect(page.getByRole("region", { name: "Map", exact: true })).toBeVisible();
     });
     await test.step("click reset", async () => {
       await page.getByRole("link", { name: "Сбросить" }).click();
     });
     await test.step("URL clears and the map re-renders", async () => {
       await expect(page).toHaveURL("/map");
-      await expect(page.locator(".maplibregl-canvas")).toHaveCount(1);
+      await expect(page.getByRole("region", { name: "Map", exact: true })).toHaveCount(1);
     });
   });
 

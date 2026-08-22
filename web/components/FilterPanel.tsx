@@ -19,7 +19,11 @@ function Section({
       <summary class="flex items-center gap-2 px-4 py-2.5 text-xs font-semibold uppercase tracking-wide text-muted-foreground cursor-pointer hover:bg-muted/50 select-none [&::-webkit-details-marker]:hidden">
         <span class="flex-1">{title}</span>
         {activeCount > 0 && (
-          <span class="bg-primary text-primary-foreground rounded-full text-[10px] leading-none px-1.5 py-0.5">
+          <span
+            role="status"
+            aria-label={`Активных фильтров в разделе «${title}»: ${activeCount}`}
+            class="bg-primary text-primary-foreground rounded-full text-[10px] leading-none px-1.5 py-0.5"
+          >
             {activeCount}
           </span>
         )}
