@@ -1,6 +1,5 @@
 import type { Database, SQLQueryBindings } from "bun:sqlite";
 import type { License } from "@shared/types";
-import { openDb, resolveDatabasePath } from "../db/client";
 import { hydrate, type LicenseRow } from "../db/rows";
 import type { ActiveFilters, FilterOptions, MineralTypeOption } from "./filters";
 
@@ -166,13 +165,3 @@ export class Repository {
     return `{"type":"FeatureCollection","features":[${rows.map((r) => r.geojson_feature).join(",")}]}`;
   }
 }
-
-let repository: Repository;
-try {
-  repository = new Repository(openDb(resolveDatabasePath()));
-} catch (error) {
-  console.error(error instanceof Error ? error.message : String(error));
-  process.exit(1);
-}
-
-export { repository };
