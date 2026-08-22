@@ -9,26 +9,34 @@
 ```
 geo-kg/
 ├── server.tsx              # HTTP-сервер (Elysia), маршруты, SSR
+├── build.ts                # Сборка ассетов (map.js, turbo.js, output.css)
 ├── shared/                 # Общие типы и справочники
 │   ├── types.ts            # License, Field<V,R>, MineralEntry
 │   ├── regions.ts          # Канонические названия регионов КР
-│   └── countries.ts        # Канонические названия стран
+│   ├── countries.ts        # Канонические названия стран
+│   └── geojson.ts          # License → GeoJSON Feature (нужен и db/, и web/)
+├── db/                     # SQLite-схема и доступ (общий для parser/ и web/)
+│   ├── schema.ts           # DDL + SCHEMA_VERSION
+│   ├── client.ts           # openDb(path) — read-only, проверка версии схемы
+│   ├── write.ts            # buildDatabase(licenses, outPath) — полная пересборка
+│   └── rows.ts             # Типы строк БД, hydrate(row) → License
 ├── parser/                 # Pipeline парсинга/нормализации CSV
-│   ├── parse.ts            # Точка входа: читает CSV, пишет licenses.json
+│   ├── parse.ts            # Точка входа: читает CSV, пишет licenses.db
 │   ├── csv.ts              # Загрузка CSV (PapaParse)
 │   ├── normalize.ts        # Оркестрация парсеров полей
 │   ├── types.ts            # RawLicense — схема одной строки CSV
 │   ├── parsers/            # Парсеры отдельных полей
 │   └── overrides/          # Ручные правки (имена, компании, строки)
 ├── web/                    # Веб-слой
-│   ├── data.ts             # Загрузка licenses.json, построение FilterOptions
-│   ├── filters.ts          # Определение фильтров, применение к массиву
+│   ├── repository.ts       # buildWhere + Repository — все SQL-запросы здесь
+│   ├── filters.ts          # Типы ActiveFilters/FilterOptions, parseFilters, filtersToQs
 │   ├── map.ts              # Клиентский JS для MapLibre GL
 │   ├── input.css           # Tailwind input
 │   └── components/         # JSX-компоненты (SSR)
-└── public/                 # Скомпилированные ассеты
+└── public/                 # Скомпилированные ассеты (не в git, собираются bun run build)
     ├── output.css          # Tailwind output
-    └── map.js              # Скомпилированный map.ts
+    ├── map.js               # Скомпилированный map.ts
+    └── turbo.js             # Скомпилированный Hotwired Turbo
 ```
 
 ---
@@ -47,23 +55,26 @@ geo-kg/
 - `GET /api/features.geojson` — GeoJSON для карты (с фильтрами)
 - `GET /api/license/:id/fragment` — HTML-фрагмент для бокового панели карты
 
-Данные загружаются один раз при старте из `output/licenses.json`. Все фильтры применяются в памяти на каждый запрос.
+Данные читаются из `output/licenses.db` (SQLite) через `web/repository.ts` — ничего не загружается
+в память при старте. Каждый запрос выполняет параметризованный SQL-запрос, построенный `buildWhere`.
 
 ---
 
 ### parser/
 
-**Цель:** превратить грязные CSV-выгрузки в чистый `licenses.json`.
+**Цель:** превратить грязные CSV-выгрузки в чистую SQLite-базу `licenses.db`.
 
 ```
 CSV (2025.csv, 2026.csv)
   → csv.ts (PapaParse, нормализация заголовков)
   → parse.ts (дедупликация по номеру лицензии, merge 2025+2026)
   → normalize.ts (применяет parsers/* к каждой строке)
-  → output/licenses.json
+  → db/write.ts::buildDatabase (схема, индексы, FTS5, filter_options)
+  → output/licenses.db
 ```
 
-**Запуск:** `bun parser/parse.ts`
+**Запуск:** `bun run parse` (или `bun parser/parse.ts --json`, чтобы дополнительно
+записать diffable `output/licenses.json` — сам сервер его не читает).
 
 #### parsers/
 
@@ -133,17 +144,29 @@ type License = {
 
 ### web/
 
-#### data.ts
+#### repository.ts
 
-Загружает `licenses.json` и строит `FilterOptions` — объект с количеством записей по каждому значению каждого фильтра (регион, минерал, страна и т.д.). Вызывается один раз при старте сервера.
+`buildWhere(filters)` переводит `ActiveFilters` в SQL `WHERE` + параметры — единственное место,
+где UI-фильтры превращаются в SQL. `Repository` — тонкий класс поверх открытого `Database`:
+`countLicenses`, `listLicenses` (пагинация через `ORDER BY ord LIMIT/OFFSET`), `getLicenseById`,
+`getFilterOptions` (читает предвычисленную таблицу `filter_options`, без агрегации по всем
+записям на каждый запрос), `geojsonBody` (склеивает предвычисленные `geojson_feature` без
+JSON-парсинга/сериализации на каждый запрос).
+
+Поддерживает:
+
+- Мультиселект (`region IN (?, ...)`, `EXISTS` против join-таблиц для minerals/workType/country)
+- Диапазоны (`areaMin`, `areaMax`) — невалидное число исключает все записи (сохранённая особенность
+  прежней in-memory реализации)
+- Полнотекстовый поиск: FTS5 с токенайзером `trigram` (фразовый запрос — сохраняет substring-
+  семантику `.includes()`) для запросов от 3 символов; `LIKE` по предвычисленной lowercase-колонке
+  для более коротких запросов (trigram не индексирует короче 3 символов, а `LIKE`/`lower()` в SQLite
+  не умеют в кириллицу — поэтому lowercase считается в JS на этапе записи)
 
 #### filters.ts
 
-Определяет структуру фильтров и функцию `applyFilters(licenses, params)`. Поддерживает:
-
-- Мультиселект (массивы в query string)
-- Диапазоны (`areaMin`, `areaMax`)
-- Полнотекстовый поиск (номер лицензии, объект, компания)
+Типы `ActiveFilters`/`FilterOptions` и чистые функции без побочных эффектов: `parseFilters`
+(query string → `ActiveFilters`), `filtersToQs` (сериализация обратно, без `page`).
 
 #### map.ts
 
@@ -192,9 +215,13 @@ type Field<V, R = string> = { raw: R; value: V };
 
 Таблица, фильтры и пагинация — чистый HTML. Никакого JS на клиенте для table view. Фильтры — `<form method="GET">`, пагинация — обычные ссылки. Карта использует отдельный клиентский bundle только там где нужна.
 
-### In-memory фильтрация
+### SQLite на каждый запрос
 
-Нет базы данных. Все лицензии в памяти (~N тысяч записей), фильтры применяются на каждый запрос через `Array.filter`. Достаточно для текущего объёма данных.
+`output/licenses.db` пересобирается из CSV за ~3с (`bun run parse`). Веб-сервер ничего не грузит в
+память при старте — каждый запрос выполняет параметризованный SQL через `web/repository.ts`.
+Схема — гибридная нормализация: колонки для `WHERE`/`ORDER BY`/`JOIN`, плюс колонка `doc` с полным
+`JSON.stringify(License)` на строку — так что `hydrate(row) = JSON.parse(row.doc)` и ни один
+SSR-компонент не пришлось переписывать под миграцию.
 
 ### Overrides как явный слой
 
@@ -205,15 +232,18 @@ type Field<V, R = string> = { raw: R; value: V };
 ## Команды
 
 ```sh
-# Сервер (dev)
-bun --hot server.tsx
+# Парсинг данных → output/licenses.db
+bun run parse
 
-# CSS (watch)
-bunx @tailwindcss/cli -i ./web/input.css -o ./public/output.css --watch
+# Сборка ассетов (map.js, turbo.js, output.css) — один раз, до старта
+bun run build
 
-# Парсинг данных
-bun parser/parse.ts
+# Сборка ассетов (watch) — второй терминал при разработке
+bun run build:watch
 
-# CSS (prod)
-bunx @tailwindcss/cli -i ./web/input.css -o ./public/output.css --minify
+# Сервер (dev): собирает ассеты один раз, затем bun --hot server.tsx
+bun run dev
+
+# Сервер (prod): без сборки, предполагает что bun run build уже выполнен
+bun run start
 ```

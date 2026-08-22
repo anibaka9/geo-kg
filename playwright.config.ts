@@ -17,16 +17,29 @@ export default defineConfig({
     trace: "retain-on-failure",
     screenshot: "only-on-failure",
   },
-  webServer: {
-    command: `bun run build:css && bun server.tsx`,
-    url: `http://127.0.0.1:${PORT}`,
-    reuseExistingServer: !process.env.CI,
-    timeout: 15_000,
-    env: {
-      PORT: String(PORT),
-      LICENSES_PATH: "./tests/fixtures/mock-licenses.json",
+  // Two entries, launched in order: the first has no url/port, so Playwright
+  // waits for it to exit before starting the second. This keeps fixture
+  // generation out of the app's own webServer.command (which should own
+  // process startup and readiness only, per AGENTS.md) while still
+  // guaranteeing the fixture DB exists before the server tries to open it.
+  webServer: [
+    {
+      command: "bun run fixtures",
+      name: "Fixtures",
+      timeout: 15_000,
     },
-  },
+    {
+      command: `bun run build && bun run start`,
+      name: "App",
+      url: `http://127.0.0.1:${PORT}`,
+      reuseExistingServer: !process.env.CI,
+      timeout: 15_000,
+      env: {
+        PORT: String(PORT),
+        DATABASE_PATH: "./tests/fixtures/mock-licenses.db",
+      },
+    },
+  ],
   expect: {
     timeout: 10_000,
   },

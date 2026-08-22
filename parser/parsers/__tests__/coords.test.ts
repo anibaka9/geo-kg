@@ -100,7 +100,9 @@ describe("parseCoords", () => {
       const result = parseCoords(x, y);
       // The repair may still produce a valid conversion but it won't be in the KG region
       // So should be filtered out
-      const inRegion = result.value.every((pt) => pt[0] >= 35 && pt[0] <= 48 && pt[1] >= 60 && pt[1] <= 85);
+      const inRegion = result.value.every(
+        (pt) => pt[0] >= 35 && pt[0] <= 48 && pt[1] >= 60 && pt[1] <= 85,
+      );
       expect(inRegion).toBe(true);
     });
   });

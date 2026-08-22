@@ -39,7 +39,7 @@ describe("licenseKey", () => {
 
 describe("getCol", () => {
   test("finds column by exact name", () => {
-    const row = { "Номер лицензии": "НМ 11-02", "Объект": "Тест" };
+    const row = { "Номер лицензии": "НМ 11-02", Объект: "Тест" };
     expect(getCol(row, "Номер лицензии")).toBe("НМ 11-02");
   });
 

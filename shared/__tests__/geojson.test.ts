@@ -23,7 +23,17 @@ function makeLicense(overrides: Partial<License> = {}): License {
     minerals: { raw: "", value: [{ name: "золото", type: "золото", group: "металлы" }] },
     workType: { raw: "", value: [] },
     areaHa: { raw: "", value: null },
-    status: { raw: "", value: { code: null, mineralType: null, workStage: null, isAnnulled: false, protocol: null, protocolDate: null } },
+    status: {
+      raw: "",
+      value: {
+        code: null,
+        mineralType: null,
+        workStage: null,
+        isAnnulled: false,
+        protocol: null,
+        protocolDate: null,
+      },
+    },
     polygon: { raw: { x: "", y: "" }, value: [] },
     beneficiaries: { raw: "", value: [] },
     notes: { raw: "", value: "" },
@@ -52,7 +62,13 @@ describe("toGeoJsonFeatures", () => {
     const license = makeLicense({
       minerals: { raw: "", value: [{ name: "вода", type: "подземные воды", group: "вода" }] },
       objectName: { raw: "скв 123", value: "скв 123" },
-      polygon: { raw: { x: "", y: "" }, value: [[42.5, 74.5], [42.6, 74.6]] },
+      polygon: {
+        raw: { x: "", y: "" },
+        value: [
+          [42.5, 74.5],
+          [42.6, 74.6],
+        ],
+      },
     });
     const features = toGeoJsonFeatures([license]);
     expect(features.length).toBe(1);
@@ -101,7 +117,14 @@ describe("toGeoJsonFeatures", () => {
       objectName: { raw: "Тест", value: "Тест" },
       status: {
         raw: "",
-        value: { code: null, mineralType: null, workStage: null, isAnnulled: true, protocol: null, protocolDate: null },
+        value: {
+          code: null,
+          mineralType: null,
+          workStage: null,
+          isAnnulled: true,
+          protocol: null,
+          protocolDate: null,
+        },
       },
       polygon: { raw: { x: "", y: "" }, value: [[42.5, 74.5]] },
     });

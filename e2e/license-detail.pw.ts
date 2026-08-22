@@ -104,9 +104,9 @@ test.describe("GeoJSON API", { tag: ["@critical"] }, () => {
 
   test("respects region filter", async ({ request }) => {
     const allRes = await request.get("/api/features.geojson");
-    const all = await allRes.json() as Record<string, unknown>;
+    const all = (await allRes.json()) as Record<string, unknown>;
     const filteredRes = await request.get("/api/features.geojson?region=Чуйская+область");
-    const filtered = await filteredRes.json() as Record<string, unknown>;
+    const filtered = (await filteredRes.json()) as Record<string, unknown>;
     const filteredArr = filtered["features"] as unknown[];
     const allArr = all["features"] as unknown[];
     expect(filteredArr.length).toBeLessThan(allArr.length);
@@ -114,7 +114,7 @@ test.describe("GeoJSON API", { tag: ["@critical"] }, () => {
 
   test("each feature has required properties", async ({ request }) => {
     const response = await request.get("/api/features.geojson");
-    const body = await response.json() as Record<string, unknown>;
+    const body = (await response.json()) as Record<string, unknown>;
     const features = body["features"] as Record<string, unknown>[];
     expect(features.length).toBeGreaterThan(0);
     for (const feature of features.slice(0, 5)) {

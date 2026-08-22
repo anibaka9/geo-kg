@@ -17,24 +17,24 @@ Kyrgyzstan's government publishes mining and drilling license data as CSV files 
 
 ## Tech Stack
 
-| Layer                 | Technology                                                              |
-| --------------------- | ----------------------------------------------------------------------- |
-| Runtime               | [Bun](https://bun.com)                                                  |
-| Language              | TypeScript (strict)                                                     |
-| Server                | [Elysia](https://elysiajs.com)                                          |
-| SSR / JSX             | [@kitajs/html](https://github.com/kitajs/html) (no React, no hydration) |
-| CSS                   | Tailwind CSS v4                                                         |
-| SPA navigation        | [Hotwire Turbo](https://turbo.hotwired.dev)                             |
-| Maps                  | [MapLibre GL](https://maplibre.org)                                     |
-| Coordinate conversion | [proj4](https://github.com/proj4js/proj4js) (SK-42 → WGS84)             |
-| CSV parsing           | [PapaParse](https://www.papaparse.com)                                  |
-| Database              | None — in-memory filtering (~22 MB JSON)                                |
+| Layer                 | Technology                                                                                 |
+| --------------------- | ------------------------------------------------------------------------------------------ |
+| Runtime               | [Bun](https://bun.com)                                                                     |
+| Language              | TypeScript (strict)                                                                        |
+| Server                | [Elysia](https://elysiajs.com)                                                             |
+| SSR / JSX             | [@kitajs/html](https://github.com/kitajs/html) (no React, no hydration)                    |
+| CSS                   | Tailwind CSS v4                                                                            |
+| SPA navigation        | [Hotwire Turbo](https://turbo.hotwired.dev)                                                |
+| Maps                  | [MapLibre GL](https://maplibre.org)                                                        |
+| Coordinate conversion | [proj4](https://github.com/proj4js/proj4js) (SK-42 → WGS84)                                |
+| CSV parsing           | [PapaParse](https://www.papaparse.com)                                                     |
+| Database              | SQLite via [`bun:sqlite`](https://bun.com/docs/api/sqlite) (embedded, no separate service) |
 
 ## Getting Started
 
 ### Prerequisites
 
-- [Bun](https://bun.com) >= 1.3.11
+- [Bun](https://bun.com) >= 1.4.0
 
 ### Installation
 
@@ -50,25 +50,21 @@ Parse and normalize the raw CSV data:
 bun run parse
 ```
 
-This reads `data/2025.csv` and `data/2026.csv`, deduplicates, cleans, and writes `output/licenses.json`.
+This reads `data/2025.csv` and `data/2026.csv`, deduplicates, cleans, and writes `output/licenses.db`
+(a SQLite database). Pass `--json` to also write `output/licenses.json` as an optional diffable
+artifact — the app itself only reads the `.db`.
 
 ### Development
 
-Run the server (auto-reload on changes) and CSS watcher in parallel:
-
 ```bash
-bun run dev:server &
-bun run dev:css
+bun run dev
 ```
 
-Or with your own terminal tabs:
+Builds assets once and starts the server with `--hot`. To rebuild assets on change while
+developing, run the watcher in a second terminal:
 
 ```bash
-# Terminal 1: Start server
-bun run dev:server
-
-# Terminal 2: Watch CSS
-bun run dev:css
+bun run build:watch
 ```
 
 Open http://localhost:3000
@@ -76,14 +72,14 @@ Open http://localhost:3000
 ### Production
 
 ```bash
-# Build CSS
-bun run build:css
+# Build assets (map.js, turbo.js, output.css) — required before start, not done at runtime
+bun run build
 
 # Configure port (optional)
 export PORT=3000
 
-# Start server
-bun server.tsx
+# Start server (no build step — assumes bun run build already ran)
+bun run start
 ```
 
 ## Project Structure
@@ -91,13 +87,20 @@ bun server.tsx
 ```
 geo-kg/
 ├── server.tsx              # HTTP server, routes, SSR entry point
+├── build.ts                # Asset build script (map.js, turbo.js, output.css)
 ├── shared/                 # Shared types and reference data
 │   ├── types.ts            # License, Field<V,R>, MineralEntry — core types
 │   ├── regions.ts          # Canonical Kyrgyzstan region names (9)
 │   ├── countries.ts        # Canonical country names (36)
+│   ├── geojson.ts          # License → GeoJSON Feature conversion
 │   └── minerals.ts         # Mineral groups, colors, MapLibre styles
-├── parser/                 # CSV → JSON normalization pipeline
-│   ├── parse.ts            # Entry point: read CSV, deduplicate, write JSON
+├── db/                     # SQLite schema and access (shared by parser/ and web/)
+│   ├── schema.ts           # DDL + SCHEMA_VERSION
+│   ├── client.ts           # openDb(path) — read-only open, schema version check
+│   ├── write.ts            # buildDatabase(licenses, outPath) — full rebuild
+│   └── rows.ts             # DB row types, hydrate(row) → License
+├── parser/                 # CSV → SQLite normalization pipeline
+│   ├── parse.ts            # Entry point: read CSV, deduplicate, build output/licenses.db
 │   ├── csv.ts              # CSV loading with PapaParse + column mapping
 │   ├── normalize.ts        # Orchestrates field parsers per row
 │   ├── parsers/            # Individual field parsers (18 files)
@@ -121,9 +124,8 @@ geo-kg/
 │       ├── company.ts      # 4 company name fixes
 │       └── country.ts      # ~75 country name mappings
 ├── web/                    # Web layer (SSR components + client JS)
-│   ├── data.ts             # Load licenses.json, build filter option counts
-│   ├── filters.ts          # Filter definitions, parsing, application
-│   ├── geojson.ts          # License → GeoJSON Feature conversion
+│   ├── repository.ts       # buildWhere + Repository — all SQL queries live here
+│   ├── filters.ts          # ActiveFilters/FilterOptions types, parseFilters, filtersToQs
 │   ├── input.css           # Tailwind CSS input
 │   ├── map.ts              # Client-side MapLibre GL init (compiled to public/map.js)
 │   └── components/         # JSX SSR components
@@ -149,7 +151,8 @@ CSV (2025.csv, 2026.csv)
   → csv.ts        (PapaParse, header normalization, column shift fix)
   → parse.ts      (deduplication by license number, 2026 overrides 2025)
   → normalize.ts  (apply field parsers, overrides, coordinate repair)
-  → output/licenses.json (~10,000 records)
+  → db/write.ts   (buildDatabase: schema, indexes, FTS5, filter_options)
+  → output/licenses.db (~6,700 records; ~3s full rebuild)
 ```
 
 ### Coordinate Repair
@@ -176,7 +179,7 @@ This allows showing original data alongside normalized values in the UI — crit
 
 - **SSR without hydration** — the table view is pure HTML. Filter forms use `method="GET"`, pagination uses plain links. No JavaScript on the client for table browsing.
 - **Map is a separate bundle** — only loaded on `/map` route
-- **In-memory filtering** — no database. All licenses in memory, filters applied via `Array.filter`. Sufficient for the current data volume.
+- **SQLite, queried per request** — no in-memory dataset. `output/licenses.db` is rebuilt from CSV in ~3s; each request runs a parameterized SQL query built by `buildWhere`. Full-text search uses FTS5 with the `trigram` tokenizer (phrase-quoted, for substring semantics), with a `LIKE` fallback for queries under 3 characters (too short for trigram).
 - **Overrides as an explicit layer** — manual corrections in `parser/overrides/` apply after automatic parsing, keeping concerns separate.
 - **No React on the server** — `@kitajs/html` converts JSX to HTML strings at render time.
 
@@ -193,7 +196,7 @@ This allows showing original data alongside normalized values in the UI — crit
 ## Testing
 
 ```bash
-bun test              # Run all 170 tests
+bun test              # Run all unit tests
 
 bun run check         # Full check: types + lint + tests
 ```

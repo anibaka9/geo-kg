@@ -3,12 +3,12 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev:server": "bun --hot server.tsx",
-    "predev:server": "bun run build:css",
-    "dev:css": "bunx @tailwindcss/cli -i ./web/input.css -o ./public/output.css --watch",
-    "dev": "bun run build:css && bun --hot server.tsx",
-    "build:css": "bunx @tailwindcss/cli -i ./web/input.css -o ./public/output.css --minify",
+    "build": "bun build.ts",
+    "build:watch": "bun build ./web/map.ts --outfile=./public/map.js --target=browser --watch & bun build ./node_modules/@hotwired/turbo/dist/turbo.es2017-esm.js --outfile=./public/turbo.js --target=browser --watch & bunx @tailwindcss/cli -i ./web/input.css -o ./public/output.css --watch",
+    "dev": "bun run build && bun --hot server.tsx",
+    "start": "bun server.tsx",
     "parse": "bun parser/parse.ts",
+    "fixtures": "bun tests/fixtures/generate-mock.ts",
     "typecheck": "bunx tsc --noEmit",
     "lint": "oxlint",
     "lint:fix": "oxlint --fix",
@@ -23,9 +23,7 @@
     "@elysiajs/html": "^1.4.0",
     "@elysiajs/static": "^1.4.9",
     "@hotwired/turbo": "^8.0.23",
-    "elysia": "^1.4.28",
-    "papaparse": "^5.5.3",
-    "proj4": "^2.20.8"
+    "elysia": "^1.4.28"
   },
   "devDependencies": {
     "@playwright/test": "^1.62.1",
@@ -36,9 +34,14 @@
     "lefthook": "^2.1.10",
     "oxfmt": "^0.64.0",
     "oxlint": "^1.79.0",
+    "papaparse": "^5.5.3",
+    "proj4": "^2.20.8",
     "tailwindcss": "^4.2.4"
   },
   "peerDependencies": {
     "typescript": "^5"
+  },
+  "engines": {
+    "bun": ">=1.4.0"
   }
 }

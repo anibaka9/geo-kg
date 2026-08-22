@@ -2,9 +2,11 @@ import { writeFileSync, mkdirSync } from "fs";
 import { join } from "path";
 import { loadRaw, licenseKey } from "./csv";
 import { normalize } from "./normalize";
+import { buildDatabase } from "../db/write";
 
 const __dirname = import.meta.dirname;
 const ROOT = join(__dirname, "..");
+const writeJson = process.argv.includes("--json");
 
 const raw2025 = loadRaw(join(ROOT, "data/2025.csv"), 2025);
 const raw2026 = loadRaw(join(ROOT, "data/2026.csv"), 2026);
@@ -23,5 +25,11 @@ console.log(`  From 2025 only: ${output.filter((l) => l.sourceYear === 2025).len
 console.log(`  From 2026:      ${output.filter((l) => l.sourceYear === 2026).length}`);
 
 mkdirSync(join(ROOT, "output"), { recursive: true });
-writeFileSync(join(ROOT, "output/licenses.json"), JSON.stringify(output, null, 2), "utf8");
-console.log(`\nWritten to output/licenses.json`);
+
+buildDatabase(output, join(ROOT, "output/licenses.db"));
+console.log(`\nWritten to output/licenses.db`);
+
+if (writeJson) {
+  writeFileSync(join(ROOT, "output/licenses.json"), JSON.stringify(output, null, 2), "utf8");
+  console.log(`Written to output/licenses.json`);
+}

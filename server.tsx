@@ -5,25 +5,16 @@ import { Layout } from "@web/components/Layout";
 import { LicensesListPage } from "@web/components/LicensesListPage";
 import { LicensePage } from "@web/components/LicensePage";
 import { MapPage } from "@web/components/MapPage";
-import { licenses, byId, filterOptions, PAGE_SIZE } from "@web/data";
-import { parseFilters, applyFilters, filtersToQs } from "@web/filters";
-import { toGeoJsonFeatures } from "@web/geojson";
+import { repository, PAGE_SIZE } from "@web/repository";
+import { parseFilters, filtersToQs } from "@web/filters";
 
-await Bun.build({
-  entrypoints: ["./web/map.ts"],
-  outdir: "./public",
-  target: "browser",
-  naming: "map.js",
-  minify: true,
-});
+if (!(await Bun.file("./public/output.css").exists())) {
+  console.error("public/output.css not found. Run: bun run build");
+  process.exit(1);
+}
 
-await Bun.build({
-  entrypoints: ["./node_modules/@hotwired/turbo/dist/turbo.es2017-esm.js"],
-  outdir: "./public",
-  target: "browser",
-  naming: "turbo.js",
-  minify: true,
-});
+const EMPTY_FILTERS = parseFilters(new URLSearchParams());
+const filterOptions = repository.getFilterOptions();
 
 const MAP_HEAD = (
   <>
@@ -46,12 +37,14 @@ new Elysia()
   .get("/", ({ query, request }) => {
     const sp = new URL(request.url).searchParams;
     const filters = parseFilters(sp);
-    const filtered = applyFilters(licenses, filters);
 
+    const total = repository.countLicenses(filters);
+    const totalAll = repository.countLicenses(EMPTY_FILTERS);
     const page = Math.max(1, Number(query.page) || 1);
-    const totalPages = Math.ceil(filtered.length / PAGE_SIZE);
+    const totalPages = Math.ceil(total / PAGE_SIZE);
     const safePage = Math.min(page, Math.max(1, totalPages));
     const offset = (safePage - 1) * PAGE_SIZE;
+    const items = repository.listLicenses(filters, offset, PAGE_SIZE);
     const qs = filtersToQs(sp);
 
     return (
@@ -59,12 +52,12 @@ new Elysia()
         <LicensesListPage
           filters={filters}
           filterOptions={filterOptions}
-          items={filtered.slice(offset, offset + PAGE_SIZE)}
+          items={items}
           offset={offset}
           page={safePage}
           totalPages={totalPages}
-          total={filtered.length}
-          totalAll={licenses.length}
+          total={total}
+          totalAll={totalAll}
           pageSize={PAGE_SIZE}
           qs={qs || undefined}
         />
@@ -74,8 +67,7 @@ new Elysia()
   .get("/map", ({ request }) => {
     const sp = new URL(request.url).searchParams;
     const filters = parseFilters(sp);
-    const filtered = applyFilters(licenses, filters);
-    const withCoords = filtered.filter((l) => l.polygon.value.length > 0).length;
+    const withCoords = repository.countLicenses(filters, { onlyWithPolygon: true });
     const qs = filtersToQs(sp);
 
     return (
@@ -91,15 +83,24 @@ new Elysia()
   })
   .get("/api/features.geojson", ({ request }) => {
     const sp = new URL(request.url).searchParams;
-    const filtered = applyFilters(licenses, parseFilters(sp));
-    const features = toGeoJsonFeatures(filtered);
-    return Response.json(
-      { type: "FeatureCollection", features },
-      { headers: { "Content-Type": "application/geo+json" } },
-    );
+    const filters = parseFilters(sp);
+    const body = repository.geojsonBody(filters);
+    const etag = `"${Bun.hash(body).toString(36)}"`;
+
+    if (request.headers.get("if-none-match") === etag) {
+      return new Response(null, { status: 304, headers: { ETag: etag } });
+    }
+
+    return new Response(body, {
+      headers: {
+        "Content-Type": "application/geo+json",
+        ETag: etag,
+        "Cache-Control": "public, max-age=60, must-revalidate",
+      },
+    });
   })
   .get("/license/:id", ({ params }) => {
-    const license = byId.get(params.id);
+    const license = repository.getLicenseById(params.id);
     if (!license) {
       return new Response("Лицензия не найдена", {
         status: 404,
@@ -113,7 +114,7 @@ new Elysia()
     );
   })
   .get("/api/license/:id/fragment", ({ params }) => {
-    const license = byId.get(params.id);
+    const license = repository.getLicenseById(params.id);
     if (!license)
       return new Response("Not found", {
         status: 404,

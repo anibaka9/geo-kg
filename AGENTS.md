@@ -1,7 +1,8 @@
 # AGENTS.md — geo-kg
 
 geo-kg is a real Bun + Elysia + TypeScript web application for viewing Kyrgyzstan subsoil licenses.
-It is not a generated scaffold. Production data lives in `data/`; the parsed output is `output/licenses.json`.
+It is not a generated scaffold. Production data lives in `data/`; the parsed output is
+`output/licenses.db` (SQLite, via `bun:sqlite`).
 
 ## What "done" means
 
@@ -24,31 +25,41 @@ to run all three in one command.
   `bg-card`, `bg-muted`. Never write raw hex colors in components.
 - **SPA navigation:** Hotwire Turbo. Reload on form submit, no client JS for table view.
 - **Map:** MapLibre GL, client-only. Bundle at `web/map.ts` → `public/map.js`.
-- **Data:** No database. `output/licenses.json` loaded into memory on server start.
+- **Data:** SQLite via `bun:sqlite`, no separate DB service. `output/licenses.db` is queried
+  per-request (nothing is loaded into memory at startup). `DATABASE_PATH` env var overrides the
+  default path; resolved once in `db/client.ts`.
 - **Lint/format:** oxlint (`bun run lint`) + oxfmt (`bun run format`).
   Configs: `.oxlintrc.json`, `.oxfmtrc.json`.
-- **Tests:** `bun:test`. 170 tests in 22 files. `bun test` or `bun run check`.
+- **Tests:** `bun:test`. `bun test` or `bun run check`.
 - **Git hooks:** Lefthook. Pre-commit runs lint + format. Pre-push runs typecheck + tests.
   Config: `lefthook.yml`.
 
 ## How the codebase is organized
 
 - `server.tsx` — Elysia server, routes, SSR entry point
-- `shared/` — types (`types.ts`), region and country canonical lists, mineral groups
-- `parser/` — CSV → JSON pipeline
-  - `parse.ts` — CLI entry: read CSV, deduplicate, write JSON
+- `shared/` — types (`types.ts`), region and country canonical lists, mineral groups,
+  `geojson.ts` (License → GeoJSON Feature conversion, used by both `db/write.ts` and `web/`)
+- `db/` — SQLite schema and access, shared by `parser/` (writer) and `web/` (reader)
+  - `schema.ts` — DDL + `SCHEMA_VERSION`
+  - `client.ts` — `openDb(path)`: read-only open, schema version check
+  - `write.ts` — `buildDatabase(licenses, outPath)`: full rebuild from scratch, one transaction
+  - `rows.ts` — DB row types, `hydrate(row)` → `License`
+- `parser/` — CSV → SQLite pipeline
+  - `parse.ts` — CLI entry: read CSV, deduplicate, build `output/licenses.db`
+    (`--json` also writes `output/licenses.json` as an optional diffable artifact)
   - `csv.ts` — PapaParse loader, `licenseKey()`, `getCol()`, `fixColumnShift()`
   - `normalize.ts` — orchestrates field parsers for each row
   - `parsers/` — 18 field parsers, each a pure function
   - `data/` — lookup tables (minerals, regions, districts, countries)
   - `overrides/` — manual corrections applied last
 - `web/` — web layer
-  - `data.ts` — loads `output/licenses.json`, builds `FilterOptions`
-  - `filters.ts` — `parseFilters`, `applyFilters`, `filtersToQs`, `buildFilterOptions`
-  - `geojson.ts` — License → GeoJSON Feature conversion
+  - `repository.ts` — `buildWhere(filters)`, `Repository` (`countLicenses`, `listLicenses`,
+    `getLicenseById`, `getFilterOptions`, `geojsonBody`) — all SQL lives here
+  - `filters.ts` — `parseFilters`, `filtersToQs`, and the `ActiveFilters`/`FilterOptions` types
   - `map.ts` — client-side MapLibre GL (compiled to `public/map.js`)
   - `components/` — SSR JSX components (no React, no state, no hooks)
-- `public/` — compiled assets (`output.css`, `map.js`, `turbo.js`)
+- `public/` — compiled assets (`output.css`, `map.js`, `turbo.js`), not committed to git —
+  built by `bun run build` (see `build.ts`)
 
 ## Conventions
 
@@ -71,8 +82,9 @@ to run all three in one command.
 ## Adding a filter
 
 1. Add field to `ActiveFilters` in `web/filters.ts`
-2. Add filter logic in `applyFilters`
-3. Add option counting in `buildFilterOptions`
+2. Add a clause in `buildWhere` in `web/repository.ts`
+3. If it needs its own option list, add a `kind` to `computeFilterOptions` in `db/write.ts`
+   (backs `filter_options`, read by `Repository.getFilterOptions`)
 4. Add UI in `web/components/FilterPanel.tsx`
 5. Add query string parsing in `parseFilters`
 
@@ -91,6 +103,12 @@ to run all three in one command.
 - Config: `playwright.config.ts`. Web server starts automatically via `webServer`.
 - `webServer` owns process startup and readiness only. Do not hide seed or migration
   logic inside the startup command. Set `use.baseURL` explicitly.
+- Fixture generation (`bun run fixtures`, writes `tests/fixtures/mock-licenses.db`) runs as its
+  own entry in the `webServer` array, without a `url`/`port` — Playwright waits for it to exit
+  before starting the next entry. This is required, not stylistic: the app entry opens the
+  database eagerly at module load and exits immediately if it's missing, and a `globalSetup`
+  hook does not run early enough to win that race (empirically, `webServer` processes are
+  spawned before `globalSetup`).
 - Use `reuseExistingServer: !process.env.CI` unless the suite has a specific reason not to.
 - Smoke tests cover: home page table, filters, map navigation, search.
 
@@ -154,6 +172,7 @@ For nested elements, scope with chained locators, `filter({ has, hasText })`,
 - Do not use `any` or `@ts-expect-error`
 - Do not add `eslint-disable` or `oxlint-disable` comments
 - Do not edit generated files in `public/` directly (`output.css`, `map.js`, `turbo.js`)
-- Do not edit file `output/licenses.json` — it is generated by `bun run parse`
+- Do not edit `output/licenses.db` (or `output/licenses.json`) — both are generated by
+  `bun run parse`
 - Do not add dependencies without explicit discussion
 - Do not change `tsconfig.json` compiler flags to weaken type checking

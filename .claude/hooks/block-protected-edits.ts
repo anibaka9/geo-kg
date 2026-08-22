@@ -14,7 +14,13 @@ if (!filePath) {
   process.exit(0);
 }
 
-const protectedPaths = ["public/map.js", "public/turbo.js", "public/output.css", "output/licenses.json"];
+const protectedPaths = [
+  "public/map.js",
+  "public/turbo.js",
+  "public/output.css",
+  "output/licenses.json",
+  "output/licenses.db",
+];
 const protectedConfigs = [".oxlintrc.json", ".oxfmtrc.json", "lefthook.yml", "tsconfig.json"];
 
 const baseName = path.basename(filePath);
