@@ -58,11 +58,11 @@ export function buildDatabase(licenses: License[], outPath: string): void {
     INSERT INTO licenses (
       id, ord, license_number, object_name, company_name, region, area_ha,
       is_annulled, source_year, has_polygon, min_lat, max_lat, min_lon, max_lon,
-      geojson_feature, doc
+      geojson_feature, doc, search_lower
     ) VALUES (
       $id, $ord, $license_number, $object_name, $company_name, $region, $area_ha,
       $is_annulled, $source_year, $has_polygon, $min_lat, $max_lat, $min_lon, $max_lon,
-      $geojson_feature, $doc
+      $geojson_feature, $doc, $search_lower
     )
   `);
   const insertMineral = db.prepare(
@@ -86,6 +86,9 @@ export function buildDatabase(licenses: License[], outPath: string): void {
       const lats = pts.map((p) => p[0]);
       const lons = pts.map((p) => p[1]);
       const feature = hasPolygon ? toGeoJsonFeatures([l])[0] : undefined;
+      const haystack = [l.licenseNumber.value, l.objectName.value, l.company.identity.value.name]
+        .filter(Boolean)
+        .join(" ");
 
       insertLicense.run({
         $id: l.id.value,
@@ -104,15 +107,13 @@ export function buildDatabase(licenses: License[], outPath: string): void {
         $max_lon: hasPolygon ? Math.max(...lons) : null,
         $geojson_feature: feature ? JSON.stringify(feature) : null,
         $doc: JSON.stringify(l),
+        $search_lower: haystack.toLowerCase(),
       });
 
       for (const m of l.minerals.value) insertMineral.run(ord, m.name, m.type, m.group);
       for (const wt of l.workType.value) insertWorkType.run(ord, wt);
       for (const c of l.company.country.value) insertCountry.run(ord, c);
 
-      const haystack = [l.licenseNumber.value, l.objectName.value, l.company.identity.value.name]
-        .filter(Boolean)
-        .join(" ");
       insertFts.run(ord, haystack);
     });
 

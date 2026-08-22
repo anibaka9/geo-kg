@@ -8,7 +8,8 @@
       "Edit(/public/map.js)",
       "Edit(/public/turbo.js)",
       "Edit(/public/output.css)",
-      "Edit(/output/licenses.json)"
+      "Edit(/output/licenses.json)",
+      "Edit(/output/licenses.db)"
     ]
   },
   "hooks": {

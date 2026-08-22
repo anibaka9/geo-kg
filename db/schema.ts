@@ -21,7 +21,8 @@ CREATE TABLE licenses (
   has_polygon    INTEGER NOT NULL,
   min_lat REAL, max_lat REAL, min_lon REAL, max_lon REAL,
   geojson_feature TEXT,
-  doc            TEXT NOT NULL
+  doc            TEXT NOT NULL,
+  search_lower   TEXT NOT NULL
 );
 
 CREATE TABLE license_minerals (
@@ -50,6 +51,11 @@ CREATE TABLE filter_options (
 
 CREATE VIRTUAL TABLE licenses_fts USING fts5(ord UNINDEXED, haystack, tokenize = 'trigram');
 `;
+
+// search_lower backs the q.length < 3 fallback (trigram needs >= 3 chars to
+// match anything). SQLite's LIKE/lower()/upper() only case-fold ASCII, so
+// Cyrillic case-insensitivity has to be done in JS at write time, mirroring
+// the previous in-memory .toLowerCase().includes() behavior.
 
 export const INDEX_SQL = `
 CREATE INDEX idx_licenses_id ON licenses(id, ord DESC);
