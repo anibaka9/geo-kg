@@ -31,15 +31,11 @@ export function LicensesListPage({
   qs,
 }: Props) {
   return (
-    <div class="flex gap-6 h-full">
+    <turbo-frame id="results" data-turbo-action="advance" class="flex gap-6 h-full w-full">
       <aside class="w-60 h-full shrink-0 overflow-y-auto rounded-lg border border-border bg-card shadow-sm">
         <FilterPanel filters={filters} options={filterOptions} />
       </aside>
-      <turbo-frame
-        id="results"
-        data-turbo-action="advance"
-        class="flex-1 h-full min-w-0 flex flex-col"
-      >
+      <div class="flex-1 h-full min-w-0 flex flex-col">
         <div class="mb-4 flex items-start justify-between gap-4 shrink-0">
           <div>
             <h1 class="text-2xl font-semibold tracking-tight text-foreground">Лицензии</h1>
@@ -53,7 +49,7 @@ export function LicensesListPage({
           <LicensesTable items={items} offset={offset} />
         </div>
         <Pagination page={page} totalPages={totalPages} total={total} pageSize={pageSize} qs={qs} />
-      </turbo-frame>
-    </div>
+      </div>
+    </turbo-frame>
   );
 }

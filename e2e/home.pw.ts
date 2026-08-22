@@ -163,3 +163,39 @@ test.describe("work type filter", { tag: ["@critical"] }, () => {
     await expect(page.getByRole("table")).toBeVisible();
   });
 });
+
+test.describe("filter panel sync", { tag: ["@critical"] }, () => {
+  test("reset link and count badge appear immediately after checking a filter", async ({
+    page,
+  }) => {
+    await test.step("navigate to home page", async () => {
+      await page.goto("/");
+    });
+    await test.step("reset link is hidden with no active filters", async () => {
+      await expect(page.getByRole("link", { name: "Сбросить" })).not.toBeVisible();
+    });
+    await test.step("check a region filter", async () => {
+      await page.getByRole("checkbox", { name: "Чуйская область" }).check();
+    });
+    await test.step("reset link and badge appear without a manual page reload", async () => {
+      await expect(page.getByRole("link", { name: "Сбросить" })).toBeVisible();
+      await expect(
+        page.locator("summary", { hasText: "Регион" }).locator(".bg-primary"),
+      ).toHaveText("1");
+    });
+  });
+
+  test("reset link clears active filters", async ({ page }) => {
+    await test.step("navigate with an active filter in the URL", async () => {
+      await page.goto("/?region=Чуйская+область");
+      await expect(page.getByRole("checkbox", { name: "Чуйская область" })).toBeChecked();
+    });
+    await test.step("click reset", async () => {
+      await page.getByRole("link", { name: "Сбросить" }).click();
+    });
+    await test.step("URL and checkbox state are cleared", async () => {
+      await expect(page).toHaveURL("/");
+      await expect(page.getByRole("checkbox", { name: "Чуйская область" })).not.toBeChecked();
+    });
+  });
+});
