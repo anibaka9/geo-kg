@@ -1,4 +1,9 @@
-import type { ActiveFilters, FilterOptions, MineralTypeOption } from "@web/filters";
+import {
+  countActiveFilters,
+  type ActiveFilters,
+  type FilterOptions,
+  type MineralTypeOption,
+} from "@web/filters";
 import { MINERAL_GROUPS } from "@shared/minerals";
 
 export { type ActiveFilters, type FilterOptions };
@@ -47,14 +52,14 @@ function CheckRow({
   checked: boolean;
 }) {
   return (
-    <label class="flex items-center gap-2 py-0.5 cursor-pointer group">
+    <label class="flex items-center gap-2 py-1 cursor-pointer group">
       <input
         type="checkbox"
         name={name}
         value={value}
         checked={checked || undefined}
         onchange="this.closest('form').requestSubmit()"
-        class="h-3.5 w-3.5 shrink-0 rounded border-border accent-primary"
+        class="h-4 w-4 shrink-0 rounded border-border accent-primary"
       />
       <span class="flex-1 text-sm text-foreground truncate" title={label}>
         {label}
@@ -73,16 +78,7 @@ export function FilterPanel({
   options: FilterOptions;
   action?: string;
 }) {
-  const totalActive =
-    (filters.q ? 1 : 0) +
-    (filters.status ? 1 : 0) +
-    filters.regions.length +
-    filters.workTypes.length +
-    filters.mineralTypes.length +
-    filters.countries.length +
-    filters.years.length +
-    (filters.areaMin ? 1 : 0) +
-    (filters.areaMax ? 1 : 0);
+  const totalActive = countActiveFilters(filters);
 
   const mineralByGroup = new Map<string, MineralTypeOption[]>();
   for (const mt of options.mineralTypes) {
@@ -140,14 +136,14 @@ export function FilterPanel({
             { value: "annulled", label: "Аннулированные" },
           ] as { value: string; label: string }[]
         ).map(({ value, label }) => (
-          <label class="flex items-center gap-2 py-0.5 cursor-pointer">
+          <label class="flex items-center gap-2 py-1 cursor-pointer">
             <input
               type="radio"
               name="status"
               value={value}
               checked={filters.status === value || undefined}
               onchange="this.closest('form').requestSubmit()"
-              class="h-3.5 w-3.5 shrink-0 border-border accent-primary"
+              class="h-4 w-4 shrink-0 border-border accent-primary"
             />
             <span class="text-sm text-foreground">{label}</span>
           </label>

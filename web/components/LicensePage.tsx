@@ -29,11 +29,11 @@ function FieldRow({ label, value, raw, href }: FieldRowProps) {
     value !== null && value !== undefined && String(value).trim() !== "" ? String(value) : null;
   const showRaw = raw !== undefined && raw.trim() !== "" && raw.trim() !== display;
   return (
-    <div class="grid grid-cols-3 gap-4 py-3 border-b border-border last:border-0">
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-1 sm:gap-4 py-3 border-b border-border last:border-0">
       <dt class="text-xs font-medium text-muted-foreground uppercase tracking-wide pt-0.5">
         {label}
       </dt>
-      <dd class="text-sm text-foreground col-span-2">
+      <dd class="text-sm text-foreground sm:col-span-2">
         {display ? (
           <FieldValue display={display} href={href} />
         ) : (
@@ -57,10 +57,10 @@ function FieldRow({ label, value, raw, href }: FieldRowProps) {
 function Card({ title, children }: { title: string; children: JSX.Element | JSX.Element[] }) {
   return (
     <div class="rounded-lg border border-border bg-card text-card-foreground shadow-sm">
-      <div class="px-6 py-4 border-b border-border">
+      <div class="px-4 sm:px-6 py-4 border-b border-border">
         <h2 class="text-sm font-semibold text-foreground">{title}</h2>
       </div>
-      <div class="px-6 py-2">
+      <div class="px-4 sm:px-6 py-2">
         <dl>{children}</dl>
       </div>
     </div>
@@ -71,11 +71,11 @@ function WorkTypeRow({ workType }: { workType: License["workType"] }) {
   const { value, raw } = workType;
   const showRaw = raw.trim() !== "" && raw.trim() !== value.join(", ");
   return (
-    <div class="grid grid-cols-3 gap-4 py-3 border-b border-border">
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-1 sm:gap-4 py-3 border-b border-border">
       <dt class="text-xs font-medium text-muted-foreground uppercase tracking-wide pt-0.5">
         Вид работ
       </dt>
-      <dd class="col-span-2">
+      <dd class="sm:col-span-2">
         {value.length > 0 ? (
           <div class="flex flex-wrap gap-1">
             {value.map((v) => (
@@ -111,11 +111,11 @@ function MineralsRow({ minerals, raw }: { minerals: MineralEntry[]; raw: string 
   const showRaw = raw.trim() !== "" && raw.trim() !== minerals.map((m) => m.name).join(", ");
 
   return (
-    <div class="grid grid-cols-3 gap-4 py-3 border-b border-border">
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-1 sm:gap-4 py-3 border-b border-border">
       <dt class="text-xs font-medium text-muted-foreground uppercase tracking-wide pt-0.5">
         Полезные ископаемые
       </dt>
-      <dd class="col-span-2 space-y-2">
+      <dd class="sm:col-span-2 space-y-2">
         {minerals.length === 0 ? (
           <span class="text-sm text-muted-foreground">—</span>
         ) : (
@@ -180,11 +180,11 @@ function StatusRow({ status, raw }: { status: StatusData; raw: string }) {
   const showRaw = raw.trim() !== "" && status.isAnnulled && raw.trim().length > 3;
 
   return (
-    <div class="grid grid-cols-3 gap-4 py-3 border-b border-border last:border-0">
+    <div class="grid grid-cols-1 sm:grid-cols-3 gap-1 sm:gap-4 py-3 border-b border-border last:border-0">
       <dt class="text-xs font-medium text-muted-foreground uppercase tracking-wide pt-0.5">
         Статус
       </dt>
-      <dd class="text-sm text-foreground col-span-2">
+      <dd class="text-sm text-foreground sm:col-span-2">
         {display}
         {showRaw && (
           <details class="mt-1">
@@ -229,8 +229,8 @@ export function LicensePage({
             ← Все лицензии
           </a>
         )}
-        <div class="flex items-start justify-between gap-4">
-          <div>
+        <div class="flex flex-wrap items-start justify-between gap-4">
+          <div class="min-w-0">
             <h1 class="text-2xl font-semibold tracking-tight text-foreground">
               {license.objectName.value}
             </h1>
@@ -291,11 +291,11 @@ export function LicensePage({
         />
         <FieldRow label="Адрес" value={license.company.address.value} />
         {license.company.country.value.length > 0 ? (
-          <div class="grid grid-cols-3 gap-4 py-3 border-b border-border last:border-0">
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-1 sm:gap-4 py-3 border-b border-border last:border-0">
             <dt class="text-xs font-medium text-muted-foreground uppercase tracking-wide pt-0.5">
               Страна
             </dt>
-            <dd class="text-sm text-foreground col-span-2 flex flex-wrap gap-2">
+            <dd class="text-sm text-foreground sm:col-span-2 flex flex-wrap gap-2">
               {license.company.country.value.map((c) => (
                 <span class="inline-flex items-center rounded-md bg-muted px-2 py-1 text-xs font-medium text-foreground">
                   {c}
@@ -316,11 +316,11 @@ export function LicensePage({
             </dd>
           </div>
         ) : (
-          <div class="grid grid-cols-3 gap-4 py-3 border-b border-border last:border-0">
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-1 sm:gap-4 py-3 border-b border-border last:border-0">
             <dt class="text-xs font-medium text-muted-foreground uppercase tracking-wide pt-0.5">
               Страна
             </dt>
-            <dd class="text-sm text-foreground col-span-2">
+            <dd class="text-sm text-foreground sm:col-span-2">
               <span class="text-muted-foreground">—</span>
               {license.company.country.raw && license.company.country.raw.trim() !== "" && (
                 <details class="mt-1">

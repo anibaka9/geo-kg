@@ -1,5 +1,6 @@
-import type { ActiveFilters, FilterOptions } from "@web/filters";
+import { countActiveFilters, type ActiveFilters, type FilterOptions } from "@web/filters";
 import { FilterPanel } from "./FilterPanel";
+import { FilterToggleButton } from "./FilterToggleButton";
 import { NavTabs } from "./NavTabs";
 
 interface Props {
@@ -11,13 +12,19 @@ interface Props {
 
 export function MapPage({ filters, filterOptions, total, qs }: Props) {
   return (
-    <div class="flex gap-6 h-[calc(100vh-5rem)]">
-      <aside class="w-60 shrink-0 overflow-y-auto rounded-lg border border-border bg-card shadow-sm">
+    <div class="flex flex-col lg:flex-row gap-4 lg:gap-6 h-[calc(100vh-5rem)]">
+      <aside
+        id="filter-aside"
+        class="hidden lg:block w-full lg:w-60 shrink-0 overflow-y-auto rounded-lg border border-border bg-card shadow-sm max-h-[45vh] lg:max-h-full"
+      >
         <FilterPanel filters={filters} options={filterOptions} action="/map" />
       </aside>
-      <div class="flex-1 flex flex-col min-w-0 gap-3">
-        <div class="flex items-center justify-between">
-          <NavTabs active="map" qs={qs} />
+      <div class="flex-1 flex flex-col min-w-0 min-h-0 gap-3">
+        <div class="flex items-center justify-between flex-wrap gap-2">
+          <div class="flex items-center gap-2">
+            <FilterToggleButton activeCount={countActiveFilters(filters)} />
+            <NavTabs active="map" qs={qs} />
+          </div>
           <p class="text-sm text-muted-foreground">{total} лицензий с координатами</p>
         </div>
         <div
@@ -28,7 +35,7 @@ export function MapPage({ filters, filterOptions, total, qs }: Props) {
       </div>
       <div
         id="license-panel"
-        class="fixed inset-y-0 right-0 w-[420px] bg-background border-l border-border overflow-y-auto shadow-xl z-50"
+        class="fixed inset-y-0 right-0 w-full sm:w-[420px] bg-background border-l border-border overflow-y-auto shadow-xl z-50"
         style="display: none;"
       >
         <div class="sticky top-0 bg-background border-b border-border px-4 py-3 flex items-center justify-between z-10">

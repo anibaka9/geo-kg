@@ -53,7 +53,7 @@ export function LicensesTable({ items, offset }: LicensesTableProps) {
       <table class="w-full text-sm">
         <thead>
           <tr class="border-b border-border bg-muted/50">
-            <th class="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider w-10">
+            <th class="hidden sm:table-cell px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider w-10">
               #
             </th>
             <th class="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
@@ -62,19 +62,19 @@ export function LicensesTable({ items, offset }: LicensesTableProps) {
             <th class="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
               Объект
             </th>
-            <th class="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
+            <th class="hidden md:table-cell px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
               Компания
             </th>
-            <th class="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
+            <th class="hidden lg:table-cell px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
               Регион
             </th>
             <th class="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
               Минералы
             </th>
-            <th class="px-4 py-3 text-right text-xs font-medium text-muted-foreground uppercase tracking-wider w-16">
+            <th class="hidden lg:table-cell px-4 py-3 text-right text-xs font-medium text-muted-foreground uppercase tracking-wider w-16">
               Га
             </th>
-            <th class="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider w-20">
+            <th class="hidden sm:table-cell px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider w-20">
               Год
             </th>
             <th class="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider w-24">
@@ -88,7 +88,9 @@ export function LicensesTable({ items, offset }: LicensesTableProps) {
               class="hover:bg-muted/40 transition-colors cursor-pointer"
               onclick={`window.location='/license/${license.id.value}'`}
             >
-              <td class="px-4 py-3 text-xs text-muted-foreground tabular-nums">{offset + i + 1}</td>
+              <td class="hidden sm:table-cell px-4 py-3 text-xs text-muted-foreground tabular-nums">
+                {offset + i + 1}
+              </td>
               <td class="px-4 py-3">
                 <a
                   href={`/license/${license.id.value}`}
@@ -101,7 +103,7 @@ export function LicensesTable({ items, offset }: LicensesTableProps) {
               <td class="px-4 py-3 text-foreground">
                 <Truncate text={license.objectName.value} maxW="max-w-44" />
               </td>
-              <td class="px-4 py-3 text-foreground">
+              <td class="hidden md:table-cell px-4 py-3 text-foreground">
                 <Truncate
                   text={[
                     license.company.identity.value.orgType,
@@ -112,7 +114,7 @@ export function LicensesTable({ items, offset }: LicensesTableProps) {
                   maxW="max-w-52"
                 />
               </td>
-              <td class="px-4 py-3 text-foreground">
+              <td class="hidden lg:table-cell px-4 py-3 text-foreground">
                 <Truncate text={license.region.value} maxW="max-w-32" />
               </td>
               <td class="px-4 py-3 text-foreground">
@@ -130,14 +132,14 @@ export function LicensesTable({ items, offset }: LicensesTableProps) {
                   {license.minerals.value.map((m) => m.name).join(", ")}
                 </div>
               </td>
-              <td class="px-4 py-3 tabular-nums text-right text-foreground">
+              <td class="hidden lg:table-cell px-4 py-3 tabular-nums text-right text-foreground">
                 {license.areaHa.value !== null ? (
                   license.areaHa.value
                 ) : (
                   <span class="text-muted-foreground">—</span>
                 )}
               </td>
-              <td class="px-4 py-3">
+              <td class="hidden sm:table-cell px-4 py-3">
                 <YearBadge year={license.sourceYear} />
               </td>
               <td class="px-4 py-3">

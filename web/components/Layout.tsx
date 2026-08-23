@@ -24,7 +24,7 @@ export function Layout({
         {headExtra}
       </head>
       <body class="bg-background text-foreground h-screen overflow-hidden">
-        <div class="px-6 py-8 h-full mx-auto">{children}</div>
+        <div class="px-3 py-4 sm:px-6 sm:py-8 h-full mx-auto">{children}</div>
       </body>
     </html>
   );
