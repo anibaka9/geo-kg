@@ -43,6 +43,20 @@ export function parseFilters(sp: URLSearchParams): ActiveFilters {
   };
 }
 
+export function countActiveFilters(filters: ActiveFilters): number {
+  return (
+    (filters.q ? 1 : 0) +
+    (filters.status ? 1 : 0) +
+    filters.regions.length +
+    filters.workTypes.length +
+    filters.mineralTypes.length +
+    filters.countries.length +
+    filters.years.length +
+    (filters.areaMin ? 1 : 0) +
+    (filters.areaMax ? 1 : 0)
+  );
+}
+
 export function filtersToQs(sp: URLSearchParams): string {
   return [...sp.entries()]
     .filter(([k]) => k !== "page")
