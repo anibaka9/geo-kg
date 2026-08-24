@@ -25,6 +25,10 @@ try {
 const EMPTY_FILTERS = parseFilters(new URLSearchParams());
 const filterOptions = repository.getFilterOptions();
 
+const TABLE_HEAD = (
+  <script src="/public/table.js" defer data-turbo-track="reload"></script>
+) as JSX.Element;
+
 const MAP_HEAD = (
   <>
     <link
@@ -57,7 +61,7 @@ new Elysia()
     const qs = filtersToQs(sp);
 
     return (
-      <Layout title="Лицензии КР">
+      <Layout title="Лицензии КР" headExtra={TABLE_HEAD}>
         <LicensesListPage
           filters={filters}
           filterOptions={filterOptions}

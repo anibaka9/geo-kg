@@ -89,7 +89,7 @@ export function FilterPanel({
 
   return (
     <form method="GET" action={action} data-turbo-frame="results" aria-label="Фильтры">
-      <div class="flex items-center justify-between px-4 py-3 border-b border-border">
+      <div class="flex items-center px-4 py-3 border-b border-border">
         <span class="text-sm font-semibold text-foreground flex items-center gap-1.5">
           Фильтры
           {totalActive > 0 && (
@@ -106,12 +106,6 @@ export function FilterPanel({
             </>
           )}
         </span>
-        <button
-          type="submit"
-          class="text-xs rounded-md border border-border bg-background px-2 py-1 text-foreground hover:bg-accent transition-colors shrink-0"
-        >
-          Применить
-        </button>
       </div>
 
       <div class="px-4 py-3 border-b border-border">

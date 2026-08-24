@@ -16,6 +16,7 @@ if (!filePath) {
 
 const protectedPaths = [
   "public/map.js",
+  "public/table.js",
   "public/turbo.js",
   "public/output.css",
   "output/licenses.json",

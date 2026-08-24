@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "build": "bun build.ts",
-    "build:watch": "bun build ./web/map.ts --outfile=./public/map.js --target=browser --watch & bun build ./node_modules/@hotwired/turbo/dist/turbo.es2017-esm.js --outfile=./public/turbo.js --target=browser --watch & bunx @tailwindcss/cli -i ./web/input.css -o ./public/output.css --watch",
+    "build:watch": "bun build ./web/map.ts --outfile=./public/map.js --target=browser --watch & bun build ./web/table.ts --outfile=./public/table.js --target=browser --watch & bun build ./node_modules/@hotwired/turbo/dist/turbo.es2017-esm.js --outfile=./public/turbo.js --target=browser --watch & bunx @tailwindcss/cli -i ./web/input.css -o ./public/output.css --watch",
     "dev": "bun run build && bun --hot server.tsx",
     "start": "bun server.tsx",
     "parse": "bun parser/parse.ts",

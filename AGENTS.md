@@ -23,7 +23,9 @@ to run all three in one command.
 - **CSS:** Tailwind CSS v4. Config in `web/input.css`, output in `public/output.css`.
 - **CSS tokens:** `bg-background`, `text-foreground`, `text-muted-foreground`, `border-border`,
   `bg-card`, `bg-muted`. Never write raw hex colors in components.
-- **SPA navigation:** Hotwire Turbo. Reload on form submit, no client JS for table view.
+- **SPA navigation:** Hotwire Turbo for page-to-page nav (e.g. pagination). The filter form on
+  `/` and `/map` is intercepted client-side (`web/table.ts` / `web/map.ts`) instead of a full
+  Turbo frame reload, so the filter panel keeps its scroll position across filter changes.
 - **Map:** MapLibre GL, client-only. Bundle at `web/map.ts` → `public/map.js`.
 - **Data:** SQLite via `bun:sqlite`, no separate DB service. `output/licenses.db` is queried
   per-request (nothing is loaded into memory at startup). `DATABASE_PATH` env var overrides the
