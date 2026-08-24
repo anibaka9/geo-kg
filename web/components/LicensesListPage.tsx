@@ -39,11 +39,11 @@ export function LicensesListPage({
     >
       <aside
         id="filter-aside"
-        class="hidden lg:block w-full lg:w-60 lg:h-full shrink-0 overflow-y-auto rounded-lg border border-border bg-card shadow-sm"
+        class="hidden lg:block w-full lg:w-60 shrink-0 overflow-y-auto rounded-lg border border-border bg-card shadow-sm max-h-[45vh] lg:max-h-full lg:h-full"
       >
         <FilterPanel filters={filters} options={filterOptions} />
       </aside>
-      <div class="flex-1 lg:h-full min-w-0 flex flex-col">
+      <div id="results-content" class="flex-1 lg:h-full min-w-0 flex flex-col">
         <div class="mb-4 flex flex-wrap items-start justify-between gap-3 shrink-0">
           <div class="min-w-0">
             <h1 class="text-2xl font-semibold tracking-tight text-foreground">Лицензии</h1>

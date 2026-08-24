@@ -79,6 +79,26 @@ test.describe("license detail page", { tag: ["@critical"] }, () => {
   });
 });
 
+test.describe("license detail page scroll", { tag: ["@critical"] }, () => {
+  test("content below the fold is reachable by scrolling (desktop)", async ({ page }) => {
+    await test.step("navigate to a license with enough content to overflow the viewport", async () => {
+      await page.goto("/license/1");
+    });
+    const polygonHeading = page.getByRole("heading", { name: "Координаты полигона" });
+    await test.step("heading starts out below the fold", async () => {
+      await expect(polygonHeading).not.toBeInViewport();
+    });
+    await test.step("scrolling the page reaches it", async () => {
+      // A real wheel scroll, not `scrollIntoViewIfNeeded()` — the latter can
+      // reposition scroll through ancestors with `overflow: hidden` in ways a
+      // real user's wheel/touch input cannot, which would make this test pass
+      // even against the bug it's meant to catch.
+      await page.mouse.wheel(0, 2000);
+      await expect(polygonHeading).toBeInViewport();
+    });
+  });
+});
+
 test.describe("map page", { tag: ["@critical"] }, () => {
   test("renders map page", async ({ page }) => {
     await test.step("navigate to map", async () => {

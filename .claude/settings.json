@@ -6,6 +6,7 @@
       "Edit(/lefthook.yml)",
       "Edit(/tsconfig.json)",
       "Edit(/public/map.js)",
+      "Edit(/public/table.js)",
       "Edit(/public/turbo.js)",
       "Edit(/public/output.css)",
       "Edit(/output/licenses.json)",

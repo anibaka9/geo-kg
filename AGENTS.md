@@ -23,7 +23,9 @@ to run all three in one command.
 - **CSS:** Tailwind CSS v4. Config in `web/input.css`, output in `public/output.css`.
 - **CSS tokens:** `bg-background`, `text-foreground`, `text-muted-foreground`, `border-border`,
   `bg-card`, `bg-muted`. Never write raw hex colors in components.
-- **SPA navigation:** Hotwire Turbo. Reload on form submit, no client JS for table view.
+- **SPA navigation:** Hotwire Turbo for page-to-page nav (e.g. pagination). The filter form on
+  `/` and `/map` is intercepted client-side (`web/table.ts` / `web/map.ts`) instead of a full
+  Turbo frame reload, so the filter panel keeps its scroll position across filter changes.
 - **Map:** MapLibre GL, client-only. Bundle at `web/map.ts` → `public/map.js`.
 - **Data:** SQLite via `bun:sqlite`, no separate DB service. `output/licenses.db` is queried
   per-request (nothing is loaded into memory at startup). `DATABASE_PATH` env var overrides the
@@ -139,9 +141,26 @@ For nested elements, scope with chained locators, `filter({ has, hasText })`,
 
 ### When a Playwright test fails
 
+- Before touching anything, run the failing test 10x locally and count failures — don't
+  guess or reason from a single run in either direction:
+  `for i in {1..10}; do bunx playwright test -g "test name" || true; done`
+  - **0/10** — not flaky on this machine. Suspect CI-only timing or worker isolation;
+    run it on CI a few times before concluding anything.
+  - **1–3/10** — a real flake. Open a trace from one of the failing runs and classify
+    it into one of the four buckets below before touching the test.
+  - **4+/10** — not flaky, just broken. Stop calling it flaky and fix the actual bug
+    (in the test or the app) like any other failing test.
+  - **10/10** — something is wrong with the setup, not the test; you're probably not
+    running what you think you're running (wrong project, stale build, stale server).
 - Read the trace _before_ changing code: `npx playwright show-trace test-results/.../trace.zip`.
 - Classify the failure into one of four buckets:
-  1. **Timing race** — fix with `page.waitForResponse`, never by bumping timeouts.
+  1. **Timing race** — fix by waiting on the actual condition (`page.waitForResponse`,
+     an auto-retrying `expect`), not by padding an assertion's timeout. If the wait
+     target is already correct and the failure is a real, variable-latency dependency
+     (e.g. a live external network call, WebGL/compositing startup) that occasionally
+     exceeds the default budget, `test.slow()` — which triples the timeout and is
+     visible in the report — is the right tool; that's a different move from bumping
+     `retries` or silently widening one assertion's timeout to hide a race.
   2. **Shared state leak** — fix with a fixture teardown.
   3. **Order-dependent rendering** — fix with a region-scoped locator.
   4. **Config / auth mismatch** — fix the project, storage state, or `dependencies: ['setup']`.
@@ -149,7 +168,9 @@ For nested elements, scope with chained locators, `filter({ has, hasText })`,
   summary, relevant network request with status and timing.
 - Never raise `retries` above `process.env.CI ? 2 : 0` to "fix" a flaky test.
   Retries are for environmental flakes only.
-- Use `test.fixme` plus an issue annotation to quarantine, never `test.skip`.
+- Use `test.fixme` plus an issue annotation to quarantine, never `test.skip`. `fixme`
+  keeps running the test and fails the build the moment it starts passing again, so
+  the quarantine can't be silently forgotten; `skip` just stops running it.
 
 ### Test steps and tags
 

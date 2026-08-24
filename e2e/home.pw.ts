@@ -199,3 +199,77 @@ test.describe("filter panel sync", { tag: ["@critical"] }, () => {
     });
   });
 });
+
+test.describe("filter panel scroll preservation", { tag: ["@critical"] }, () => {
+  test("checking a filter updates results client-side without a full page reload", async ({
+    page,
+  }) => {
+    await test.step("navigate to home page", async () => {
+      await page.goto("/");
+    });
+    await test.step("mark the current document instance", async () => {
+      await page.evaluate(() => {
+        (globalThis as unknown as { __noReload: boolean }).__noReload = true;
+      });
+    });
+    await test.step("check a region filter", async () => {
+      await page.getByRole("checkbox", { name: "Чуйская область" }).check();
+      await expect(page.getByRole("link", { name: "Сбросить" })).toBeVisible();
+    });
+    await test.step("marker survived — the page was not reloaded", async () => {
+      const marker = await page.evaluate(
+        () => (globalThis as unknown as { __noReload?: boolean }).__noReload,
+      );
+      expect(marker).toBe(true);
+    });
+    await test.step("URL reflects the new filter", async () => {
+      await expect(page).toHaveURL(/region=/u);
+    });
+  });
+
+  test("filter panel keeps its scroll position after checking a filter", async ({ page }) => {
+    await test.step("navigate to home page", async () => {
+      await page.goto("/");
+    });
+    await test.step("scroll the filter panel down", async () => {
+      await page.locator("#filter-aside").evaluate((el) => el.scrollTo(0, 300));
+    });
+    await test.step("check a filter further down the panel", async () => {
+      await page.getByRole("checkbox", { name: "подземные воды" }).check();
+      await expect(page.getByRole("link", { name: "Сбросить" })).toBeVisible();
+    });
+    await test.step("scroll position is preserved, not reset to the top", async () => {
+      const scrollTop = await page.locator("#filter-aside").evaluate((el) => el.scrollTop);
+      expect(scrollTop).toBeGreaterThan(0);
+    });
+  });
+});
+
+test.describe("apply button removed", { tag: ["@critical"] }, () => {
+  test("no redundant always-visible apply button next to the reset link", async ({ page }) => {
+    await test.step("navigate to home page", async () => {
+      await page.goto("/");
+    });
+    await test.step("apply button is not shown (checkboxes auto-apply already)", async () => {
+      await expect(page.getByRole("button", { name: "Применить" })).toBeHidden();
+    });
+  });
+
+  test("reset link stays inside the filter panel bounds when it appears", async ({ page }) => {
+    await test.step("navigate to home page", async () => {
+      await page.goto("/");
+    });
+    await test.step("check a filter so the reset link appears", async () => {
+      await page.getByRole("checkbox", { name: "Чуйская область" }).check();
+    });
+    const resetLink = page.getByRole("link", { name: "Сбросить" });
+    await expect(resetLink).toBeVisible();
+    await test.step("reset link does not overflow the filter panel", async () => {
+      const resetBox = await resetLink.boundingBox();
+      const asideBox = await page.locator("#filter-aside").boundingBox();
+      expect(resetBox).not.toBeNull();
+      expect(asideBox).not.toBeNull();
+      expect(resetBox!.x + resetBox!.width).toBeLessThanOrEqual(asideBox!.x + asideBox!.width + 1);
+    });
+  });
+});

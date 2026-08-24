@@ -47,6 +47,27 @@ test.describe("mobile home page", { tag: ["@critical"] }, () => {
     });
   });
 
+  test("filter panel itself scrolls to reach fields below the fold", async ({ page }) => {
+    await test.step("navigate to home page and open filters", async () => {
+      await page.goto("/");
+      await page.getByRole("button", { name: "Фильтры" }).click();
+      await expect(page.getByRole("checkbox", { name: "Чуйская область" })).toBeVisible();
+    });
+    const aside = page.locator("#filter-aside");
+    await test.step("filter panel content overflows its own box (has something to scroll)", async () => {
+      const { scrollHeight, clientHeight } = await aside.evaluate((el) => ({
+        scrollHeight: el.scrollHeight,
+        clientHeight: el.clientHeight,
+      }));
+      expect(scrollHeight).toBeGreaterThan(clientHeight);
+    });
+    await test.step("scrolling the panel moves its content, unlike a page-level scroll", async () => {
+      await aside.evaluate((el) => el.scrollTo(0, el.scrollHeight));
+      const scrollTop = await aside.evaluate((el) => el.scrollTop);
+      expect(scrollTop).toBeGreaterThan(0);
+    });
+  });
+
   test("clicking a license row still navigates to detail page", async ({ page }) => {
     await test.step("navigate to home page", async () => {
       await page.goto("/");
@@ -80,8 +101,11 @@ test.describe("mobile license detail page", { tag: ["@critical"] }, () => {
   });
 });
 
-test.describe("mobile map page", { tag: ["@critical"] }, () => {
+test.describe("mobile map page", { tag: ["@critical", "@slow"] }, () => {
   test("filter panel is collapsed behind a toggle and map still renders", async ({ page }) => {
+    // Real network tile fetches + software WebGL init are measurably slower on headless
+    // WebKit (~35s) than Chromium; triple the timeout rather than raising it globally.
+    test.slow();
     await test.step("navigate to map", async () => {
       const geojsonResponse = page.waitForResponse((r) =>
         r.url().includes("/api/features.geojson"),

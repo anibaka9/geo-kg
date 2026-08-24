@@ -1,4 +1,4 @@
-import { defineConfig } from "@playwright/test";
+import { defineConfig, devices } from "@playwright/test";
 
 const PORT = 3000;
 
@@ -43,4 +43,15 @@ export default defineConfig({
   expect: {
     timeout: 10_000,
   },
+  // Default project mirrors the previous no-`projects` behavior (Desktop Chrome).
+  // "mobile-webkit" additionally runs the mobile suite on a WebKit (Safari) engine,
+  // since mobile-only CSS/overflow bugs can slip past a Chromium-only baseline.
+  projects: [
+    { name: "chromium", use: { ...devices["Desktop Chrome"] } },
+    {
+      name: "mobile-webkit",
+      use: { ...devices["iPhone 13"] },
+      testMatch: /mobile\.pw\.ts/u,
+    },
+  ],
 });
